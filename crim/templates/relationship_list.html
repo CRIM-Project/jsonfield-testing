@@ -1,0 +1,11 @@
+<html><body>
+    <h1>Relationships</h1>
+    <ol>
+        {% for relationship in relationships %}
+            <p><li><b>{{ relationship.relationship_type }}</b></li>
+            {% for key, value in relationship.details.items %}
+                <br>{{ key }} : {{ value }}
+            {% endfor %}</p>
+        {% endfor %}
+    </ol>
+</body></html>

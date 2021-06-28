@@ -1,4 +1,5 @@
 from django.urls import path
+from rest_framework.urlpatterns import format_suffix_patterns
 from crim.views.observation import ObservationList, ObservationDetail, api_root
 from crim.views.relationship import RelationshipList, RelationshipDetail
 
@@ -10,3 +11,5 @@ urlpatterns = [
     
     path('', api_root),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)

@@ -1,0 +1,16 @@
+{% load rest_framework %}
+
+<html><body>
+
+<h1>{{ observation.musical_type }}</h1>
+    {% for key, value in observation.details.items %}
+        <br><b>{{ key }}</b> : {{ value }}
+    {% endfor %}
+
+<p><form action="{% url 'crimobservation-detail' pk=observation.pk %}" method="POST">
+    {% csrf_token %}
+    {% render_form serializer %}
+    <input type="submit" value="Save">
+</form></p>
+
+</body></html>

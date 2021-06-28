@@ -1,18 +1,69 @@
+from django.shortcuts import get_object_or_404, redirect
+from django.http import Http404
 from crim.models.relationship import CRIMRelationship
 from crim.serializers.relationship import CRIMRelationshipSerializer
-from rest_framework import generics
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+from rest_framework.decorators import api_view
+from rest_framework.views import APIView
+from rest_framework.renderers import TemplateHTMLRenderer
 
-class RelationshipList(generics.ListCreateAPIView):
+class RelationshipList(APIView):
     """
-    List all relationship, or create a new relationship.
+    List all observation, or create a new observation.
     """
-    queryset = CRIMRelationship.objects.all()
-    serializer_class = CRIMRelationshipSerializer
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'relationship_list.html'
 
-class RelationshipDetail(generics.RetrieveUpdateDestroyAPIView):
+    def get(self, request, format=None):
+        relationships = CRIMRelationship.objects.all()
+        queryset = CRIMRelationship.objects.all()
+        return Response({'relationships': queryset}, template_name='relationship_list.html')
+
+    def post(self, request, format=None):
+        serializer = CRIMRelationshipSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format=None):
+        relationships = CRIMRelationship.objects.all()
+        relationships.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class RelationshipDetail(APIView):
     """
-    Retrieve, update or delete an relationship.
+    Retrieve, update or delete an observation.
     """
-    queryset = CRIMRelationship.objects.all()
-    serializer_class = CRIMRelationshipSerializer
-   
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'relationship_detail.html'
+
+    def get(self, request, pk):
+        relationship = get_object_or_404(CRIMRelationship, pk=pk)
+        serializer = CRIMRelationshipSerializer(relationship, context={'request': request})
+        return Response({'serializer': serializer, 'relationship': relationship}, template_name='relationship_detail.html')
+
+    def post(self, request, pk):
+        relationship = get_object_or_404(CRIMRelationship, pk=pk)
+        serializer = CRIMRelationshipSerializer(relationship, data=request.data)
+        if not serializer.is_valid():
+            return Response({'serializer': serializer, 'relationship': relationship})
+        serializer.save()
+        return redirect('crimrelationship-list')
+    
+    def put(self, request, pk, format=None):
+        relationship = self.get_object(pk)
+        serializer = CRIMRelationshipSerializer(relationship, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        relationship = self.get_object(pk)
+        relationship.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+

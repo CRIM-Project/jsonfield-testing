@@ -1,0 +1,11 @@
+<html><body>
+<h1>Observations</h1>
+<ol>
+    {% for observation in observations %}
+        <p><li><b>{{ observation.musical_type }}</b></li>
+        {% for key, value in observation.details.items %}
+            <br>{{ key }} : {{ value }}
+        {% endfor %}</p>
+    {% endfor %}
+</ol>
+</body></html>
