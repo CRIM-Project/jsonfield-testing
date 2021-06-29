@@ -3,9 +3,19 @@
     <ol>
         {% for relationship in relationships %}
             <p><li><b>{{ relationship.relationship_type }}</b></li>
+            <br>{{ relationship.musical_type }}    
             {% for key, value in relationship.details.items %}
                 <br>{{ key }} : {{ value }}
-            {% endfor %}</p>
+            {% endfor %}
+            <br><br><b>Observation 1 : {{ relationship.model_observation.musical_type }}</b>
+            {% for key, value in relationship.model_observation.details.items %}
+                <br> {{ key }} : {{ value }} 
+            {% endfor %} 
+            <br><br><b>Observation 2 : {{ relationship.derivative_observation.musical_type }}</b>
+            {% for key, value in relationship.derivative_observation.details.items %}
+                <br> {{ key }} : {{ value }} 
+            {% endfor %}
+            </p>
         {% endfor %}
     </ol>
 </body></html>
