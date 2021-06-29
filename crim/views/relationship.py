@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
-from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 
 class RelationshipList(APIView):
     """
@@ -18,8 +18,7 @@ class RelationshipList(APIView):
 
     def get(self, request, format=None):
         relationships = CRIMRelationship.objects.all()
-        queryset = CRIMRelationship.objects.all()
-        return Response({'relationships': queryset}, template_name='relationship_list.html')
+        return Response({'relationships': relationships}, template_name='relationship_list.html')
 
     def post(self, request, format=None):
         serializer = CRIMRelationshipSerializer(data=request.data)
@@ -67,3 +66,25 @@ class RelationshipDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 
+class RelationshipListJSON(APIView):
+    """
+    List all relationships in json.
+    """
+    renderer_classes = [JSONRenderer]
+
+    def get(self, request, format=None):
+        relationships = CRIMRelationship.objects.all()
+        serializer = CRIMRelationshipSerializer(relationships, many=True, context={'request':request})
+        return Response(serializer.data)
+        
+
+class RelationshipDetailJSON(APIView):
+    """
+    List one relationship in json.
+    """
+    renderer_classes = [JSONRenderer]
+
+    def get(self, request, pk):
+        relationship = get_object_or_404(CRIMRelationship, pk=pk)
+        serializer = CRIMRelationshipSerializer(relationship, context={'request': request})
+        return Response(serializer.data)

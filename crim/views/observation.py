@@ -1,5 +1,5 @@
-from django.shortcuts import get_object_or_404, redirect
-from django.http import Http404
+from django.shortcuts import get_object_or_404, redirect, render
+from django.http import Http404, JsonResponse
 from crim.models.observation import CRIMObservation
 from crim.serializers.observation import CRIMObservationSerializer
 from rest_framework import status
@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
-from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 
 class ObservationList(APIView):
     """
@@ -18,8 +18,7 @@ class ObservationList(APIView):
 
     def get(self, request, format=None):
         observations = CRIMObservation.objects.all()
-        queryset = CRIMObservation.objects.all()
-        return Response({'observations': queryset}, template_name='observation_list.html')
+        return Response({'observations': observations}, template_name='observation_list.html')
 
     def post(self, request, format=None):
         serializer = CRIMObservationSerializer(data=request.data)
@@ -66,6 +65,38 @@ class ObservationDetail(APIView):
         observation.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
+# data/observation/ to return json info
+
+class ObservationListJSON(APIView):
+    """
+    List all observations in json.
+    """
+    renderer_classes = [JSONRenderer]
+
+    def get(self, request, format=None):
+        observations = CRIMObservation.objects.all()
+        serializer = CRIMObservationSerializer(observations, many=True, context={'request': request})
+        return Response(serializer.data)
+
+
+class ObservationDetailJSON(APIView):
+    """
+    List one observation in json.
+    """
+    renderer_classes = [JSONRenderer]
+
+    def get(self, request, pk):
+        observation = get_object_or_404(CRIMObservation, pk=pk)
+        serializer = CRIMObservationSerializer(observation, context={'request': request})
+        return Response(serializer.data)
+
+
+
+
+
+
+
+
 #TODO: Move this to a separate home view
 @api_view(['GET'])
 def api_root(request, format=None):
