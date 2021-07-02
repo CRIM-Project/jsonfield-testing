@@ -4,7 +4,7 @@ Instructions to run
 
 ## Installation
 
-Clone this git repo. Navigate (cd) to this jsonfield-testing directory, activate a new virtual environment.</br> 
+Clone this git repo. Navigate (cd) to this jsonfield-testing directory, activate a new virtual environment (``` virtualenv env_name ```, then ```source env_name/bin/activate``` ).</br> 
 Then run the following command
 
 ```
