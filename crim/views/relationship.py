@@ -21,7 +21,7 @@ class RelationshipList(APIView):
         return Response({'relationships': relationships}, template_name='relationship_list.html')
 
     def post(self, request, format=None):
-        serializer = CRIMRelationshipSerializer(data=request.data)
+        serializer = CRIMRelationshipSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -46,7 +46,7 @@ class RelationshipDetail(APIView):
 
     def post(self, request, pk):
         relationship = get_object_or_404(CRIMRelationship, pk=pk)
-        serializer = CRIMRelationshipSerializer(relationship, data=request.data)
+        serializer = CRIMRelationshipSerializer(relationship, data=request.data, context={'request': request})
         if not serializer.is_valid():
             return Response({'serializer': serializer, 'relationship': relationship})
         serializer.save()
@@ -54,7 +54,7 @@ class RelationshipDetail(APIView):
     
     def put(self, request, pk, format=None):
         relationship = self.get_object(pk)
-        serializer = CRIMRelationshipSerializer(relationship, data=request.data)
+        serializer = CRIMRelationshipSerializer(relationship, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

@@ -10,7 +10,7 @@ class CRIMRelationshipSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = CRIMRelationship
-        fields = ['url', 'id', 'relationship_type', 'musical_type', 'details', 'model_observation', 'derivative_observation']
+        fields = ['url', 'id', 'observer', 'relationship_type', 'musical_type', 'details', 'model_observation', 'derivative_observation']
 
     def create(self, validated_data):
         """
@@ -23,6 +23,7 @@ class CRIMRelationshipSerializer(serializers.HyperlinkedModelSerializer):
         Update and return an existing `CRIMRelationship` instance, given the validated data.
         """
         instance.relationship_type = validated_data.get('relationship_type', instance.relationship_type)
+        instance.observer = validated_data.get('observer', instance.observer)
         instance.musical_type = validated_data.get('musical_type', instance.musical_type)
         instance.details = validated_data.get('details', instance.details)
         instance.model_observation = validated_data.get('model_observation', instance.model_observation)

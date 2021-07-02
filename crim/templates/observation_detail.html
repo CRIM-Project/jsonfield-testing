@@ -3,6 +3,7 @@
 <html><body>
 
 <h1>{{ observation.musical_type }}</h1>
+<h2>Observer: {{ observation.observer }}</h2>
     {% for key, value in observation.details.items %}
         <br><b>{{ key }}</b> : {{ value }}
     {% endfor %}

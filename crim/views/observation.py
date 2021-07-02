@@ -21,7 +21,7 @@ class ObservationList(APIView):
         return Response({'observations': observations}, template_name='observation_list.html')
 
     def post(self, request, format=None):
-        serializer = CRIMObservationSerializer(data=request.data)
+        serializer = CRIMObservationSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -46,7 +46,7 @@ class ObservationDetail(APIView):
 
     def post(self, request, pk):
         observation = get_object_or_404(CRIMObservation, pk=pk)
-        serializer = CRIMObservationSerializer(observation, data=request.data)
+        serializer = CRIMObservationSerializer(observation, data=request.data, context={'request': request})
         if not serializer.is_valid():
             return Response({'serializer': serializer, 'observation': observation})
         serializer.save()
@@ -54,7 +54,7 @@ class ObservationDetail(APIView):
     
     def put(self, request, pk, format=None):
         observation = self.get_object(pk)
-        serializer = CRIMObservationSerializer(observation, data=request.data)
+        serializer = CRIMObservationSerializer(observation, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -93,14 +93,10 @@ class ObservationDetailJSON(APIView):
 
 
 
-
-
-
-
-#TODO: Move this to a separate home view
+#TODO: Remove redundant code
 @api_view(['GET'])
 def api_root(request, format=None):
     return Response({
         'observations': reverse('crimobservation-list', request=request, format=format),
         'relationships': reverse('crimrelationship-list',request=request, format=format)
-    })
+    }, template_name='index.html')

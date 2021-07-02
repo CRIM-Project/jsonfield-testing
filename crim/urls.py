@@ -14,7 +14,7 @@ urlpatterns = [
     path('data/relationships/', RelationshipListJSON.as_view(), name='crimrelationship-list-json'),
     path('data/relationships/<int:pk>/', RelationshipDetailJSON.as_view(), name='crimrelationship-detail-json'),
     
-    path('', api_root),
+    path('', api_root, name='home-view'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
