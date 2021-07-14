@@ -45,18 +45,17 @@ class CRIMObservation(models.Model):
                 allowed_subtypes = sorted(list(def_dict['cad_subtypes']))
             elif typename == 'homorhythm':
                 allowed_subtypes = sorted(list(def_dict['hr_subtypes']))
-            
+            #add more types later
+
             print(allowed_subtypes)
             if curr_subtypes == allowed_subtypes:
                 valid = True
-           #add more types later
            
-            #if valid:
-            #    self.definition.save()
-            #    super(CRIMObservation, self).save(*args, **kwargs)
-            if not valid:
-                print('subtypes not valid')
+            if valid:
+                print('validated. saving...')
+                self.definition.save()
+                super(CRIMObservation, self).save(*args, **kwargs)
             else:
-                print('got here')
+                print('subtypes not valid')
         else:
             print('Error saving, typename not in allowed musical types')
