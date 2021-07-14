@@ -40,18 +40,14 @@ class CRIMRelationship(models.Model):
         # For the musical type field, check if both observations use the same
         # musical type; otherwise, use whichever has a musical type if one of
         # them doesn't (e.g. omission), or include them both.
-    #    if self.model_observation['musical_type'] and self.derivative_observation['musical_type']:
-    #        mt1 = self.model_observation['musical_type']
-    #        self.musical_type = 
+    #    if self.model_observation.musical_type and self.derivative_observation.musical_type:
+    #        mt1 = str(self.model_observation.musical_type)
+    #        mt2 = str(self.derivative_observation.musical_type)
+    #        self.musical_type = [mt1, mt2]
     #    elif self.model_observation.musical_type:
     #        self.musical_type = self.model_observation.musical_type
     #    elif self.derivative_observation.musical_type:
     #        self.musical_type = self.derivative_observation.musical_type
-    #    else:
-    #        self.musical_type = '{0}; {1}'.format(
-    #            self.model_observation.musical_type,
-    #            self.derivative_observation.musical_type,
-    #        )
 
         # Save observations, thus caching them
     #    self.model_observation.save()

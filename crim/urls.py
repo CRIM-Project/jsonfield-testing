@@ -2,7 +2,7 @@ from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 from crim.views.observation import ObservationList, ObservationDetail, api_root, ObservationListJSON, ObservationDetailJSON
 from crim.views.relationship import RelationshipList, RelationshipDetail, RelationshipListJSON, RelationshipDetailJSON
-
+from crim.views.definition import DefinitionList, DefinitionDetail, DefinitionListJSON, DefinitionDetailJSON
 urlpatterns = [
     path('observations/', ObservationList.as_view(), name='crimobservation-list'),
     path('observations/<int:pk>/', ObservationDetail.as_view(), name='crimobservation-detail'),
@@ -14,6 +14,11 @@ urlpatterns = [
     path('data/relationships/', RelationshipListJSON.as_view(), name='crimrelationship-list-json'),
     path('data/relationships/<int:pk>/', RelationshipDetailJSON.as_view(), name='crimrelationship-detail-json'),
     
+    path('definitions/', DefinitionList.as_view(), name='crimdefinition-list'),
+    path('definitions/<int:pk>/', DefinitionDetail.as_view(), name='crimdefinition-detail'),
+    path('data/definitions/', DefinitionListJSON.as_view(), name='crimdefinition-list-json'),
+    path('data/definitions/<int:pk>/', DefinitionDetailJSON.as_view(), name='crimdefinition-detail-json'),
+
     path('', api_root, name='home-view'),
 ]
 

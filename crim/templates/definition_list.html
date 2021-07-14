@@ -1,0 +1,13 @@
+<html><body>
+    <h1>Definitions</h1>
+    <ol>
+        {% for definition in definitions %}
+            {% for key, value in definition.observation_definition.items %}
+                <br>{{ key }} : {{ value }}
+            {% endfor %}</p>
+            {% for key, value in definition.relationship_definition.items %}
+                <br>{{ key }} : {{ value }}
+            {% endfor %}</p>
+        {% endfor %}
+    </ol>
+</body></html>
