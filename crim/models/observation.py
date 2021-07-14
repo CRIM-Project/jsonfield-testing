@@ -30,9 +30,11 @@ class CRIMObservation(models.Model):
         typename = str(self.musical_type).lower()
         print(typename)
         print('lower success')
-        def_list = list(self.definition.observation_definition)
-        print(def_list)
-        if typename in def_list:
+        def_dict = self.definition.observation_definition
+        typelist = def_dict['musical_types']
+        print(def_dict)
+        print(typelist)
+        if typename in typelist:
             print('passed if 1')
             valid = False
             curr_subtypes = list(self.details.keys()).sort()
