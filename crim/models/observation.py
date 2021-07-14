@@ -37,26 +37,26 @@ class CRIMObservation(models.Model):
         if typename in typelist:
             print('passed if 1')
             valid = False
-            curr_subtypes = list(self.details.keys()).sort()
+            curr_subtypes = sorted(list(self.details.keys()))
             print(curr_subtypes)
             if typename == 'fuga':
-                allowed_subtypes = list(def_dict['fg_subtypes']).sort()
-                if curr_subtypes == allowed_subtypes:
-                    valid = True
+                allowed_subtypes = sorted(list(def_dict['fg_subtypes']))
             elif typename == 'cadence':
-                allowed_subtypes = list(def_dict['cad_subtypes']).sort()
-                if curr_subtypes == allowed_subtypes:
-                    valid = True
+                allowed_subtypes = sorted(list(def_dict['cad_subtypes']))
             elif typename == 'homorhythm':
-                allowed_subtypes = list(def_dict['hr_subtypes']).sort()
-                if curr_subtypes == allowed_subtypes:
-                   valid = True
+                allowed_subtypes = sorted(list(def_dict['hr_subtypes']))
+            
+            print(allowed_subtypes)
+            if curr_subtypes == allowed_subtypes:
+                valid = True
            #add more types later
            
-            if valid:
-                self.definition.save()
-                super(CRIMObservation, self).save(*args, **kwargs)
-            else:
+            #if valid:
+            #    self.definition.save()
+            #    super(CRIMObservation, self).save(*args, **kwargs)
+            if not valid:
                 print('subtypes not valid')
+            else:
+                print('got here')
         else:
             print('Error saving, typename not in allowed musical types')
