@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import JSONField
+import json
 
 # Create your models here.
 class CRIMObservation(models.Model):
@@ -25,25 +26,35 @@ class CRIMObservation(models.Model):
     def __str__(self):
         return self.musical_type
 
-    #def save(self, *args, **kwargs):
-    #    typename = str(self.musical_type).lower()
-    #    if typename in list(self.definition.observation_definition.musical_types):
-    #       valid = False
-    #       def_dict = json.loads(self.definition.observation_definition) 
-    #       curr_subtypes = list(self.details.keys()).sort()
-    #       if typename == 'fuga':
-    #           allowed_subtypes = list(def_dict['fg_subtypes']).sort()
-    #           if curr_subtypes == allowed_subtypes:
-    #               valid = True
-    #       elif if typename == 'cadence':
-    #           allowed_subtypes = list(def_dict['cad_subtypes']).sort()
-    #           if curr_subtypes == allowed_subtypes:
-    #               valid = True
-    #       elif if typename == 'homorhythm':
-    #           allowed_subtypes = list(def_dict['hr_subtypes']).sort()
-    #           if curr_subtypes == allowed_subtypes:
-    #               valid = True
-    #       #add more types later
-    #       if valid:
-    #           self.definition.save()
-    #           super(CRIMObservation, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        typename = str(self.musical_type).lower()
+        print(typename)
+        print('lower success')
+        def_list = list(self.definition.observation_definition)
+        print(def_list)
+        if typename in def_list:
+            print('passed if 1')
+            valid = False
+            curr_subtypes = list(self.details.keys()).sort()
+            print(curr_subtypes)
+            if typename == 'fuga':
+                allowed_subtypes = list(def_dict['fg_subtypes']).sort()
+                if curr_subtypes == allowed_subtypes:
+                    valid = True
+            elif typename == 'cadence':
+                allowed_subtypes = list(def_dict['cad_subtypes']).sort()
+                if curr_subtypes == allowed_subtypes:
+                    valid = True
+            elif typename == 'homorhythm':
+                allowed_subtypes = list(def_dict['hr_subtypes']).sort()
+                if curr_subtypes == allowed_subtypes:
+                   valid = True
+           #add more types later
+           
+            if valid:
+                self.definition.save()
+                super(CRIMObservation, self).save(*args, **kwargs)
+            else:
+                print('subtypes not valid')
+        else:
+            print('Error saving, typename not in allowed musical types')
