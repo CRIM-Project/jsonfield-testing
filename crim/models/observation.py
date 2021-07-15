@@ -28,19 +28,16 @@ class CRIMObservation(models.Model):
     def save(self, *args, **kwargs):
         typename = str(self.musical_type).lower()
         def_dict = self.definition.observation_definition
-        typelist = def_dict['musical_types']
-        if typename in typelist:
+        if typename in def_dict:
             valid_sub = False
-            no_validation_needed = False #for type with no required subfields for now
+            allowed_subtypes = sorted(list(def_dict[typename]))
             curr_subtypes = sorted(list(self.details.keys()))
-            if typename in def_dict:
-                allowed_subtypes = sorted(list(def_dict[typename]))
-                if curr_subtypes == allowed_subtypes:
-                    valid_sub = True
-            else:    
-                no_validation_needed = True
-           
-            if valid_sub or no_validation_needed:
+            if allowed_subtypes == []:
+                valid_sub = True
+            elif curr_subtypes == allowed_subtypes:
+                valid_sub = True
+        
+            if valid_sub:
                 print('validated. saving...')
                 self.definition.save()
                 super(CRIMObservation, self).save(*args, **kwargs)
