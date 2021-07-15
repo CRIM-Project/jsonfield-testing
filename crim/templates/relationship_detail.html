@@ -18,6 +18,7 @@
     {% for key, value in relationship.derivative_observation.details.items %}
         <br> {{ key }} : {{ value }} 
     {% endfor %}
+    <br><br><b>Definition : {{ relationship.definition.pk }} </b>
 
 <p><form action="{% url 'crimrelationship-detail' pk=relationship.pk %}" method="POST">
     {% csrf_token %}

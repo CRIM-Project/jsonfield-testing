@@ -7,10 +7,8 @@
     {% for key, value in observation.details.items %}
         <br><b>{{ key }}</b> : {{ value }}
     {% endfor %}
-    <br><br><b>Definition :</b>
-    <br>{% for key, value in observation.definition.observation_definition.items %}
-        <br> {{ key }} : {{ value }} 
-    {% endfor %} 
+    <br><br><b>Definition : {{ observation.definition.pk }} </b>
+
 <p><form action="{% url 'crimobservation-detail' pk=observation.pk %}" method="POST">
     {% csrf_token %}
     {% render_form serializer %}
