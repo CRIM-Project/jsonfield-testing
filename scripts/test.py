@@ -17,8 +17,8 @@ def run():
                             relationship_definition = {})
     testdef.save()
     
-    testobs = CRIMObservation(observer='Chad', musical_type='Fuga', 
+    testobs = CRIMObservation(observer='Chad', musical_type='Cantus firmus', 
                             details={'periodic':False,'strict':False,'flexed':False,
-                            'sequential':False,'inverted':False,'retrograde':False},
+                            'sequential':False,'inverted':False,'retrograde':False, 'NOTE':'Only for test'},
                             definition=CRIMDefinition.objects.get(pk=3))
     testobs.save()
