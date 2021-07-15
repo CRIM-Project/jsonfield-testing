@@ -32,26 +32,13 @@ class CRIMObservation(models.Model):
         if typename in typelist:
             valid_sub = False
             no_validation_needed = False #for type with no required subfields for now
-            allowed_subtypes = []
             curr_subtypes = sorted(list(self.details.keys()))
-            
-            if typename == 'fuga':
-                allowed_subtypes = sorted(list(def_dict['fg_subtypes']))
-            elif typename == 'cadence':
-                allowed_subtypes = sorted(list(def_dict['cad_subtypes']))
-            elif typename == 'homorhythm':
-                allowed_subtypes = sorted(list(def_dict['hr_subtypes']))
-            elif typename == 'periodic entry':
-                allowed_subtypes = sorted(list(def_dict['pe_subtypes']))
-            elif typename == 'imitative duo':
-                allowed_subtypes = sorted(list(def_dict['id_subtypes']))
-            elif typename == 'non-imitative duo':
-                allowed_subtypes = sorted(list(def_dict['nid_subtypes']))
-            else:
+            if typename in def_dict:
+                allowed_subtypes = sorted(list(def_dict[typename]))
+                if curr_subtypes == allowed_subtypes:
+                    valid_sub = True
+            else:    
                 no_validation_needed = True
-
-            if curr_subtypes == allowed_subtypes:
-                valid_sub = True
            
             if valid_sub or no_validation_needed:
                 print('validated. saving...')
