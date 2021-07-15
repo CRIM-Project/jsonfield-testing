@@ -36,8 +36,10 @@ class CRIMObservation(models.Model):
         print(typelist)
         if typename in typelist:
             print('passed if 1')
-            valid = False
+            valid_sub = False
+            allowed_subtypes = []
             curr_subtypes = sorted(list(self.details.keys()))
+            
             print(curr_subtypes)
             if typename == 'fuga':
                 allowed_subtypes = sorted(list(def_dict['fg_subtypes']))
@@ -45,13 +47,13 @@ class CRIMObservation(models.Model):
                 allowed_subtypes = sorted(list(def_dict['cad_subtypes']))
             elif typename == 'homorhythm':
                 allowed_subtypes = sorted(list(def_dict['hr_subtypes']))
-            #add more types later
+            #TODO: make defs, add more types 
 
             print(allowed_subtypes)
             if curr_subtypes == allowed_subtypes:
-                valid = True
+                valid_sub = True
            
-            if valid:
+            if valid_sub:
                 print('validated. saving...')
                 self.definition.save()
                 super(CRIMObservation, self).save(*args, **kwargs)
