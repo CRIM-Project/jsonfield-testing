@@ -38,7 +38,7 @@ class CRIMObservation(models.Model):
                 valid_sub = True
         
             if valid_sub:
-                print('validated. saving...')
+                print('validated. saving observation...')
                 self.definition.save()
                 super(CRIMObservation, self).save(*args, **kwargs)
             else:

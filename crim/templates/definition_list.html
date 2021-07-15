@@ -2,6 +2,7 @@
     <h1>Definitions</h1>
     <ol>
         {% for definition in definitions %}
+            <br><b>{{ definition.pk }}</b>
             {% for key, value in definition.observation_definition.items %}
                 <br>{{ key }} : {{ value }}
             {% endfor %}</p>

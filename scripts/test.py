@@ -1,24 +1,10 @@
 from crim.models.definition import CRIMDefinition
 from crim.models.observation import CRIMObservation
+from crim.models.relationship import CRIMRelationship
 
 def run():
-    testdef = CRIMDefinition(observation_definition = {
-                                'cantus firmus' : [],
-                                'soggetto' : [],
-                                'counter-soggetto' : [],
-                                'contrapuntal duo' : [],
-                                'interval patterns' : [],
-                                'cadence' : ['type', 'tone'],
-                                'fuga' : ['periodic', 'strict', 'flexed', 'sequential', 'inverted', 'retrograde'],
-                                'periodic entry' : ['strict', 'flexed melodic', 'flexed rhythmic', 'sequential', 'added entry', 'invertible'],
-                                'imitative duo' : ['strict', 'flexed', 'flexed rhythmic', 'invertible'],
-                                'non-imitative duo' : ['strict', 'flexed', 'flexed', 'flexed rhythmic', 'invertible'],
-                                'homorhythm' : ['simple', 'staggered', 'sequential', 'fauxbourdon'] }, 
-                            relationship_definition = {})
-    testdef.save()
-    
-    testobs = CRIMObservation(observer='Chad', musical_type='Cantus firmus', 
-                            details={'periodic':False,'strict':False,'flexed':False,
-                            'sequential':False,'inverted':False,'retrograde':False, 'NOTE':'Only for test'},
-                            definition=CRIMDefinition.objects.get(pk=3))
-    testobs.save()
+    testrel = CRIMRelationship(observer='Fred', relationship_type='Quotation',
+                            details={'exact' : True, 'monnayage' : False}, model_observation = CRIMObservation.objects.get(pk=11),
+                            derivative_observation = CRIMObservation.objects.get(pk=12),
+                            definition=CRIMDefinition.objects.get(pk=5))
+    testrel.save()
