@@ -1,6 +1,5 @@
 from django.db import models
 from django.db.models import JSONField
-import json
 
 # Create your models here.
 class CRIMObservation(models.Model):
