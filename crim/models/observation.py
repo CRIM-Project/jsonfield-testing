@@ -28,32 +28,33 @@ class CRIMObservation(models.Model):
 
     def save(self, *args, **kwargs):
         typename = str(self.musical_type).lower()
-        print(typename)
-        print('lower success')
         def_dict = self.definition.observation_definition
         typelist = def_dict['musical_types']
-        print(def_dict)
-        print(typelist)
         if typename in typelist:
-            print('passed if 1')
             valid_sub = False
+            no_validation_needed = False #for type with no required subfields for now
             allowed_subtypes = []
             curr_subtypes = sorted(list(self.details.keys()))
             
-            print(curr_subtypes)
             if typename == 'fuga':
                 allowed_subtypes = sorted(list(def_dict['fg_subtypes']))
             elif typename == 'cadence':
                 allowed_subtypes = sorted(list(def_dict['cad_subtypes']))
             elif typename == 'homorhythm':
                 allowed_subtypes = sorted(list(def_dict['hr_subtypes']))
-            #TODO: make defs, add more types 
+            elif typename == 'periodic entry':
+                allowed_subtypes = sorted(list(def_dict['pe_subtypes']))
+            elif typename == 'imitative duo':
+                allowed_subtypes = sorted(list(def_dict['id_subtypes']))
+            elif typename == 'non-imitative duo':
+                allowed_subtypes = sorted(list(def_dict['nid_subtypes']))
+            else:
+                no_validation_needed = True
 
-            print(allowed_subtypes)
             if curr_subtypes == allowed_subtypes:
                 valid_sub = True
            
-            if valid_sub:
+            if valid_sub or no_validation_needed:
                 print('validated. saving...')
                 self.definition.save()
                 super(CRIMObservation, self).save(*args, **kwargs)
