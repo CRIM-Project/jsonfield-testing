@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 from crim.forms.relationship import RelationshipForm
+from crim.models.definition import CRIMDefinition
 
 def get_relationship(request):
     # if this is a POST request we need to process the form data

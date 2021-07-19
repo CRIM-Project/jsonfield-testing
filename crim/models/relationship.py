@@ -40,7 +40,7 @@ class CRIMRelationship(models.Model):
     details = JSONField(null=True) 
 
     def __str__(self):
-        return self.relationship_type
+        return str(self.pk)
 
     def save(self, *args, **kwargs):
 

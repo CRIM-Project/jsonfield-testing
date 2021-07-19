@@ -13,4 +13,4 @@ class CRIMDefinition(models.Model):
     
 
     def __str__(self):
-        return self
+        return str(self.pk)

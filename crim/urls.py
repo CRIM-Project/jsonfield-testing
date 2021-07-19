@@ -20,7 +20,7 @@ urlpatterns = [
     path('data/definitions/', DefinitionListJSON.as_view(), name='crimdefinition-list-json'),
     path('data/definitions/<int:pk>/', DefinitionDetailJSON.as_view(), name='crimdefinition-detail-json'),
 
-    path('forms/relationship', get_relationship, name='relationshio-form'),
+    path('forms/relationship/', get_relationship, name='relationship-form'),
     path('', api_root, name='home-view'),
 ]
 

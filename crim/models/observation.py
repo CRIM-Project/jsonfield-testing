@@ -23,7 +23,7 @@ class CRIMObservation(models.Model):
     )
 
     def __str__(self):
-        return self.musical_type
+        return str(self.pk)
 
     def save(self, *args, **kwargs):
         typename = str(self.musical_type).lower()
