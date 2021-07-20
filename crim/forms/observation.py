@@ -21,8 +21,12 @@ for type in allowed_types:
 
 class ObservationForm(forms.ModelForm):
     #piece = forms.ChoiceField(choices=PIECE_CHOICES)
-    musical_type = forms.ChoiceField(choices=MUSICAL_TYPE_CHOICES)
+    #musical_type = forms.ChoiceField(choices=MUSICAL_TYPE_CHOICES)
 
     class Meta:
         model = CRIMObservation
         fields=['observer', 'details', "definition"]
+
+    def __init__(self, *args, **kwargs):
+        super(ObservationForm, self).__init__(*args, **kwargs)
+        self.fields['musical_type'] = forms.ChoiceField(choices=MUSICAL_TYPE_CHOICES)

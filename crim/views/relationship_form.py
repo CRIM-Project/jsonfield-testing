@@ -19,3 +19,6 @@ def get_relationship(request):
         form = RelationshipForm()
 
     return render(request, 'relationship_form.html', context={'form': form})
+
+#def load_subtypes(request):
+    
