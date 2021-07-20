@@ -4,6 +4,7 @@ from crim.views.observation import ObservationList, ObservationDetail, api_root,
 from crim.views.relationship import RelationshipList, RelationshipDetail, RelationshipListJSON, RelationshipDetailJSON
 from crim.views.definition import DefinitionList, DefinitionDetail, DefinitionListJSON, DefinitionDetailJSON
 from crim.views.relationship_form import get_relationship
+from crim.views.observation_form import get_observation
 urlpatterns = [
     path('observations/', ObservationList.as_view(), name='crimobservation-list'),
     path('observations/<int:pk>/', ObservationDetail.as_view(), name='crimobservation-detail'),
@@ -21,6 +22,7 @@ urlpatterns = [
     path('data/definitions/<int:pk>/', DefinitionDetailJSON.as_view(), name='crimdefinition-detail-json'),
 
     path('forms/relationship/', get_relationship, name='relationship-form'),
+    path('forms/observation/', get_observation, name='observation-form'),
     path('', api_root, name='home-view'),
 ]
 
