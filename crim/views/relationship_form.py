@@ -20,5 +20,6 @@ def get_relationship(request):
 
     return render(request, 'relationship_form.html', context={'form': form})
 
-#def load_subtypes(request):
+#TODO turn details to jsonfield input 
+#ajax for form after type selection
     

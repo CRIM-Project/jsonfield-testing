@@ -30,6 +30,8 @@ class RelationshipForm(forms.ModelForm):
         super(RelationshipForm, self).__init__(*args, **kwargs)
         self.fields['relationship_type'] = forms.ChoiceField(choices=RELATIONSHIP_TYPE_CHOICES)
         
+        # jsonfield widget for details 
+        # OR pop up subfields true/false select
 
         
         
