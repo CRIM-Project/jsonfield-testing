@@ -50,7 +50,10 @@ class CRIMRelationship(models.Model):
         if self.model_observation.musical_type and self.derivative_observation.musical_type:
             mt1 = self.model_observation.musical_type
             mt2 = self.derivative_observation.musical_type
-            self.musical_type = mt1 + ', ' + mt2
+            if not mt1 == mt2:
+                self.musical_type = mt1 + ', ' + mt2
+            else:
+                self.musical_type = mt1
         elif self.model_observation.musical_type:
             self.musical_type = self.model_observation.musical_type
         elif self.derivative_observation.musical_type:
@@ -58,6 +61,7 @@ class CRIMRelationship(models.Model):
 
         #Validation for model instance pre-save
         rtypename = str(self.relationship_type).lower()
+        print(rtypename)
         def_dict = self.definition.relationship_definition
         if rtypename in def_dict:
             valid_sub = False

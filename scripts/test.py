@@ -3,8 +3,13 @@ from crim.models.observation import CRIMObservation
 from crim.models.relationship import CRIMRelationship
 
 def run():
-    testrel = CRIMRelationship(observer='Fred', relationship_type='Quotation',
-                            details={'exact' : True, 'monnayage' : False}, model_observation = CRIMObservation.objects.get(pk=11),
-                            derivative_observation = CRIMObservation.objects.get(pk=12),
+    testobs1 = CRIMObservation(observer='Evan', musical_type='Fuga',
+                            details={'periodic':False, 'strict':False, 'flexed':False, 'sequential':False, 'inverted':False, 'retrograde':False}, 
                             definition=CRIMDefinition.objects.get(pk=5))
-    testrel.save()
+    testobs1.save()
+
+    testobs2 = CRIMObservation(observer='Dean', musical_type='Fuga',
+                            details={'periodic':False, 'strict':True, 'flexed':False, 'sequential':False, 'inverted':False, 'retrograde':False}, 
+                            definition=CRIMDefinition.objects.get(pk=5))
+
+    testobs2.save()

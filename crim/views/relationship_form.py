@@ -5,10 +5,13 @@ from crim.forms.relationship import RelationshipForm
 from crim.models.definition import CRIMDefinition
 
 def get_relationship(request):
+    #test json
+    json = {'exact': False,
+            'monnayage' : False}
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = RelationshipForm(request.POST)
+        form = RelationshipForm(request.POST, initial={'details': json})
         # check whether it's valid:
         if form.is_valid():
             form.save()
