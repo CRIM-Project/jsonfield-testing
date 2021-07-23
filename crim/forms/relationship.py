@@ -18,7 +18,7 @@ allowed_types = list(set_definition.relationship_definition.keys())
 RELATIONSHIP_TYPE_CHOICES = []
 strkey = ''
 for type in allowed_types:
-    strkey = str(type)
+    strkey = str(type).capitalize()
     RELATIONSHIP_TYPE_CHOICES.append((strkey, type))
 
 class RelationshipForm(forms.ModelForm):
@@ -35,7 +35,7 @@ class RelationshipForm(forms.ModelForm):
         self.fields['derivative_observation'] = forms.ModelChoiceField(queryset=CRIMObservation.objects.all(), widget=forms.NumberInput, required=True)
         
         #attrs = {'class':'special', 'size':'40'}
-        #self.fields['details'] = forms.CharField(widget=SplitJSONWidget())
+        self.fields['details'] = forms.CharField(widget=SplitJSONWidget())
 
         # default def = 5, hide in template
         # jsonfield widget for details 

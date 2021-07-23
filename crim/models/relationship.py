@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import JSONField
+import json
 
 # Create your models here.
 class CRIMRelationship(models.Model):
@@ -61,12 +62,13 @@ class CRIMRelationship(models.Model):
 
         #Validation for model instance pre-save
         rtypename = str(self.relationship_type).lower()
-        print(rtypename)
         def_dict = self.definition.relationship_definition
         if rtypename in def_dict:
             valid_sub = False
             allowed_subtypes = sorted(list(def_dict[rtypename]))
-            curr_subtypes = sorted(list(self.details.keys()))
+            sub_dict = json.loads(self.details)
+            curr_subtypes = sorted(list(sub_dict.keys()))
+            
             if allowed_subtypes == []:
                 valid_sub = True
             elif curr_subtypes == allowed_subtypes:
