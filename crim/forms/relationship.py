@@ -1,15 +1,15 @@
 from django import forms
-from splitjson.widgets import SplitJSONWidget
+#from splitjson.widgets import SplitJSONWidget
 from crim.models.relationship import CRIMRelationship
 from crim.models.definition import CRIMDefinition
 from crim.models.observation import CRIMObservation
 
-PIECE_CHOICES = (
-    ('1', 'Piece 1'),
-    ('2', 'Piece 2'),
-    ('3', 'Piece 3'),
-    ('4', 'Piece 4'),
-)
+#PIECE_CHOICES = (
+#    ('1', 'Piece 1'),
+#    ('2', 'Piece 2'),
+#    ('3', 'Piece 3'),
+#    ('4', 'Piece 4'),
+#)
 
 #Set to definition 5
 set_definition = CRIMDefinition.objects.get(pk=5)
@@ -19,7 +19,7 @@ RELATIONSHIP_TYPE_CHOICES = []
 strkey = ''
 for type in allowed_types:
     strkey = str(type).capitalize()
-    RELATIONSHIP_TYPE_CHOICES.append((strkey, type))
+    RELATIONSHIP_TYPE_CHOICES.append((strkey, strkey))
 
 class RelationshipForm(forms.ModelForm):
     #piece = forms.ChoiceField(choices=PIECE_CHOICES)
@@ -35,7 +35,7 @@ class RelationshipForm(forms.ModelForm):
         self.fields['derivative_observation'] = forms.ModelChoiceField(queryset=CRIMObservation.objects.all(), widget=forms.NumberInput, required=True)
         
         #attrs = {'class':'special', 'size':'40'}
-        self.fields['details'] = forms.CharField(widget=SplitJSONWidget())
+        #self.fields['details'] = forms.CharField(widget=SplitJSONWidget())
 
         # default def = 5, hide in template
         # jsonfield widget for details 
