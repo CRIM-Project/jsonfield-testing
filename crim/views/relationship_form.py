@@ -8,6 +8,12 @@ def get_relationship(request):
     #test json
     json = {"exact": False,
             "monnayage" : False}
+    #get list of relationship types for display
+    curr_def = CRIMDefinition.objects.get(pk=5)
+    curr_types = list(curr_def.relationship_definition)
+    first_type = curr_types[0]
+    other_types = curr_types[1:]
+
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -21,7 +27,6 @@ def get_relationship(request):
     else:
         form = RelationshipForm(initial={"details" : json})
 
-    return render(request, 'relationship_form.html', context={'form': form})
+    return render(request, 'relationship_form.html', context={'form': form, 'first_type': first_type, 'other_types': other_types})
  
-#ajax for form after type selection
     
