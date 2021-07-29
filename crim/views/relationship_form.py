@@ -6,12 +6,15 @@ from crim.forms.relationship import RelationshipForm
 from crim.models.definition import CRIMDefinition
 
 def get_relationship(request):
-    curr_def = CRIMDefinition.objects.get(pk=5)
+    curr_def = CRIMDefinition.objects.get(pk=6)
     curr_types = list(curr_def.relationship_definition)
     first_type = curr_types[0]
     other_types = curr_types[1:]
-    qt_details = list(curr_def.relationship_definition[first_type])
-
+    first_details = list(curr_def.relationship_definition[first_type].keys())
+    #['test1', 'test2']
+    first_detail_type = str(curr_def.relationship_definition[first_type]['test1'])
+    #boolean
+    
     subtype_dict = curr_def.relationship_definition
 
     # if this is a POST request we need to process the form data
@@ -31,7 +34,8 @@ def get_relationship(request):
                 context={'form': form, 
                         'first_type': first_type, 
                         'other_types': other_types, 
-                        'qt_details': qt_details,
+                        'first_details': first_details,
+                        'first_detail_type': first_detail_type,
                         'curr_types': curr_types,
                         'subtype_dict': subtype_dict, 
                         'curr_def': curr_def})

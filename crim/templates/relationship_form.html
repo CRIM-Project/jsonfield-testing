@@ -32,7 +32,7 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
 
-                    <div class="tab-pane container active" id="{{ first_type }}">
+                    <div class="tab-pane container active" id="a">
                         <p><br><i>Pick the details for this type</i></p>
                         <div class="checkboxlist"></div>
                     </div>
@@ -64,15 +64,15 @@
             {{ subtype_dict|lookup:subtype|json_script:subtype}}
         {% endfor %}
 
-        {{ qt_details|json_script:"qt_details" }}
+        {{ first_details|json_script:"first_details" }}
         <script>
-            const data = JSON.parse(document.getElementById('qt_details').textContent);
+            const data = JSON.parse(document.getElementById('first_details').textContent);
             $.each(data, function(index){
                 $('.checkboxlist')
                 .append("<div class='form-check'> <input class='form-check-input' type='checkbox' value='" + data[index] + "' id='" + data[index] + "'> <label class='form-check-label' for='" + data[index] + "'>" + data[index] + "</label></div>");
             });
 
-            const other_data = JSON.parse(document.getElementById('omission').textContent);
+            const other_data = JSON.parse(document.getElementById('quotation').textContent);
             $.each(other_data, function(index){
                 $('.checkboxlists')
                 .append("<div class='form-check'> <input class='form-check-input' type='checkbox' value='" + data[index] + "' id='" + data[index] + "'> <label class='form-check-label' for='" + data[index] + "'>" + data[index] + "</label></div>");

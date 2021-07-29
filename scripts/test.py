@@ -14,8 +14,8 @@ def run():
     #testobs2.save()
 
     testdef = CRIMDefinition(observation_definition={}, 
-                            derivative_observation={"mechanical transformation": {},
+                            relationship_definition={"mechanical transformation": {"test1": "boolean", "test2": "text"},
                             "new material": {}, "non-mechanical transformation": {},
-                            "omission": {}, "quotation": {"exact":"boolean", "monnayage":"boolean"}})
+                            "omission": {"test1":"boolean", "test2":"boolean"}, "quotation": {"exact":"boolean", "monnayage":"boolean"}})
 
     testdef.save()
