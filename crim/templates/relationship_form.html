@@ -89,6 +89,7 @@
         {{ qt_details_type|json_script:"qt_details_type"}}
 
         <script>
+
             const mt_key = JSON.parse(document.getElementById('mt_details').textContent);
             const mt_value = JSON.parse(document.getElementById('mt_details_type').textContent);
             $.each(mt_key, function(i){
@@ -155,8 +156,6 @@
             });
 
         </script>
-
-        
 
     </body>
 </html>
