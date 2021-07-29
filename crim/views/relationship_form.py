@@ -13,6 +13,8 @@ def get_relationship(request):
     curr_types = list(curr_def.relationship_definition)
     first_type = curr_types[0]
     other_types = curr_types[1:]
+    qt_details = list(curr_def.relationship_definition[first_type])
+
 
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -27,6 +29,7 @@ def get_relationship(request):
     else:
         form = RelationshipForm(initial={"details" : json})
 
-    return render(request, 'relationship_form.html', context={'form': form, 'first_type': first_type, 'other_types': other_types})
+    return render(request, 'relationship_form.html', 
+                context={'form': form, 'first_type': first_type, 'other_types': other_types, 'qt_details': qt_details, 'curr_def': curr_def})
  
     

@@ -9,6 +9,7 @@
     </head>
     <body>
         {% load crispy_forms_tags %}
+        
         <div class="shadow-none p-4 mt-4 mb-4 bg-light">
             <div class="text-center">
                 <h1>Create a relationship instance</h1>
@@ -18,33 +19,31 @@
             <div class="shadow-none p-4 mb-4 bg-light">
                 <div class="row-sm">{{form.observer|as_crispy_field}}</div>
                 <div class="row-sm">{{form.relationship_type|as_crispy_field}}</div>
-                <div class="row-sm">{{form.details|as_crispy_field}}</div>
                 
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs">
                     <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#a">{{ first_type.capitalize }}</a></li>
                     {% for relatype in other_types %}
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#">{{ relatype.capitalize }}</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#b">{{ relatype.capitalize }}</a></li>
                     {% endfor %}
                 </ul>
   
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div class="tab-pane container active" id="a">
-                        <p><br><i>Pick the subtypes for this type</i></p>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="st1">
-                            <label class="form-check-label" for="st1">
-                            Exact
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="st2">
-                            <label class="form-check-label" for="st2">
-                            Monnayage
-                            </label>
-                        </div>
+                        <p><br><i>Pick the details for this type</i></p>
+
+                        <script>
+                            var data = ["exact","monnayage"]
+                            $.each(data, function(index){
+                                $('.checkboxlist')
+                                .append("<div class='form-check'> <input class='form-check-input' type='checkbox' value='" + data[index] + "' id='" + data[index] + "'/> <label class='form-check-label' for='details'>" + data[index] + "</label></div>");
+                            });
+                        </script>
+                        <div class="checkboxlist"></div>
+
                     </div>
+                
                     <div class="tab-pane container fade" id="b">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
@@ -53,14 +52,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="tab-pane container fade" id="c">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            <label class="form-check-label" for="defaultCheck1">
-                              Default checkbox
-                            </label>
-                        </div>
-                    </div>
+
                 </div>
                 <p></p>
                 <div class="row">
