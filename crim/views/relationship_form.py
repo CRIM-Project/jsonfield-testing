@@ -12,8 +12,9 @@ def get_relationship(request):
     other_types = curr_types[1:]
     first_details = list(curr_def.relationship_definition[first_type].keys())
     #['test1', 'test2']
-    first_detail_type = str(curr_def.relationship_definition[first_type]['test1'])
-    #boolean
+    first_details_type = list(curr_def.relationship_definition[first_type].values())
+    #['boolean', 'text']
+    
     
     subtype_dict = curr_def.relationship_definition
 
@@ -35,7 +36,7 @@ def get_relationship(request):
                         'first_type': first_type, 
                         'other_types': other_types, 
                         'first_details': first_details,
-                        'first_detail_type': first_detail_type,
+                        'first_details_type': first_details_type,
                         'curr_types': curr_types,
                         'subtype_dict': subtype_dict, 
                         'curr_def': curr_def})

@@ -34,7 +34,7 @@
 
                     <div class="tab-pane container active" id="a">
                         <p><br><i>Pick the details for this type</i></p>
-                        <div class="checkboxlist"></div>
+                        <div class="mt"></div>
                     </div>
                 
                     <div class="tab-pane container fade" id="b">
@@ -65,11 +65,19 @@
         {% endfor %}
 
         {{ first_details|json_script:"first_details" }}
+        {{ first_details_type|json_script:"first_details_type"}}
         <script>
-            const data = JSON.parse(document.getElementById('first_details').textContent);
-            $.each(data, function(index){
-                $('.checkboxlist')
-                .append("<div class='form-check'> <input class='form-check-input' type='checkbox' value='" + data[index] + "' id='" + data[index] + "'> <label class='form-check-label' for='" + data[index] + "'>" + data[index] + "</label></div>");
+            const outer = JSON.parse(document.getElementById('first_details').textContent);
+            const inner = JSON.parse(document.getElementById('first_details_type').textContent);
+            $.each(outer, function(i){
+                if (inner[i] == 'boolean') {
+                    $('.mt')
+                    .append("<div class='form-check'> <input class='form-check-input' type='checkbox' value='" + outer[i] + "' id='" + outer[i] + "'> <label class='form-check-label' for='" + outer[i] + "'>" + outer[i] + "</label></div>");
+                }
+                else {
+                    $('.mt')
+                    .append("<div class='form-group'> <label for='" + inner[i] + "'>" + outer[i] + "</label> <textarea class='form-control' id='" + inner[i] + "' rows='1'></textarea></div>");
+                }
             });
 
             const other_data = JSON.parse(document.getElementById('quotation').textContent);
