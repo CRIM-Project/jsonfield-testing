@@ -69,6 +69,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries':{
+                'dict_lookup': 'crim.templatetags.dict_lookup'
+            }
         },
     },
 ]
