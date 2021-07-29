@@ -17,8 +17,8 @@ def get_relationship(request):
     nmt_details_type = list(curr_def.relationship_definition['non-mechanical transformation'].values())
     om_details = list(curr_def.relationship_definition['omission'].keys())
     om_details_type = list(curr_def.relationship_definition['omission'].values())
-    qt_details = list(curr_def.relationship_definition['omission'].keys())
-    qt_details_type = list(curr_def.relationship_definition['omission'].values())
+    qt_details = list(curr_def.relationship_definition['quotation'].keys())
+    qt_details_type = list(curr_def.relationship_definition['quotation'].values())
 
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
