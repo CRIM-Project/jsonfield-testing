@@ -7,16 +7,18 @@ from crim.models.definition import CRIMDefinition
 
 def get_relationship(request):
     curr_def = CRIMDefinition.objects.get(pk=6)
-    curr_types = list(curr_def.relationship_definition)
-    first_type = curr_types[0]
-    other_types = curr_types[1:]
-    first_details = list(curr_def.relationship_definition[first_type].keys())
-    #['test1', 'test2']
-    first_details_type = list(curr_def.relationship_definition[first_type].values())
-    #['boolean', 'text']
+    #curr_types = list(curr_def.relationship_definition)
     
-    
-    subtype_dict = curr_def.relationship_definition
+    mt_details = list(curr_def.relationship_definition['mechanical transformation'].keys())
+    mt_details_type = list(curr_def.relationship_definition['mechanical transformation'].values())
+    nm_details = list(curr_def.relationship_definition['new material'].keys())
+    nm_details_type = list(curr_def.relationship_definition['new material'].values())
+    nmt_details = list(curr_def.relationship_definition['non-mechanical transformation'].keys())
+    nmt_details_type = list(curr_def.relationship_definition['non-mechanical transformation'].values())
+    om_details = list(curr_def.relationship_definition['omission'].keys())
+    om_details_type = list(curr_def.relationship_definition['omission'].values())
+    qt_details = list(curr_def.relationship_definition['omission'].keys())
+    qt_details_type = list(curr_def.relationship_definition['omission'].values())
 
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -33,12 +35,16 @@ def get_relationship(request):
 
     return render(request, 'relationship_form.html', 
                 context={'form': form, 
-                        'first_type': first_type, 
-                        'other_types': other_types, 
-                        'first_details': first_details,
-                        'first_details_type': first_details_type,
-                        'curr_types': curr_types,
-                        'subtype_dict': subtype_dict, 
-                        'curr_def': curr_def})
+                        'mt_details': mt_details,
+                        'mt_details_type': mt_details_type,
+                        'nm_details': nm_details,
+                        'nm_details_type': nm_details_type,
+                        'nmt_details': nmt_details,
+                        'nmt_details_type': nmt_details_type,
+                        'om_details': om_details,
+                        'om_details_type': om_details_type,
+                        'qt_details': qt_details,
+                        'qt_details_type': qt_details_type,
+                        })
  
     

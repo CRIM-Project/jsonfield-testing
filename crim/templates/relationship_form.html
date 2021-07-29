@@ -23,23 +23,39 @@
                 
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs">
-                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#a">{{ first_type.capitalize }}</a></li>
-                    {% for relatype in other_types %}
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#b">{{ relatype.capitalize }}</a></li>
-                    {% endfor %}
+                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#mt"> Mechanical transformation </a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nm"> New material </a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nmt"> Non-mechanical transformation</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#om"> Omission </a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#qt"> Quotation </a></li>
                 </ul>
   
                 <!-- Tab panes -->
                 <div class="tab-content">
 
-                    <div class="tab-pane container active" id="a">
-                        <p><br><i>Pick the details for this type</i></p>
+                    <div class="tab-pane container active" id="mt">
+                        <p><br><i>Pick the details for type Mechanical transformation</i></p>
                         <div class="mt"></div>
                     </div>
                 
-                    <div class="tab-pane container fade" id="b">
-                        <p><br><i>Pick the details for this type</i></p>
-                        <div class="checkboxlists"></div>
+                    <div class="tab-pane container fade" id="nm">
+                        <p><br><i>Pick the details for type New material</i></p>
+                        <div class="nm"></div>
+                    </div>
+
+                    <div class="tab-pane container fade" id="nmt">
+                        <p><br><i>Pick the details for type Non-mechanical transformation</i></p>
+                        <div class="nmt"></div>
+                    </div>
+
+                    <div class="tab-pane container fade" id="om">
+                        <p><br><i>Pick the details for type Omission</i></p>
+                        <div class="om"></div>
+                    </div>
+
+                    <div class="tab-pane container fade" id="qt">
+                        <p><br><i>Pick the details for type Quotation</i></p>
+                        <div class="qt"></div>
                     </div>
 
                 </div>
@@ -49,7 +65,7 @@
                     <div class="col-sm">{{form.derivative_observation|as_crispy_field}}</div>
                 </div>
                 <div class="row-sm">{{form.definition|as_crispy_field}}</div>
-                <input type="submit" value="Submit">
+                <input class="btn btn-primary" type="submit" value="Submit">
             </form>
         </div>
 
@@ -60,30 +76,82 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     
-        {% for subtype in other_types %}
-            {{ subtype_dict|lookup:subtype|json_script:subtype}}
-        {% endfor %}
 
-        {{ first_details|json_script:"first_details" }}
-        {{ first_details_type|json_script:"first_details_type"}}
+        {{ mt_details|json_script:"mt_details" }}
+        {{ mt_details_type|json_script:"mt_details_type"}}
+        {{ nm_details|json_script:"nm_details" }}
+        {{ nm_details_type|json_script:"nm_details_type"}}
+        {{ nmt_details|json_script:"nmt_details" }}
+        {{ nmt_details_type|json_script:"nmt_details_type"}}
+        {{ om_details|json_script:"om_details" }}
+        {{ om_details_type|json_script:"om_details_type"}}
+        {{ qt_details|json_script:"qt_details" }}
+        {{ qt_details_type|json_script:"qt_details_type"}}
+
         <script>
-            const outer = JSON.parse(document.getElementById('first_details').textContent);
-            const inner = JSON.parse(document.getElementById('first_details_type').textContent);
-            $.each(outer, function(i){
-                if (inner[i] == 'boolean') {
+            const mt_key = JSON.parse(document.getElementById('mt_details').textContent);
+            const mt_value = JSON.parse(document.getElementById('mt_details_type').textContent);
+            $.each(mt_key, function(i){
+                if (mt_value[i] == 'boolean') {
                     $('.mt')
-                    .append("<div class='form-check'> <input class='form-check-input' type='checkbox' value='" + outer[i] + "' id='" + outer[i] + "'> <label class='form-check-label' for='" + outer[i] + "'>" + outer[i] + "</label></div>");
+                    .append("<div class='form-check'> <input class='form-check-input' type='checkbox' value='" + mt_key[i] + "' id='" + "mt" + mt_key[i] + "'> <label class='form-check-label' for='" + "mt" + mt_key[i] + "'>" + mt_key[i] + "</label></div>");
                 }
                 else {
                     $('.mt')
-                    .append("<div class='form-group'> <label for='" + inner[i] + "'>" + outer[i] + "</label> <textarea class='form-control' id='" + inner[i] + "' rows='1'></textarea></div>");
+                    .append("<div class='form-group'> <label for='" + "mt" + mt_value[i] + "'>" + mt_key[i] + "</label> <textarea class='form-control' id='" + "mt" + mt_key[i] + "' rows='1'></textarea></div>");
                 }
             });
 
-            const other_data = JSON.parse(document.getElementById('quotation').textContent);
-            $.each(other_data, function(index){
-                $('.checkboxlists')
-                .append("<div class='form-check'> <input class='form-check-input' type='checkbox' value='" + data[index] + "' id='" + data[index] + "'> <label class='form-check-label' for='" + data[index] + "'>" + data[index] + "</label></div>");
+            const nm_key = JSON.parse(document.getElementById('nm_details').textContent);
+            const nm_value = JSON.parse(document.getElementById('nm_details_type').textContent);
+            $.each(nm_key, function(i){
+                if (nm_value[i] == 'boolean') {
+                    $('.nm')
+                    .append("<div class='form-check'> <input class='form-check-input' type='checkbox' value='" + nm_key[i] + "' id='" + "nm" + nm_key[i] + "'> <label class='form-check-label' for='" + "nm" + nm_key[i] + "'>" + nm_key[i] + "</label></div>");
+                }
+                else {
+                    $('.nm')
+                    .append("<div class='form-group'> <label for='" + "nm" + nm_value[i] + "'>" + nm_key[i] + "</label> <textarea class='form-control' id='" + "nm" + nm_key[i] + "' rows='1'></textarea></div>");
+                }
+            });
+
+            const nmt_key = JSON.parse(document.getElementById('nmt_details').textContent);
+            const nmt_value = JSON.parse(document.getElementById('nmt_details_type').textContent);
+            $.each(nmt_key, function(i){
+                if (nmt_value[i] == 'boolean') {
+                    $('.nmt')
+                    .append("<div class='form-check'> <input class='form-check-input' type='checkbox' value='" + nmt_key[i] + "' id='" + "nmt" + nmt_key[i] + "'> <label class='form-check-label' for='" + "nmt" + nmt_key[i] + "'>" + nmt_key[i] + "</label></div>");
+                }
+                else {
+                    $('.nmt')
+                    .append("<div class='form-group'> <label for='" + "nmt" + nmt_value[i] + "'>" + nmt_key[i] + "</label> <textarea class='form-control' id='" + "nmt" + nmt_key[i] + "' rows='1'></textarea></div>");
+                }
+            });
+
+            const om_key = JSON.parse(document.getElementById('om_details').textContent);
+            const om_value = JSON.parse(document.getElementById('om_details_type').textContent);
+            $.each(om_key, function(i){
+                if (om_value[i] == 'boolean') {
+                    $('.om')
+                    .append("<div class='form-check'> <input class='form-check-input' type='checkbox' value='" + om_key[i] + "' id='" + "om" + om_key[i] + "'> <label class='form-check-label' for='" + "om" + om_key[i] + "'>" + om_key[i] + "</label></div>");
+                }
+                else {
+                    $('.om')
+                    .append("<div class='form-group'> <label for='" + "om" + om_value[i] + "'>" + om_key[i] + "</label> <textarea class='form-control' id='" + "om" + om_key[i] + "' rows='1'></textarea></div>");
+                }
+            });
+
+            const qt_key = JSON.parse(document.getElementById('qt_details').textContent);
+            const qt_value = JSON.parse(document.getElementById('qt_details_type').textContent);
+            $.each(qt_key, function(i){
+                if (qt_value[i] == 'boolean') {
+                    $('.qt')
+                    .append("<div class='form-check'> <input class='form-check-input' type='checkbox' value='" + qt_key[i] + "' id='" + "qt" + qt_key[i] + "'> <label class='form-check-label' for='" + "qt" + qt_key[i] + "'>" + qt_key[i] + "</label></div>");
+                }
+                else {
+                    $('.qt')
+                    .append("<div class='form-group'> <label for='" + "qt" + qt_value[i] + "'>" + qt_key[i] + "</label> <textarea class='form-control' id='" + "qt" + qt_key[i] + "' rows='1'></textarea></div>");
+                }
             });
 
         </script>
