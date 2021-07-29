@@ -28,6 +28,8 @@ def get_relationship(request):
         if form.is_valid():
             form.save()
             return HttpResponse('Your relationship instance is saved')
+        else:
+            return HttpResponse('Something is wrong with your input. Try again')
 
     # if a GET (or any other method) we'll create a blank form
     else:
