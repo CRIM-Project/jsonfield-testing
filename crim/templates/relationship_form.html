@@ -147,12 +147,17 @@
             $.each(qt_key, function(i){
                 if (qt_value[i] == 'boolean') {
                     $('.qt')
-                    .append("<div class='form-check'> <input class='form-check-input' type='checkbox' name='" + qt_key[i] + "' value='" + qt_key[i] + "' id='" + "qt" + qt_key[i] + "'> <label class='form-check-label' for='" + "qt" + qt_key[i] + "'>" + qt_key[i] + "</label></div>");
+                    .append("<div class='form-check'> <input class='qt_checkbox' type='checkbox' name='" + qt_key[i] + "' value='" + qt_key[i] + "' id='" + "qt" + qt_key[i] + "'> <label class='form-check-label' for='" + "qt" + qt_key[i] + "'>" + qt_key[i] + "</label></div>");
                 }
                 else {
                     $('.qt')
                     .append("<div class='form-group'> <label for='" + "qt" + qt_value[i] + "'>" + qt_key[i] + "</label> <textarea class='form-control' id='" + "qt" + qt_key[i] + "' rows='1'></textarea></div>");
                 }
+            });
+
+            
+            $('.qt_checkbox').on('change', function() {
+                $('.qt_checkbox').not(this).prop('checked', false);
             });
             
         </script>
