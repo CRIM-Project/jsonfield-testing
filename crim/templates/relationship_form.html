@@ -3,14 +3,14 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!--Bootstrap CSS-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
     <body>
         {% load crispy_forms_tags %}
         {% load dict_lookup %}
-        
+
         <div class="shadow-none p-4 mt-4 mb-4 bg-light">
             <div class="text-center">
                 <h1>Create a relationship instance</h1>
@@ -69,13 +69,13 @@
             </form>
         </div>
 
-        
+
 
         <!-- Optional Javascript -->
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    
+
 
         {{ mt_details|json_script:"mt_details" }}
         {{ mt_details_type|json_script:"mt_details_type"}}
@@ -89,7 +89,7 @@
         {{ qt_details_type|json_script:"qt_details_type"}}
 
         <script>
-        
+
             const mt_key = JSON.parse(document.getElementById('mt_details').textContent);
             const mt_value = JSON.parse(document.getElementById('mt_details_type').textContent);
             $.each(mt_key, function(i){
@@ -102,9 +102,9 @@
                     .append("<div class='form-group'> <label for='" + "mt" + mt_value[i] + "'>" + mt_key[i] + "</label> <textarea class='form-control' id='" + "mt" + mt_key[i] + "' rows='1'></textarea></div>");
                 }
             });
-      
 
-        
+
+
             const nm_key = JSON.parse(document.getElementById('nm_details').textContent);
             const nm_value = JSON.parse(document.getElementById('nm_details_type').textContent);
             $.each(nm_key, function(i){
@@ -117,9 +117,9 @@
                     .append("<div class='form-group'> <label for='" + "nm" + nm_value[i] + "'>" + nm_key[i] + "</label> <textarea class='form-control' id='" + "nm" + nm_key[i] + "' rows='1'></textarea></div>");
                 }
             });
-        
 
-       
+
+
             const nmt_key = JSON.parse(document.getElementById('nmt_details').textContent);
             const nmt_value = JSON.parse(document.getElementById('nmt_details_type').textContent);
             $.each(nmt_key, function(i){
@@ -132,9 +132,9 @@
                     .append("<div class='form-group'> <label for='" + "nmt" + nmt_value[i] + "'>" + nmt_key[i] + "</label> <textarea class='form-control' id='" + "nmt" + nmt_key[i] + "' rows='1'></textarea></div>");
                 }
             });
-        
 
-        
+
+
             const om_key = JSON.parse(document.getElementById('om_details').textContent);
             const om_value = JSON.parse(document.getElementById('om_details_type').textContent);
             $.each(om_key, function(i){
@@ -147,9 +147,9 @@
                     .append("<div class='form-group'> <label for='" + "om" + om_value[i] + "'>" + om_key[i] + "</label> <textarea class='form-control' id='" + "om" + om_key[i] + "' rows='1'></textarea></div>");
                 }
             });
-        
 
-        
+
+
             const qt_key = JSON.parse(document.getElementById('qt_details').textContent);
             const qt_value = JSON.parse(document.getElementById('qt_details_type').textContent);
             $.each(qt_key, function(i){
@@ -162,14 +162,14 @@
                     .append("<div class='form-group'> <label for='" + "qt" + qt_value[i] + "'>" + qt_key[i] + "</label> <textarea class='form-control' id='" + "qt" + qt_key[i] + "' rows='1'></textarea></div>");
                 }
             });
-        
 
-            
+
+
             $('.qt_checkbox').on('change', function() {
                 $('.qt_checkbox').not(this).prop('checked', false);
             });
-            
-            
+
+
             $(document).ready(function(){
                 $(".nav-tabs a").click(function(){
                     $(this).tab('show');

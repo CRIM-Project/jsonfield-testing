@@ -2,6 +2,8 @@ from django import forms
 from crim.models.observation import CRIMObservation
 from crim.models.definition import CRIMDefinition
 
+from crim.common import *
+
 PIECE_CHOICES = (
     ('1', 'Piece 1'),
     ('2', 'Piece 2'),
@@ -9,9 +11,7 @@ PIECE_CHOICES = (
     ('4', 'Piece 4'),
 )
 
-#Set to definition 5
-set_definition = CRIMDefinition.objects.get(pk=5)
-allowed_types = list(set_definition.observation_definition.keys())
+allowed_types = list(CURRENT_DEFINITION.observation_definition.keys())
 
 MUSICAL_TYPE_CHOICES = []
 i = 1
