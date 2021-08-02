@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import JSONField
+from crim.models.definition import CRIMDefinition
 
 # Create your models here.
 class CRIMObservation(models.Model):
@@ -13,9 +14,9 @@ class CRIMObservation(models.Model):
     observer = models.CharField(max_length=128, blank=True)
     musical_type = models.CharField(max_length=128, blank=True)
     details = JSONField(null=True)
-    
+
     definition = models.ForeignKey(
-        'CRIMDefinition',
+        CRIMDefinition,
         on_delete=models.CASCADE,
         db_index=True,
         related_name='definition',
@@ -36,7 +37,7 @@ class CRIMObservation(models.Model):
                 valid_sub = True
             elif curr_subtypes == allowed_subtypes:
                 valid_sub = True
-        
+
             if valid_sub:
                 print('validated. saving observation...')
                 self.definition.save()
