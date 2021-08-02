@@ -22,7 +22,7 @@ def get_relationship(request):
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = RelationshipForm(initial={"definition":"6"})
+        form = RelationshipForm()
 
     return render(request, 'relationship_form.html', 
                 context={'form': form, 
