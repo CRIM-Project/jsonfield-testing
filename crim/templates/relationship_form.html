@@ -19,8 +19,7 @@
             {% csrf_token %}
             <div class="shadow-none p-4 mb-4 bg-light">
                 <div class="row-sm">{{form.observer|as_crispy_field}}</div>
-                <div class="row-sm">{{form.relationship_type|as_crispy_field}}</div>
-                
+
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs">
                   {% for key, value in relationship_definition.items %}
