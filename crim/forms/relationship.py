@@ -27,7 +27,8 @@ class RelationshipForm(forms.ModelForm):
     class Meta:
         model = CRIMRelationship
         fields=['observer', 'relationship_type', 'details', 'model_observation', 'derivative_observation', "definition"]
-
+        widgets = {'definition': forms.HiddenInput()}
+        
     def __init__(self, *args, **kwargs):
         super(RelationshipForm, self).__init__(*args, **kwargs)
         self.fields['relationship_type'] = forms.ChoiceField(choices=RELATIONSHIP_TYPE_CHOICES)
