@@ -23,48 +23,25 @@
                 
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs">
-                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#mt"> Mechanical transformation </a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nm"> New material </a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nmt"> Non-mechanical transformation</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#om"> Omission </a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#qt"> Quotation </a></li>
+                  {% for key, value in relationship_definition.items %}
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#{{ key|slugify }}">{{ key }}</a></li>
+                  {% endfor %}
                 </ul>
-  
+
                 <!-- Tab panes -->
                 <div class="tab-content">
-
-                    <div class="tab-pane container active" id="mt">
-                        <p><br><i>Pick the details for type Mechanical transformation</i></p>
-                        <div class="mt"></div>
+                  {% for key, value in relationship_definition.items %}
+                    <div class="tab-pane container active" id="{{ key|slugify }}">
+                      {{ value }}
                     </div>
-                
-                    <div class="tab-pane container fade" id="nm">
-                        <p><br><i>Pick the details for type New material</i></p>
-                        <div class="nm"></div>
-                    </div>
-
-                    <div class="tab-pane container fade" id="nmt">
-                        <p><br><i>Pick the details for type Non-mechanical transformation</i></p>
-                        <div class="nmt"></div>
-                    </div>
-
-                    <div class="tab-pane container fade" id="om">
-                        <p><br><i>Pick the details for type Omission</i></p>
-                        <div class="om"></div>
-                    </div>
-
-                    <div class="tab-pane container fade" id="qt">
-                        <p><br><i>Pick the details for type Quotation</i></p>
-                        <div class="qt"></div>
-                    </div>
-
+                  {% endfor %}
                 </div>
                 <p></p>
                 <div class="row">
                     <div class="col-sm">{{form.model_observation|as_crispy_field}}</div>
                     <div class="col-sm">{{form.derivative_observation|as_crispy_field}}</div>
                 </div>
-                <div class="row-sm">{{form.definition|as_crispy_field}}</div>
+                <div class="row-sm">{{form.relationship_definition}}</div>
                 <input class="btn btn-primary" type="submit" name="Submit" value="Submit">
             </form>
         </div>

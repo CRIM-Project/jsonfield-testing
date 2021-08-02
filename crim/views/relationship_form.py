@@ -24,18 +24,7 @@ def get_relationship(request):
     else:
         form = RelationshipForm()
 
-    return render(request, 'relationship_form.html', 
-                context={'form': form, 
-                        'mt_details': mt_details,
-                        'mt_details_type': mt_details_type,
-                        'nm_details': nm_details,
-                        'nm_details_type': nm_details_type,
-                        'nmt_details': nmt_details,
-                        'nmt_details_type': nmt_details_type,
-                        'om_details': om_details,
-                        'om_details_type': om_details_type,
-                        'qt_details': qt_details,
-                        'qt_details_type': qt_details_type,
+    return render(request, 'relationship_form.html',
+                context={'form': form,
+                        'relationship_definition': CURRENT_DEFINITION.relationship_definition,
                         })
- 
-    
