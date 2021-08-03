@@ -5,6 +5,8 @@ import json
 from crim.forms.relationship import RelationshipForm
 from crim.models.definition import CRIMDefinition
 
+from crim.common import *
+
 def get_relationship(request):
     curr_def = CRIMDefinition.objects.get(pk=6)
     #curr_types = list(curr_def.relationship_definition)
@@ -46,7 +48,7 @@ def get_relationship(request):
                                         "model_observation": model_observation,
                                         "derivative_observation": derivative_observation,
                                         
-                                        "definition": 6})
+                                        })
 
         
 
@@ -60,7 +62,7 @@ def get_relationship(request):
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = RelationshipForm(initial={"definition": 6})
+        form = RelationshipForm()
 
     return render(request, 'relationship_form.html', 
                 context={'form': form, 
@@ -76,4 +78,7 @@ def get_relationship(request):
                         'qt_details_type': qt_details_type,
                         })
  
-    
+    return render(request, 'relationship_form.html',
+                context={'form': form,
+                        'relationship_definition': CURRENT_DEFINITION.relationship_definition,
+                        })
