@@ -15,7 +15,7 @@
             <div class="text-center">
                 <h1>Create a relationship instance</h1>
             </div>
-            <form method="post">
+            <form method="post" action="https://jsonplaceholder.typicode.com/users" id="form">
             {% csrf_token %}
             <div class="shadow-none p-4 mb-4 bg-light">
                 <div class="row-sm"> {{form.observer|as_crispy_field}}</div>
@@ -72,8 +72,8 @@
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"> </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <script>
             /*const mt_key = JSON.parse(document.getElementById('mt_details').textContent);
@@ -154,34 +154,48 @@
                 });
             }); 
 
-            //var serializeForm = function (form) {
-	        //    var obj = {};
-	        //    var formData = new FormData(form);
-	        //    for (var key of formData.keys()) {
-		    //        obj[key] = formData.get(key);
-	        //    }
-	        //    return obj;
-            //};
+            // GET ALL FORM INPUT AS JSON
+            const form = document.getElementById("form");
+            form.addEventListener("submit", handleFormSubmit)
+            
+            async function handleFormSubmit(event) {
+                event.preventDefault();
+                const form = event.currentTarget;
+                const url = form.action;
 
-            //var form = document.querySelector('form');
-            //var data = new FormData(form);
+                try {
+                    const formData = new FormData(form);
+                    const responseData = await postFormDataAsJson({ url, formData });
+                    
+                    console.log({ responseData });
+                } catch (error) {
+                    console.error(error);
+                }
+            }
 
-            //document.addEventListener('submit', function (event) {
-            //    event.preventDefault();
-            //    fetch('https://jsonplaceholder.typicode.com/posts', {
-		    //        method: 'POST',
-		    //        body: JSON.stringify(serializeForm(event.target)),
-	        //    }).then(function (response) {
-		    //        if (response.ok) {
-			//            return response.json();
-		    //        }
-		    //        return Promise.reject(response);
-	        //    }).then(function (data) {
-		    //        document.getElementById("demo").innerHTML = data;
-	        //    }).catch(function (error) {
-		    //        document.getElementById("demo").innerHTML = error;
-	        //    });
-            //});
+            async function postFormDataAsJson({ url, formData }) {
+                const plainFormData = Object.fromEntries(formData.entries());
+	            const formDataJsonString = JSON.stringify(plainFormData);
+
+                const fetchOptions = {
+                    method: "POST",
+                    headers: {
+			            "Content-Type": "application/json",
+			            "Accept": "application/json"
+                    },
+                    body: formDataJsonString,
+                };
+
+                const response = await fetch(url, fetchOptions);
+
+	            if (!response.ok) {
+		            const errorMessage = await response.text();
+		            throw new Error(errorMessage);
+	            }
+
+	            return response.json();
+
+            }
 
             
         </script>
