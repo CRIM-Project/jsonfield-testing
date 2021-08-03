@@ -25,16 +25,28 @@ def get_relationship(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = RelationshipForm(initial={"definition":"6"})
+        details_dict = {}
+        #form = RelationshipForm(initial={"definition":"6"})
         #form = RelationshipForm(request.POST, initial={"definition":"6"})
         observer = request.POST['observer']
-        print(observer)
         relationship_type = request.POST['relationship_type']
-        print(relationship_type)
+        model_observation = request.POST['model_observation']
+        derivative_observation = request.POST['derivative_observation']
+        type_dict = {'quotation' : 'qt', 
+                    'omission' : 'om', 
+                    'new material' : 'nm', 
+                    'non-mechanical transformation' : 'nmt',
+                    'mechanical transformation' : 'mt' }
+        rela = type_dict.get(relationship_type.lower())
+        print(rela)
+        details_dict = {  }
         qt_quickres = request.POST['qtexact']
-        print(qt_quickres)
-        print(request.POST['qtmonnayage'])
-        
+        form = RelationshipForm(initial={"observer": observer, 
+                                        "relationship_type": relationship_type, 
+                                        "model_observation": model_observation,
+                                        "derivative_observation": derivative_observation,
+                                        
+                                        "definition": 6})
 
         
 
@@ -48,7 +60,7 @@ def get_relationship(request):
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = RelationshipForm(initial={"definition":"6"})
+        form = RelationshipForm(initial={"definition": 6})
 
     return render(request, 'relationship_form.html', 
                 context={'form': form, 
