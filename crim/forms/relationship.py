@@ -4,6 +4,8 @@ from crim.models.relationship import CRIMRelationship
 from crim.models.definition import CRIMDefinition
 from crim.models.observation import CRIMObservation
 
+from crim.common import *
+
 #PIECE_CHOICES = (
 #    ('1', 'Piece 1'),
 #    ('2', 'Piece 2'),
@@ -11,10 +13,7 @@ from crim.models.observation import CRIMObservation
 #    ('4', 'Piece 4'),
 #)
 
-#Set to definition 6
-set_definition = CRIMDefinition.objects.get(pk=5)
-allowed_types = list(set_definition.relationship_definition.keys())
-
+allowed_types = list(CURRENT_DEFINITION.relationship_definition.keys())
 RELATIONSHIP_TYPE_CHOICES = []
 strkey = ''
 for type in allowed_types:
@@ -26,8 +25,8 @@ class RelationshipForm(forms.ModelForm):
 
     class Meta:
         model = CRIMRelationship
-        fields=['observer', 'relationship_type', 'details', 'model_observation', 'derivative_observation', "definition"]
-        widgets = {'definition': forms.HiddenInput(), 'details': forms.HiddenInput}
+        fields=['observer', 'relationship_type', 'details', 'model_observation', 'derivative_observation']
+        widgets = {'definition': forms.HiddenInput(), 'details': forms.HiddenInput()}
 
     def __init__(self, *args, **kwargs):
         super(RelationshipForm, self).__init__(*args, **kwargs)
@@ -45,10 +44,7 @@ class RelationshipForm(forms.ModelForm):
         #attrs = {'class':'special', 'size':'40'}
         #self.fields['details'] = forms.CharField(widget=SplitJSONWidget())
 
-        # default def = 5, hide in template
-        # jsonfield widget for details 
-        # OR pop up subfields true/false select
-
+        
         
         
         

@@ -19,21 +19,25 @@
             {% csrf_token %}
             <div class="shadow-none p-4 mb-4 bg-light">
                 <div class="row-sm"> {{form.observer|as_crispy_field}}</div>
-                <div class="row-sm">{{form.relationship_type|as_crispy_field}}</div>
+                <!-- <div class="row-sm"> {{form.observer|as_crispy_field}}</div> -->
+    
                 
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs">
-                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#mt"> Mechanical transformation </a></li>
+                <!-- <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#mt"> Mechanical transformation </a></li>
                     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nm"> New material </a></li>
                     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#nmt"> Non-mechanical transformation</a></li>
                     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#om"> Omission </a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#qt"> Quotation </a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#qt"> Quotation </a></li> -->
+                    {% for key, value in relationship_definition.items %}
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#{{ key|slugify }}">{{ key }}</a></li>
+                    {% endfor %}
                 </ul>
   
                 <!-- Tab panes -->
                 <div class="tab-content">
 
-                    <div class="tab-pane container active" id="mt">
+                    <!-- <div class="tab-pane container active" id="mt">
                         <p><br><i>Pick the details for type Mechanical transformation</i></p>
                         <div class="mt"></div>
                     </div>
@@ -56,7 +60,13 @@
                     <div class="tab-pane container fade" id="qt">
                         <p><br><i>Pick the details for type Quotation</i></p>
                         <div class="qt"></div>
-                    </div>
+                    </div> -->
+
+                    {% for key, value in relationship_definition.items %}
+                        <div class="tab-pane container active" id="{{ key|slugify }}">
+                            {{ value }}
+                        </div>
+                    {% endfor %}
 
                 </div>
                 <p></p>
@@ -65,7 +75,7 @@
                     <div class="col-sm">{{form.derivative_observation|as_crispy_field}}</div>
                 </div>
                 <div class="row-sm">{{form.details|as_crispy_field}}</div>
-                <div class="row-sm">{{form.definition|as_crispy_field}}</div>
+                <div class="row-sm">{{form.relationship_definition}}</div>
                 <input class="btn btn-primary" type="submit" name="Submit" value="Submit">
             </form>
         </div>

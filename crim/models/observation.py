@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import JSONField
+from crim.models.definition import CRIMDefinition
 
 # Create your models here.
 class CRIMObservation(models.Model):
@@ -15,7 +16,7 @@ class CRIMObservation(models.Model):
     details = JSONField(null=True)
     
     definition = models.ForeignKey(
-        'CRIMDefinition',
+        CRIMDefinition,
         on_delete=models.CASCADE,
         db_index=True,
         related_name='definition',
