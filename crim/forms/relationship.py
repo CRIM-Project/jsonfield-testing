@@ -11,7 +11,7 @@ from crim.models.observation import CRIMObservation
 #    ('4', 'Piece 4'),
 #)
 
-#Set to definition 5
+#Set to definition 6
 set_definition = CRIMDefinition.objects.get(pk=5)
 allowed_types = list(set_definition.relationship_definition.keys())
 
@@ -27,13 +27,20 @@ class RelationshipForm(forms.ModelForm):
     class Meta:
         model = CRIMRelationship
         fields=['observer', 'relationship_type', 'details', 'model_observation', 'derivative_observation', "definition"]
-        widgets = {'definition': forms.HiddenInput()}
-        
+        widgets = {'definition': forms.HiddenInput(), 'details': forms.HiddenInput}
+
     def __init__(self, *args, **kwargs):
         super(RelationshipForm, self).__init__(*args, **kwargs)
         self.fields['relationship_type'] = forms.ChoiceField(choices=RELATIONSHIP_TYPE_CHOICES)
         self.fields['model_observation'] = forms.ModelChoiceField(queryset=CRIMObservation.objects.all(), widget=forms.NumberInput, required=True)
         self.fields['derivative_observation'] = forms.ModelChoiceField(queryset=CRIMObservation.objects.all(), widget=forms.NumberInput, required=True)
+        
+        #self.fields['observer'].widget.attrs['name'] = 'observer'
+        #self.fields['relationship_type'].widget.attrs['name'] = 'relationship_type'
+        #self.fields['details'].widget.attrs['name'] = 'details'
+        #self.fields['model_observation'].widget.attrs['name'] = 'model_observation'
+        #self.fields['derivative_observation'].widget.attrs['name'] = 'derivative_observation'
+        #self.fields['definition'].widget.attrs['name'] = 'definition'
         
         #attrs = {'class':'special', 'size':'40'}
         #self.fields['details'] = forms.CharField(widget=SplitJSONWidget())

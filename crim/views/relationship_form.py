@@ -20,16 +20,31 @@ def get_relationship(request):
     qt_details = list(curr_def.relationship_definition['quotation'].keys())
     qt_details_type = list(curr_def.relationship_definition['quotation'].values())
 
+    details_dict = {}
+
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = RelationshipForm(request.POST, initial={"definition":"6"})
+        form = RelationshipForm(initial={"definition":"6"})
+        #form = RelationshipForm(request.POST, initial={"definition":"6"})
+        observer = request.POST['observer']
+        print(observer)
+        relationship_type = request.POST['relationship_type']
+        print(relationship_type)
+        qt_quickres = request.POST['qtexact']
+        print(qt_quickres)
+        print(request.POST['qtmonnayage'])
+        
+
+        
+
+        
         # check whether it's valid:
-        if form.is_valid():
-            form.save()
-            return HttpResponse('Your relationship instance is saved')
-        else:
-            return HttpResponse('Something is wrong with your input. Try again')
+        #if form.is_valid():
+        #    form.save()
+        #    return HttpResponse('Your relationship instance is saved')
+        #else:
+        #    return HttpResponse('Something is wrong with your input. Try again')
 
     # if a GET (or any other method) we'll create a blank form
     else:

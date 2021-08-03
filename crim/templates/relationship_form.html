@@ -18,7 +18,7 @@
             <form method="post">
             {% csrf_token %}
             <div class="shadow-none p-4 mb-4 bg-light">
-                <div class="row-sm">{{form.observer|as_crispy_field}}</div>
+                <div class="row-sm"> {{form.observer|as_crispy_field}}</div>
                 <div class="row-sm">{{form.relationship_type|as_crispy_field}}</div>
                 
                 <!-- Nav tabs -->
@@ -64,18 +64,21 @@
                     <div class="col-sm">{{form.model_observation|as_crispy_field}}</div>
                     <div class="col-sm">{{form.derivative_observation|as_crispy_field}}</div>
                 </div>
+                <div class="row-sm">{{form.details|as_crispy_field}}</div>
                 <div class="row-sm">{{form.definition|as_crispy_field}}</div>
                 <input class="btn btn-primary" type="submit" name="Submit" value="Submit">
             </form>
         </div>
 
         
+        <p id="demo"></p>
 
         <!-- Optional Javascript -->
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"> </script>
 
         {{ mt_details|json_script:"mt_details" }}
         {{ mt_details_type|json_script:"mt_details_type"}}
@@ -89,17 +92,16 @@
         {{ qt_details_type|json_script:"qt_details_type"}}
 
         <script>
-        
             const mt_key = JSON.parse(document.getElementById('mt_details').textContent);
             const mt_value = JSON.parse(document.getElementById('mt_details_type').textContent);
             $.each(mt_key, function(i){
                 if (mt_value[i] == 'boolean') {
                     $('.mt')
-                    .append("<div class='form-check'> <input class='form-check-input' type='checkbox' name='" + mt_key[i] + "' value='" + mt_key[i] + "' id='" + "mt" + mt_key[i] + "'> <label class='form-check-label' for='" + "mt" + mt_key[i] + "'>" + mt_key[i] + "</label></div>");
+                    .append("<div class='form-check'> <input class='form-check-input' type='checkbox' name='" + "mt" +  mt_key[i] + "' value='true' id='" + "mt" + mt_key[i] + "'> <input name='" + "mt" +  mt_key[i] + "' type='hidden' value='false'> <label class='form-check-label' for='" + "mt" + mt_key[i] + "'>" + mt_key[i] + "</label></div>");
                 }
                 else {
                     $('.mt')
-                    .append("<div class='form-group'> <label for='" + "mt" + mt_value[i] + "'>" + mt_key[i] + "</label> <textarea class='form-control' id='" + "mt" + mt_key[i] + "' rows='1'></textarea></div>");
+                    .append("<div class='form-group'> <label for='" + "mt" + mt_value[i] + "'>" + mt_key[i] + "</label> <textarea class='form-control' id='" + "mt" + mt_key[i] + "' name='" + "mt" + mt_key[i] + "' rows='1'></textarea></div>");
                 }
             });
       
@@ -110,11 +112,11 @@
             $.each(nm_key, function(i){
                 if (nm_value[i] == 'boolean') {
                     $('.nm')
-                    .append("<div class='form-check'> <input class='form-check-input' type='checkbox' name='" + nm_key[i] + "' value='" + nm_key[i] + "' id='" + "nm" + nm_key[i] + "'> <label class='form-check-label' for='" + "nm" + nm_key[i] + "'>" + nm_key[i] + "</label></div>");
+                    .append("<div class='form-check'> <input class='form-check-input' type='checkbox' name='" + "nm" +  nm_key[i] + "' value='true' id='" + "nm" + nm_key[i] + "'> <input name='" + "nm" +  nm_key[i] + "' type='hidden' value='false'> <label class='form-check-label' for='" + "nm" + nm_key[i] + "'>" + nm_key[i] + "</label></div>");
                 }
                 else {
                     $('.nm')
-                    .append("<div class='form-group'> <label for='" + "nm" + nm_value[i] + "'>" + nm_key[i] + "</label> <textarea class='form-control' id='" + "nm" + nm_key[i] + "' rows='1'></textarea></div>");
+                    .append("<div class='form-group'> <label for='" + "nm" + nm_value[i] + "'>" + nm_key[i] + "</label> <textarea class='form-control' id='" + "nm" + nm_key[i] + "' name='" + "nm" + nm_key[i] + "' rows='1'></textarea></div>");
                 }
             });
         
@@ -125,11 +127,11 @@
             $.each(nmt_key, function(i){
                 if (nmt_value[i] == 'boolean') {
                     $('.nmt')
-                    .append("<div class='form-check'> <input class='form-check-input' type='checkbox' name='" + nmt_key[i] + "' value='" + nmt_key[i] + "' id='" + "nmt" + nmt_key[i] + "'> <label class='form-check-label' for='" + "nmt" + nmt_key[i] + "'>" + nmt_key[i] + "</label></div>");
+                    .append("<div class='form-check'> <input class='form-check-input' type='checkbox' name='" + "nmt" +  nmt_key[i] + "' value='true' id='" + "nmt" + nmt_key[i] + "'> <input name='" + "nmt" +  nmt_key[i] + "' type='hidden' value='false'> <label class='form-check-label' for='" + "nmt" + nmt_key[i] + "'>" + nmt_key[i] + "</label></div>");
                 }
                 else {
                     $('.nmt')
-                    .append("<div class='form-group'> <label for='" + "nmt" + nmt_value[i] + "'>" + nmt_key[i] + "</label> <textarea class='form-control' id='" + "nmt" + nmt_key[i] + "' rows='1'></textarea></div>");
+                    .append("<div class='form-group'> <label for='" + "nmt" + nmt_value[i] + "'>" + nmt_key[i] + "</label> <textarea class='form-control' id='" + "nmt" + nmt_key[i] + "' name='" + "nmt" + nmt_key[i] + "' rows='1'></textarea></div>");
                 }
             });
         
@@ -140,11 +142,11 @@
             $.each(om_key, function(i){
                 if (om_value[i] == 'boolean') {
                     $('.om')
-                    .append("<div class='form-check'> <input class='form-check-input' type='checkbox' name='" + om_key[i] + "' value='" + om_key[i] + "' id='" + "om" + om_key[i] + "'> <label class='form-check-label' for='" + "om" + om_key[i] + "'>" + om_key[i] + "</label></div>");
+                    .append("<div class='form-check'> <input class='form-check-input' type='checkbox' name='" + "om" +  om_key[i] + "' value='true' id='" + "om" + om_key[i] + "'> <input name='" + "om" +  om_key[i] + "' type='hidden' value='false'> <label class='form-check-label' for='" + "om" + om_key[i] + "'>" + om_key[i] + "</label></div>");
                 }
                 else {
                     $('.om')
-                    .append("<div class='form-group'> <label for='" + "om" + om_value[i] + "'>" + om_key[i] + "</label> <textarea class='form-control' id='" + "om" + om_key[i] + "' rows='1'></textarea></div>");
+                    .append("<div class='form-group'> <label for='" + "om" + om_value[i] + "'>" + om_key[i] + "</label> <textarea class='form-control' id='" + "om" + om_key[i] + "' name='" + "om" + om_key[i] + "' rows='1'></textarea></div>");
                 }
             });
         
@@ -155,16 +157,19 @@
             $.each(qt_key, function(i){
                 if (qt_value[i] == 'boolean') {
                     $('.qt')
-                    .append("<div class='form-check'> <input class='qt_checkbox' type='checkbox' name='" + qt_key[i] + "' value='" + qt_key[i] + "' id='" + "qt" + qt_key[i] + "'> <label class='form-check-label' for='" + "qt" + qt_key[i] + "'>" + qt_key[i] + "</label></div>");
+                    .append("<div class='form-check'> <input class='qt_checkbox' type='checkbox' name='" + "qt" +  qt_key[i] + "' value='true' id='" + "qt" + qt_key[i] + "'> <input name='" + "qt" +  qt_key[i] + "' type='hidden' value='false'> <label class='form-check-label' for='" + "qt" + qt_key[i] + "'>" + qt_key[i] + "</label></div>");
                 }
                 else {
                     $('.qt')
-                    .append("<div class='form-group'> <label for='" + "qt" + qt_value[i] + "'>" + qt_key[i] + "</label> <textarea class='form-control' id='" + "qt" + qt_key[i] + "' rows='1'></textarea></div>");
+                    .append("<div class='form-group'> <label for='" + "qt" + qt_value[i] + "'>" + qt_key[i] + "</label> <textarea class='form-control' id='" + "qt" + qt_key[i] + "' name='" + "qt" + qt_key[i] + "' rows='1'></textarea></div>");
                 }
             });
         
+            $("input:checkbox").change(function () {
+                $(this).parent().find('input:hidden').val($(this).is(':checked'));
+            });
 
-            
+            // clear hardcode
             $('.qt_checkbox').on('change', function() {
                 $('.qt_checkbox').not(this).prop('checked', false);
             });
@@ -176,6 +181,36 @@
                 });
             });
 
+            //var serializeForm = function (form) {
+	        //    var obj = {};
+	        //    var formData = new FormData(form);
+	        //    for (var key of formData.keys()) {
+		    //        obj[key] = formData.get(key);
+	        //    }
+	        //    return obj;
+            //};
+
+            //var form = document.querySelector('form');
+            //var data = new FormData(form);
+
+            //document.addEventListener('submit', function (event) {
+            //    event.preventDefault();
+            //    fetch('https://jsonplaceholder.typicode.com/posts', {
+		    //        method: 'POST',
+		    //        body: JSON.stringify(serializeForm(event.target)),
+	        //    }).then(function (response) {
+		    //        if (response.ok) {
+			//            return response.json();
+		    //        }
+		    //        return Promise.reject(response);
+	        //    }).then(function (data) {
+		    //        document.getElementById("demo").innerHTML = data;
+	        //    }).catch(function (error) {
+		    //        document.getElementById("demo").innerHTML = error;
+	        //    });
+            //});
+
+            
         </script>
 
     </body>
