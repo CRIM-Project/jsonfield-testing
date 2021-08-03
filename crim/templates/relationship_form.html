@@ -64,12 +64,11 @@
 
                     {% for key, value in relationship_definition.items %}
                         <div class="tab-pane container active" id="{{ key|slugify }}">
-                            {{ value }}
                             {% for innerkey, innervalue in value.items %}
                                 <div class="form-check"> 
-                                    <input class="form-check-input" type='checkbox' name="{{innerkey|slugify}}" value='true' id="{{innerkey|slugify}}"> 
-                                    <input name="{{innerkey|slugify}}" type='hidden' value='false'> 
-                                    <label class='form-check-label' for="{{innerkey|slugify}}">{{ innerkey }}</label>
+                                    <input class="form-check-input" type='checkbox' name="{{ innerkey|slugify }}" value='true' id="{{ innerkey|slugify }}"> 
+                                    <input name="{{ innerkey|slugify }}" type='hidden' value='false'> 
+                                    <label class='form-check-label' for="{{ innerkey|slugify }}">{{ innerkey }}</label>
                                 </div>
                             {% endfor %}
                         </div>
@@ -194,19 +193,26 @@
             // TODO: clear hardcode
 
             // exact and monnayage
-            $('.qt_checkbox').on('change', function() {
-                $('.qt_checkbox').not(this).prop('checked', false);
+            $('#exact').on('change', function () {
+                if (this.checked) {     
+                    $('#monnayage').prop('checked', false);
+                }
+            });
+            $('#monnayage').on('change', function () {
+                if (this.checked) {     
+                    $('#exact').prop('checked', false);
+                }
             });
 
             // amplified and truncated
-            $('#non-mechanical-transformationtruncated').on('change', function () {
+            $('#truncated').on('change', function () {
                 if (this.checked) {     
-                    $('#non-mechanical-transformationamplified').prop('checked', false);
+                    $('#amplified').prop('checked', false);
                 }
             });
-            $('##non-mechanical-transformationamplified').on('change', function () {
+            $('#amplified').on('change', function () {
                 if (this.checked) {     
-                    $('#non-mechanical-transformationtruncated').prop('checked', false);
+                    $('#truncated').prop('checked', false);
                 }
             });
 
@@ -235,11 +241,11 @@
                 }
             });
 
-            $(document).ready(function(){
+            /*$(document).ready(function(){
                 $(".nav-tabs a").click(function(){
                     $(this).tab('show');
                 });
-            });
+            }); */
 
             //var serializeForm = function (form) {
 	        //    var obj = {};
