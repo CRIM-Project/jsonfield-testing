@@ -65,6 +65,13 @@
                     {% for key, value in relationship_definition.items %}
                         <div class="tab-pane container active" id="{{ key|slugify }}">
                             {{ value }}
+                            {% for innerkey, innervalue in value.items %}
+                                <div class="form-check"> 
+                                    <input class="form-check-input" type='checkbox' name="{{innerkey|slugify}}" value='true' id="{{innerkey|slugify}}"> 
+                                    <input name="{{innerkey|slugify}}" type='hidden' value='false'> 
+                                    <label class='form-check-label' for="{{innerkey|slugify}}">{{ innerkey }}</label>
+                                </div>
+                            {% endfor %}
                         </div>
                     {% endfor %}
 
@@ -90,7 +97,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"> </script>
 
-        {{ mt_details|json_script:"mt_details" }}
+        <!--{{ mt_details|json_script:"mt_details" }}
         {{ mt_details_type|json_script:"mt_details_type"}}
         {{ nm_details|json_script:"nm_details" }}
         {{ nm_details_type|json_script:"nm_details_type"}}
@@ -99,19 +106,19 @@
         {{ om_details|json_script:"om_details" }}
         {{ om_details_type|json_script:"om_details_type"}}
         {{ qt_details|json_script:"qt_details" }}
-        {{ qt_details_type|json_script:"qt_details_type"}}
+        {{ qt_details_type|json_script:"qt_details_type"}} -->
 
         <script>
-            const mt_key = JSON.parse(document.getElementById('mt_details').textContent);
+            /*const mt_key = JSON.parse(document.getElementById('mt_details').textContent);
             const mt_value = JSON.parse(document.getElementById('mt_details_type').textContent);
             $.each(mt_key, function(i){
                 if (mt_value[i] == 'boolean') {
                     mt_rep = mt_key[i].replace(/\s/g, "_");
-                    $('.mt')
+                    $('.mechanical-transformation')
                     .append("<div class='form-check'> <input class='form-check-input' type='checkbox' name='" + "mt" +  mt_rep + "' value='true' id='" + "mt" + mt_rep + "'> <input name='" + "mt" +  mt_rep + "' type='hidden' value='false'> <label class='form-check-label' for='" + "mt" + mt_rep + "'>" + mt_key[i] + "</label></div>");
                 }
                 else {
-                    $('.mt')
+                    $('.mechanical-transformation')
                     .append("<div class='form-group'> <label for='" + "mt" + mt_rep + "'>" + mt_key[i] + "</label> <textarea class='form-control' id='" + "mt" + mt_rep + "' name='" + "mt" + mt_rep + "' rows='1'></textarea></div>");
                 }
             });
@@ -123,11 +130,11 @@
             $.each(nm_key, function(i){
                 if (nm_value[i] == 'boolean') {
                     nm_rep = nm_key[i].replace(/\s/g, "_");
-                    $('.nm')
+                    $('.new-material')
                     .append("<div class='form-check'> <input class='form-check-input' type='checkbox' name='" + "nm" +  nm_rep + "' value='true' id='" + "nm" + nm_rep + "'> <input name='" + "nm" +  nm_rep + "' type='hidden' value='false'> <label class='form-check-label' for='" + "nm" + nm_rep + "'>" + nm_key[i] + "</label></div>");
                 }
                 else {
-                    $('.nm')
+                    $('.new-material')
                     .append("<div class='form-group'> <label for='" + "nm" + nm_rep + "'>" + nm_key[i] + "</label> <textarea class='form-control' id='" + "nm" + nm_rep + "' name='" + "nm" + nm_rep + "' rows='1'></textarea></div>");
                 }
             });
@@ -139,11 +146,11 @@
             $.each(nmt_key, function(i){
                 if (nmt_value[i] == 'boolean') {
                     nmt_rep = nmt_key[i].replace(/\s/g, "_");
-                    $('.nmt')
+                    $('.non-mechanical-transformation')
                     .append("<div class='form-check'> <input class='form-check-input' type='checkbox' name='" + "nmt" +  nmt_rep + "' value='true' id='" + "nmt" + nmt_rep + "'> <input name='" + "nmt" +  nmt_rep + "' type='hidden' value='false'> <label class='form-check-label' for='" + "nmt" + nmt_rep + "'>" + nmt_key[i] + "</label></div>");
                 }
                 else {
-                    $('.nmt')
+                    $('.non-mechanical-transformation')
                     .append("<div class='form-group'> <label for='" + "nmt" + nmt_rep + "'>" + nmt_key[i] + "</label> <textarea class='form-control' id='" + "nmt" + nmt_rep + "' name='" + "nmt" + nmt_rep + "' rows='1'></textarea></div>");
                 }
             });
@@ -155,11 +162,11 @@
             $.each(om_key, function(i){
                 if (om_value[i] == 'boolean') {
                     om_rep = om_key[i].replace(/\s/g, "_");
-                    $('.om')
+                    $('.omission')
                     .append("<div class='form-check'> <input class='form-check-input' type='checkbox' name='" + "om" +  om_rep + "' value='true' id='" + "om" + om_rep + "'> <input name='" + "om" +  om_rep + "' type='hidden' value='false'> <label class='form-check-label' for='" + "om" + om_rep + "'>" + om_key[i] + "</label></div>");
                 }
                 else {
-                    $('.om')
+                    $('.omission')
                     .append("<div class='form-group'> <label for='" + "om" + om_rep + "'>" + om_key[i] + "</label> <textarea class='form-control' id='" + "om" + om_rep + "' name='" + "om" + om_rep + "' rows='1'></textarea></div>");
                 }
             });
@@ -171,14 +178,14 @@
             $.each(qt_key, function(i){
                 if (qt_value[i] == 'boolean') {
                     qt_rep = qt_key[i].replace(/\s/g, "_");
-                    $('.qt')
+                    $('.quotation')
                     .append("<div class='form-check'> <input class='qt_checkbox' type='checkbox' name='" + "qt" +  qt_rep + "' value='true' id='" + "qt" + qt_rep + "'> <input name='" + "qt" +  qt_rep + "' type='hidden' value='false'> <label class='form-check-label' for='" + "qt" + qt_rep + "'>" + qt_key[i] + "</label></div>");
                 }
                 else {
-                    $('.qt')
+                    $('.quotation')
                     .append("<div class='form-group'> <label for='" + "qt" + qt_rep + "'>" + qt_key[i] + "</label> <textarea class='form-control' id='" + "qt" + qt_rep + "' name='" + "qt" + qt_rep + "' rows='1'></textarea></div>");
                 }
-            });
+            }); */
         
             $("input:checkbox").change(function () {
                 $(this).parent().find('input:hidden').val($(this).is(':checked'));
@@ -192,39 +199,39 @@
             });
 
             // amplified and truncated
-            $('#nmttruncated').on('change', function () {
+            $('#non-mechanical-transformationtruncated').on('change', function () {
                 if (this.checked) {     
-                    $('#nmtamplified').prop('checked', false);
+                    $('#non-mechanical-transformationamplified').prop('checked', false);
                 }
             });
-            $('#nmtamplified').on('change', function () {
+            $('##non-mechanical-transformationamplified').on('change', function () {
                 if (this.checked) {     
-                    $('#nmttruncated').prop('checked', false);
+                    $('#non-mechanical-transformationtruncated').prop('checked', false);
                 }
             });
 
              // embellished and reduced
-            $('#nmtembellished').on('change', function () {
+            $('#embellished').on('change', function () {
                 if (this.checked) {     
-                    $('#nmtreduced').prop('checked', false);
+                    $('#reduced').prop('checked', false);
                 }
             });
             
-            $('#nmtreduced').on('change', function () {
+            $('#reduced').on('change', function () {
                 if (this.checked) {     
-                    $('#nmtembellished').prop('checked', false);
+                    $('#embellished').prop('checked', false);
                 }
             });
             
             // transposed and transposed diff amounts
-            $('#mttransposed').on('change', function () {
+            $('#transposed').on('change', function () {
                 if (this.checked) {     
-                    $('#mttransposed_different_amounts').prop('checked', false);
+                    $('#transposed-different-amounts').prop('checked', false);
                 }
             });
-            $('#mttransposed_different_amounts').on('change', function () {
+            $('#transposed-different-amounts').on('change', function () {
                 if (this.checked) {     
-                    $('#mttransposed').prop('checked', false);
+                    $('#transposed').prop('checked', false);
                 }
             });
 

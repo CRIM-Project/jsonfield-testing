@@ -76,6 +76,7 @@ def get_relationship(request):
                         'om_details_type': om_details_type,
                         'qt_details': qt_details,
                         'qt_details_type': qt_details_type,
+                        'relationship_definition': CURRENT_DEFINITION.relationship_definition,
                         })
  
     return render(request, 'relationship_form.html',
