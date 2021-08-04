@@ -65,11 +65,13 @@
                 </div>
                 <div class="row-sm">{{form.details|as_crispy_field}}</div>
                 <div class="row-sm">{{form.relationship_definition}}</div>
+                <input type="hidden" id="selected-tab" name="selected-tab">
                 <input class="btn btn-primary" type="submit" name="Submit" value="Submit">
+            
             </form>
         </div>
 
-        
+        <input type="hidden" id="selected-tab" name="selected-tab">
         <hr>
         <p class="act"><b>Active Tab</b>: <span></span></p>
         <p class="prev"><b>Previous Tab</b>: <span></span></p>
@@ -163,6 +165,9 @@
                     var y = $(event.relatedTarget).text();  // previous tab
                     $(".act span").text(x);
                     $(".prev span").text(y);
+
+                    var selected = x.replace(/\s+/g, '-');
+                    $("#selected-tab").val(selected);
                 });
             }); 
 
