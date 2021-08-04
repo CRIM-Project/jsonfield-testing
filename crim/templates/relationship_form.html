@@ -157,9 +157,14 @@
             });
 
             $(document).ready(function(){
+                var activeTab = $(".tab-content").find(".active");
+                var id = activeTab.attr('id');
+                $("#selected-tab").val(id);
+
                 $(".nav-tabs a").click(function(){
                     $(this).tab('show');
                 });
+
                 $(".nav-tabs a").on('shown.bs.tab', function(event){
                     var x = $(event.target).text();         // active tab
                     var y = $(event.relatedTarget).text();  // previous tab
@@ -169,6 +174,7 @@
                     var selected = x.replace(/\s+/g, '-');
                     $("#selected-tab").val(selected);
                 });
+                
             }); 
 
             // GET ALL FORM INPUT AS JSON
