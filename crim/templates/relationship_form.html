@@ -38,7 +38,7 @@
 
                     {% for key, value in relationship_definition.items %}
                         {% if forloop.first %}
-                            <div class="tab-pane container active fade show" id="{{ key|slugify }}">
+                            <div class="tab-pane container fade show active" id="{{ key|slugify }}">
                         {% else %}
                             <div class="tab-pane container fade" id="{{ key|slugify }}">
                         {% endif %}
