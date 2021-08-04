@@ -25,10 +25,13 @@ def get_relationship(request):
     details_dict = {}
 
     # if this is a POST request we need to process the form data
-    if request.method == 'POST':
+    if request.is_ajax and request.method == 'POST':
         # create a form instance and manually populate it with data from the request:
         details_dict = {}
+        data = request.body
+        print(data)
         observer = request.POST['observer']
+        print(observer)
         model_observation = request.POST['model_observation']
         derivative_observation = request.POST['derivative_observation']
        
