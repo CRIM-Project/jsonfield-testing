@@ -25,18 +25,22 @@ def get_relationship(request):
                 allowed_subtypes = list(CURRENT_DEFINITION.relationship_definition[rtype])
                 for subtype in allowed_subtypes:
                     slug = subtype.replace(' ', '-')
-                    details_dict[subtype] = request.POST[slug]
+                    details_dict[subtype.capitalize()] = request.POST[slug]
                 break
         json_object = json.dumps(details_dict)  
 
         form_data = {"observer": request.POST['observer'],  
-                    "relationship_type": relationship_type,
+                    "relationship_type": relationship_type.capitalize(),
                     "details": json_object,
                     "model_observation": request.POST['model_observation'],
                     "derivative_observation": request.POST['derivative_observation'], 
                     }
         #print(form_data)
         form = RelationshipForm(form_data)
+        print (form.is_bound)
+        print (form.is_valid())
+        print (form.errors)
+        print (form.non_field_errors)
         # check whether it's valid:
         if form.is_valid():
             print(form.cleaned_data)
