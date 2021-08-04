@@ -47,8 +47,8 @@
                             <p><i>Pick the details for this type {{key}}</i></p>
                             {% for innerkey, innervalue in value.items %}
                                 <div class="form-check"> 
-                                    <input class="form-check-input" type='checkbox' name="{{ innerkey|slugify }}" value='true' id="{{ innerkey|slugify }}"> 
-                                    <input name="{{ innerkey|slugify }}" type='hidden' value='false'> 
+                                    <input class="form-check-input" type='checkbox' name="{{ innerkey|slugify }}" value='True' id="{{ innerkey|slugify }}"> 
+                                    <input name="{{ innerkey|slugify }}" type='hidden' value='False'> 
                                     <label class='form-check-label' for="{{ innerkey|slugify }}">{{ innerkey }}</label>
                                 </div>
                             {% endfor %} 

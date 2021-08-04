@@ -44,7 +44,6 @@ def get_relationship(request):
         print (form.non_field_errors)
         # check whether it's valid:
         if form.is_valid():
-            print(form.cleaned_data)
             form.save()
             return HttpResponse('Your relationship instance is saved')
         else:
@@ -52,7 +51,7 @@ def get_relationship(request):
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = RelationshipForm()
+        form = RelationshipForm(initial={"definition": CURRENT_DEFINITION})
  
     return render(request, 'relationship_form.html',
                 context={'form': form,
