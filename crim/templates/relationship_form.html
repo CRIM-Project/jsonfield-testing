@@ -10,6 +10,7 @@
     <body>
         {% load crispy_forms_tags %}
         {% load dict_lookup %}
+        {% load concat_str %}
         
         <div class="shadow-none p-4 mt-4 mb-4 bg-light">
             <div class="text-center">
@@ -47,9 +48,9 @@
                             <p><i>Pick the details for this type {{key}}</i></p>
                             {% for innerkey, innervalue in value.items %}
                                 <div class="form-check"> 
-                                    <input class="form-check-input" type='checkbox' name="{{ innerkey|slugify }}" value='True' id="{{ innerkey|slugify }}"> 
-                                    <input name="{{ innerkey|slugify }}" type='hidden' value='False'> 
-                                    <label class='form-check-label' for="{{ innerkey|slugify }}">{{ innerkey }}</label>
+                                    <input class="form-check-input" type='checkbox' name="{{ key|concat_str:innerkey }}" value='true' id="{{ key|concat_str:innerkey }}"> 
+                                    <input name="{{ key|concat_str:innerkey }}" type='hidden' value='false'> 
+                                    <label class='form-check-label' for="{{ key|concat_str:innerkey }}">{{ innerkey }}</label>
                                 </div>
                             {% endfor %} 
 
@@ -190,14 +191,14 @@
                     const formData = new FormData(form);
                     const responseData = await postFormDataAsJson({ url, formData });
                     console.log({ responseData });
-                    $.ajax({
+                    /*$.ajax({
                         type:'POST',
                         url: '',
                         data: responseData,
                         success: function(response){
                             console.log('Success');
                         },
-                    });
+                    });*/
                     
                 } catch (error) {
                     console.error(error);

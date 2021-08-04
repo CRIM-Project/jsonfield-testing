@@ -70,7 +70,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'libraries':{
-                'dict_lookup': 'crim.templatetags.dict_lookup'
+                'dict_lookup': 'crim.templatetags.dict_lookup',
+                'concat_str': 'crim.templatetags.concat_str'
             }
         },
     },
