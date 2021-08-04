@@ -33,7 +33,8 @@ def get_relationship(request):
                     "relationship_type": relationship_type.capitalize(),
                     "details": json_object,
                     "model_observation": request.POST['model_observation'],
-                    "derivative_observation": request.POST['derivative_observation'], 
+                    "derivative_observation": request.POST['derivative_observation'],
+                    "definition": CURRENT_DEFINITION 
                     }
         #print(form_data)
         form = RelationshipForm(form_data)

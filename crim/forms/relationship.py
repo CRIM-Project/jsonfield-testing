@@ -25,7 +25,7 @@ class RelationshipForm(forms.ModelForm):
 
     class Meta:
         model = CRIMRelationship
-        fields=['observer', 'relationship_type', 'details', 'model_observation', 'derivative_observation']
+        fields=['observer', 'relationship_type', 'details', 'model_observation', 'derivative_observation', 'definition']
         widgets = {'definition': forms.HiddenInput(), 'details': forms.HiddenInput()}
 
     def __init__(self, *args, **kwargs):
@@ -33,7 +33,7 @@ class RelationshipForm(forms.ModelForm):
         self.fields['relationship_type'] = forms.ChoiceField(choices=RELATIONSHIP_TYPE_CHOICES)
         self.fields['model_observation'] = forms.ModelChoiceField(queryset=CRIMObservation.objects.all(), widget=forms.NumberInput, required=True)
         self.fields['derivative_observation'] = forms.ModelChoiceField(queryset=CRIMObservation.objects.all(), widget=forms.NumberInput, required=True)
-        
+
         #self.fields['observer'].widget.attrs['name'] = 'observer'
         #self.fields['relationship_type'].widget.attrs['name'] = 'relationship_type'
         #self.fields['details'].widget.attrs['name'] = 'details'
