@@ -8,19 +8,8 @@ from crim.models.definition import CRIMDefinition
 from crim.common import *
 
 def get_relationship(request):
-    curr_def = CRIMDefinition.objects.get(pk=6)
+    #curr_def = CRIMDefinition.objects.get(pk=6)
     #curr_types = list(curr_def.relationship_definition)
-    
-    mt_details = list(curr_def.relationship_definition['mechanical transformation'].keys())
-    mt_details_type = list(curr_def.relationship_definition['mechanical transformation'].values())
-    nm_details = list(curr_def.relationship_definition['new material'].keys())
-    nm_details_type = list(curr_def.relationship_definition['new material'].values())
-    nmt_details = list(curr_def.relationship_definition['non-mechanical transformation'].keys())
-    nmt_details_type = list(curr_def.relationship_definition['non-mechanical transformation'].values())
-    om_details = list(curr_def.relationship_definition['omission'].keys())
-    om_details_type = list(curr_def.relationship_definition['omission'].values())
-    qt_details = list(curr_def.relationship_definition['quotation'].keys())
-    qt_details_type = list(curr_def.relationship_definition['quotation'].values())
 
     details_dict = {}
 
@@ -28,26 +17,35 @@ def get_relationship(request):
     if request.is_ajax and request.method == 'POST':
         # create a form instance and manually populate it with data from the request:
         details_dict = {}
-        data = request.POST
-        print(data)
-        
-       
-        
-        
-        #form = RelationshipForm(data={"observer": observer,  
-        #                            "model_observation": model_observation,
-        #                            "derivative_observation": derivative_observation,                               
-        #                        })
-
-        
-
-        
+        relationship_type = ''
+        allowed_types = list(CURRENT_DEFINITION.relationship_definition.keys())
+        selected_type = request.POST['selected-tab']
+        strip1 = ''.join(e for e in selected_type if e.isalnum())
+        for rtype in allowed_types:
+            strip2 = ''.join(e for e in rtype if e.isalnum())
+            if strip1 == strip2:
+                relationship_type = relationship_type + rtype
+                allowed_subtypes = list(CURRENT_DEFINITION.relationship_definition[rtype])
+                for subtype in allowed_subtypes:
+                    slug = subtype.replace(' ', '-')
+                    details_dict[subtype] = request.POST[slug]
+                print(details_dict)
+                break
+        json_object = json.dumps(details_dict)  
+        form_data = {"observer": request.POST['observer'],  
+                    "relationship_type": relationship_type,
+                    "details": json_object,
+                    "model_observation": request.POST['model_observation'],
+                    "derivative_observation": request.POST['derivative_observation'], 
+                    }
+        print(form_data)
+        form = RelationshipForm(initial=form_data)
         # check whether it's valid:
-        #if form.is_valid():
-        #    form.save()
-        #    return HttpResponse('Your relationship instance is saved')
-        #else:
-        #    return HttpResponse('Something is wrong with your input. Try again')
+        if form.is_valid():
+            form.save()
+            return HttpResponse('Your relationship instance is saved')
+        else:
+            return HttpResponse('Something is wrong with your input. Try again')
 
     # if a GET (or any other method) we'll create a blank form
     else:
