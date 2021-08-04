@@ -28,21 +28,16 @@ def get_relationship(request):
     if request.is_ajax and request.method == 'POST':
         # create a form instance and manually populate it with data from the request:
         details_dict = {}
-        data = request.body
+        data = request.POST
         print(data)
-        observer = request.POST['observer']
-        print(observer)
-        model_observation = request.POST['model_observation']
-        derivative_observation = request.POST['derivative_observation']
+        
        
         
-        details_dict = {  }
-        qt_quickres = request.POST['qtexact']
-        form = RelationshipForm(data={"observer": observer,  
-                                    "model_observation": model_observation,
-                                    "derivative_observation": derivative_observation,
-                                        
-                                })
+        
+        #form = RelationshipForm(data={"observer": observer,  
+        #                            "model_observation": model_observation,
+        #                            "derivative_observation": derivative_observation,                               
+        #                        })
 
         
 

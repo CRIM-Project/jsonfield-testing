@@ -189,19 +189,15 @@
                 try {
                     const formData = new FormData(form);
                     const responseData = await postFormDataAsJson({ url, formData });
-                    
+                    console.log({ responseData });
                     $.ajax({
                         type:'POST',
                         url: '',
-                        data : {
-                            form_data: responseData,
-                            csrfmiddlewaretoken: '{{csrf_token}}',
-                        },
+                        data: responseData,
                         success: function(response){
                             console.log('Success');
                         },
                     });
-                    console.log({ responseData });
                     
                 } catch (error) {
                     console.error(error);
