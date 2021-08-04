@@ -25,7 +25,11 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs">
                     {% for key, value in relationship_definition.items %}
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#{{ key|slugify }}">{{ key }}</a></li>
+                        {% if forloop.first %}
+                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#{{ key|slugify }}">{{ key }}</a></li>
+                        {% else %}
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#{{ key|slugify }}">{{ key }}</a></li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
   
@@ -34,7 +38,7 @@
 
                     {% for key, value in relationship_definition.items %}
                         {% if forloop.first %}
-                            <div class="tab-pane container active" id="{{ key|slugify }}">
+                            <div class="tab-pane container active fade show" id="{{ key|slugify }}">
                         {% else %}
                             <div class="tab-pane container fade" id="{{ key|slugify }}">
                         {% endif %}
@@ -66,15 +70,17 @@
         </div>
 
         
-        <p id="demo"></p>
+        <hr>
+        <p class="act"><b>Active Tab</b>: <span></span></p>
+        <p class="prev"><b>Previous Tab</b>: <span></span></p>
 
         <!-- Optional Javascript -->
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"> </script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
         <script>
             /*const mt_key = JSON.parse(document.getElementById('mt_details').textContent);
             const mt_value = JSON.parse(document.getElementById('mt_details_type').textContent);
@@ -151,6 +157,12 @@
             $(document).ready(function(){
                 $(".nav-tabs a").click(function(){
                     $(this).tab('show');
+                });
+                $(".nav-tabs a").on('shown.bs.tab', function(event){
+                    var x = $(event.target).text();         // active tab
+                    var y = $(event.relatedTarget).text();  // previous tab
+                    $(".act span").text(x);
+                    $(".prev span").text(y);
                 });
             }); 
 
