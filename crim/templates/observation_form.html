@@ -9,7 +9,7 @@
     </head>
     <body>
         {% load crispy_forms_tags %}
-        {% load dict_lookup %}
+        {% load concat_str %}
         
         <div class="shadow-none p-4 mt-4 mb-4 bg-light">
             <div class="text-center">
@@ -19,8 +19,6 @@
             {% csrf_token %}
             <div class="shadow-none p-4 mb-4 bg-light">
                 <div class="row-sm"> {{form.observer|as_crispy_field}}</div>
-                <!-- <div class="row-sm"> {{form.relationship_type|as_crispy_field}}</div> -->
-    
                 
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs">
@@ -36,7 +34,7 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
 
-                    {% for key, value in relationship_definition.items %}
+                    {% for key, value in observation_definition.items %}
                         {% if forloop.first %}
                             <div class="tab-pane container fade show active" id="{{ key|slugify }}">
                         {% else %}
@@ -46,32 +44,33 @@
                         <div class="{{ key|slugify }}"></div>
                             <p><i>Pick the details for this type {{key}}</i></p>
                             {% for innerkey, innervalue in value.items %}
-                                <div class="form-check"> 
-                                    <input class="form-check-input" type='checkbox' name="{{ key + '' + innerkey|slugify }}" value='True' id="{{ innerkey|slugify }}"> 
-                                    <input name="{{ innerkey|slugify }}" type='hidden' value='False'> 
-                                    <label class='form-check-label' for="{{ innerkey|slugify }}">{{ innerkey }}</label>
-                                </div>
+                                {% if innervalue == "boolean" %}
+                                    <div class="form-check"> 
+                                        <input class="form-check-input" type='checkbox' name="{{ key|concat_str:innerkey }}" value='true' id="{{ key|concat_str:innerkey }}"> 
+                                        <input name="{{ key|concat_str:innerkey }}" type='hidden' value='false'> 
+                                        <label class='form-check-label' for="{{ key|concat_str:innerkey }}">{{ innerkey }}</label>
+                                    </div>
+                                {% elif innervalue == "text" %}
+                                    <div class="form-group"> 
+                                        <label for="{{ key|concat_str:innerkey }}"> {{ innerkey }} </label> 
+                                        <textarea class="form-control" id="{{ key|concat_str:innerkey }}" name="{{ key|concat_str:innerkey }}" rows="1"></textarea>
+                                    </div>
                             {% endfor %} 
-
                         </div>
 
                     {% endfor %}
 
                 </div>
                 <p></p>
-                <div class="row">
-                    <div class="col-sm">{{form.model_observation|as_crispy_field}}</div>
-                    <div class="col-sm">{{form.derivative_observation|as_crispy_field}}</div>
-                </div>
                 <div class="row-sm">{{form.details|as_crispy_field}}</div>
                 <div class="row-sm">{{form.relationship_definition}}</div>
+
                 <input type="hidden" id="selected-tab" name="selected-tab">
                 <input class="btn btn-primary" type="submit" name="Submit" value="Submit">
             
             </form>
         </div>
 
-        <input type="hidden" id="selected-tab" name="selected-tab">
         <hr>
         <p class="act"><b>Active Tab</b>: <span></span></p>
         <p class="prev"><b>Previous Tab</b>: <span></span></p>
@@ -83,79 +82,14 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"> </script>
+        
         <script>
-            /*const mt_key = JSON.parse(document.getElementById('mt_details').textContent);
-            const mt_value = JSON.parse(document.getElementById('mt_details_type').textContent);
-            $.each(mt_key, function(i){
-                if (mt_value[i] == 'boolean') {
-                    mt_rep = mt_key[i].replace(/\s/g, "_");
-                    $('.mechanical-transformation')
-                    .append("<div class='form-check'> <input class='form-check-input' type='checkbox' name='" + "mt" +  mt_rep + "' value='true' id='" + "mt" + mt_rep + "'> <input name='" + "mt" +  mt_rep + "' type='hidden' value='false'> <label class='form-check-label' for='" + "mt" + mt_rep + "'>" + mt_key[i] + "</label></div>");
-                }
-                else {
-                    $('.mechanical-transformation')
-                    .append("<div class='form-group'> <label for='" + "mt" + mt_rep + "'>" + mt_key[i] + "</label> <textarea class='form-control' id='" + "mt" + mt_rep + "' name='" + "mt" + mt_rep + "' rows='1'></textarea></div>");
-                }
-            }); */
       
-
-        
-        
             $("input:checkbox").change(function () {
                 $(this).parent().find('input:hidden').val($(this).is(':checked'));
             });
 
-            // TODO: clear hardcode
-
-            // exact and monnayage
-            $('#exact').on('change', function () {
-                if (this.checked) {     
-                    $('#monnayage').prop('checked', false);
-                }
-            });
-            $('#monnayage').on('change', function () {
-                if (this.checked) {     
-                    $('#exact').prop('checked', false);
-                }
-            });
-
-            // amplified and truncated
-            $('#truncated').on('change', function () {
-                if (this.checked) {     
-                    $('#amplified').prop('checked', false);
-                }
-            });
-            $('#amplified').on('change', function () {
-                if (this.checked) {     
-                    $('#truncated').prop('checked', false);
-                }
-            });
-
-             // embellished and reduced
-            $('#embellished').on('change', function () {
-                if (this.checked) {     
-                    $('#reduced').prop('checked', false);
-                }
-            });
             
-            $('#reduced').on('change', function () {
-                if (this.checked) {     
-                    $('#embellished').prop('checked', false);
-                }
-            });
-            
-            // transposed and transposed diff amounts
-            $('#transposed').on('change', function () {
-                if (this.checked) {     
-                    $('#transposed-different-amounts').prop('checked', false);
-                }
-            });
-            $('#transposed-different-amounts').on('change', function () {
-                if (this.checked) {     
-                    $('#transposed').prop('checked', false);
-                }
-            });
-
             $(document).ready(function(){
                 var activeTab = $(".tab-content").find(".active");
                 var id = activeTab.attr('id');

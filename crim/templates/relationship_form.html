@@ -9,7 +9,6 @@
     </head>
     <body>
         {% load crispy_forms_tags %}
-        {% load dict_lookup %}
         {% load concat_str %}
         
         <div class="shadow-none p-4 mt-4 mb-4 bg-light">
@@ -65,13 +64,13 @@
                 </div>
                 <div class="row-sm">{{form.details|as_crispy_field}}</div>
                 <div class="row-sm">{{form.relationship_definition}}</div>
+
                 <input type="hidden" id="selected-tab" name="selected-tab">
                 <input class="btn btn-primary" type="submit" name="Submit" value="Submit">
             
             </form>
         </div>
 
-        <input type="hidden" id="selected-tab" name="selected-tab">
         <hr>
         <p class="act"><b>Active Tab</b>: <span></span></p>
         <p class="prev"><b>Previous Tab</b>: <span></span></p>
@@ -84,22 +83,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"> </script>
         <script>
-            /*const mt_key = JSON.parse(document.getElementById('mt_details').textContent);
-            const mt_value = JSON.parse(document.getElementById('mt_details_type').textContent);
-            $.each(mt_key, function(i){
-                if (mt_value[i] == 'boolean') {
-                    mt_rep = mt_key[i].replace(/\s/g, "_");
-                    $('.mechanical-transformation')
-                    .append("<div class='form-check'> <input class='form-check-input' type='checkbox' name='" + "mt" +  mt_rep + "' value='true' id='" + "mt" + mt_rep + "'> <input name='" + "mt" +  mt_rep + "' type='hidden' value='false'> <label class='form-check-label' for='" + "mt" + mt_rep + "'>" + mt_key[i] + "</label></div>");
-                }
-                else {
-                    $('.mechanical-transformation')
-                    .append("<div class='form-group'> <label for='" + "mt" + mt_rep + "'>" + mt_key[i] + "</label> <textarea class='form-control' id='" + "mt" + mt_rep + "' name='" + "mt" + mt_rep + "' rows='1'></textarea></div>");
-                }
-            }); */
-      
-
-        
+           
         
             $("input:checkbox").change(function () {
                 $(this).parent().find('input:hidden').val($(this).is(':checked'));
