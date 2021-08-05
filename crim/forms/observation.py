@@ -12,21 +12,28 @@ PIECE_CHOICES = (
 )
 
 allowed_types = list(CURRENT_DEFINITION.observation_definition.keys())
-
 MUSICAL_TYPE_CHOICES = []
-i = 1
+strkey = ''
 for type in allowed_types:
-    MUSICAL_TYPE_CHOICES.append((i, type))
-    i=i+1
+    strkey = str(type).capitalize()
+    MUSICAL_TYPE_CHOICES.append((strkey, strkey))
 
 class ObservationForm(forms.ModelForm):
     #piece = forms.ChoiceField(choices=PIECE_CHOICES)
-    #musical_type = forms.ChoiceField(choices=MUSICAL_TYPE_CHOICES)
 
     class Meta:
         model = CRIMObservation
-        fields=['observer', 'details', "definition"]
+        fields=['observer', 'musical_type', 'details', 'definition']
+        widgets = {'definition': forms.HiddenInput(), 'details': forms.HiddenInput()}
 
     def __init__(self, *args, **kwargs):
         super(ObservationForm, self).__init__(*args, **kwargs)
         self.fields['musical_type'] = forms.ChoiceField(choices=MUSICAL_TYPE_CHOICES)
+       
+
+       
+
+        
+        
+        
+        

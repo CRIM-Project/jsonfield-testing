@@ -55,6 +55,7 @@
                                         <label for="{{ key|concat_str:innerkey }}"> {{ innerkey }} </label> 
                                         <textarea class="form-control" id="{{ key|concat_str:innerkey }}" name="{{ key|concat_str:innerkey }}" rows="1"></textarea>
                                     </div>
+                                {% endif %}
                             {% endfor %} 
                         </div>
 
