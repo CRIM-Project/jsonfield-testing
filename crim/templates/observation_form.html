@@ -124,14 +124,14 @@
                     const formData = new FormData(form);
                     const responseData = await postFormDataAsJson({ url, formData });
                     console.log({ responseData });
-                    /*$.ajax({
+                    $.ajax({
                         type:'POST',
                         url: '',
                         data: responseData,
                         success: function(response){
                             console.log('Success');
                         },
-                    });*/
+                    });
                     
                 } catch (error) {
                     console.error(error);

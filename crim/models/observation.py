@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import JSONField
 from crim.models.definition import CRIMDefinition
+import json
 
 # Create your models here.
 class CRIMObservation(models.Model):
@@ -27,22 +28,30 @@ class CRIMObservation(models.Model):
         return str(self.pk)
 
     def save(self, *args, **kwargs):
-        typename = str(self.musical_type).lower()
-        def_dict = self.definition.observation_definition
-        if typename in def_dict:
+        mtypename = str(self.musical_type).lower()
+        allowed_types = list(self.definition.observation_definition.keys())
+
+        if mtypename in allowed_types:
             valid_sub = False
-            allowed_subtypes = sorted(list(def_dict[typename]))
-            curr_subtypes = sorted(list(self.details.keys()))
+            allowed_subtypes = sorted(list(self.definition.observation_definition[mtypename]))
+            string_details = json.dumps(self.details)
+            sub_dict = json.loads(string_details)
+
+            curr_subtypes = sorted(list(sub_dict.keys()))
+            curr_subtypes_lower = [e.lower() for e in curr_subtypes]
+
             if allowed_subtypes == []:
                 valid_sub = True
-            elif curr_subtypes == allowed_subtypes:
+            elif curr_subtypes_lower == allowed_subtypes:
                 valid_sub = True
         
             if valid_sub:
-                print('validated. saving observation...')
+                print('validated. saving obs...')
                 self.definition.save()
                 super(CRIMObservation, self).save(*args, **kwargs)
+                print('obs saved')
             else:
                 print('subtypes not valid')
         else:
-            print('Error saving, typename not in allowed musical types')
+            print('Error saving, mtypename not in allowed musical types')
+

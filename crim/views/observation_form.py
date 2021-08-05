@@ -42,9 +42,9 @@ def get_observation(request):
         # check whether it's valid:
         if form.is_valid():
             form.save()
-            return HttpResponse('Your observation instance is saved')
+            return HttpResponse('Your observation instance is saved.')
         else:
-            return HttpResponse('Something is wrong with your input. Try again')
+            return HttpResponse('Something is wrong with your input. Try again.')
 
     # if a GET (or any other method) we'll create a blank form
     else:

@@ -65,18 +65,14 @@ class CRIMRelationship(models.Model):
         #Validation for model instance pre-save
         rtypename = str(self.relationship_type).lower()
         allowed_types = list(self.definition.relationship_definition.keys())
-        print(allowed_types)
+       
         if rtypename in allowed_types:
             valid_sub = False
-            allowed_subtypes = list(self.definition.relationship_definition[rtypename])
-            print(allowed_subtypes)
-            print(self.details)
+            allowed_subtypes = sorted(list(self.definition.relationship_definition[rtypename]))
             string_details = json.dumps(self.details)
             sub_dict = json.loads(string_details)
-            print(sub_dict)
             
             curr_subtypes = sorted(list(sub_dict.keys()))
-            print(curr_subtypes)
             curr_subtypes_lower = [e.lower() for e in curr_subtypes]
             
             if allowed_subtypes == []:
