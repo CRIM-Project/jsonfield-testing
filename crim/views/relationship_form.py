@@ -16,15 +16,15 @@ def get_relationship(request):
 
         allowed_types = list(CURRENT_DEFINITION.relationship_definition.keys())
         selected_type = request.POST['selected-tab']
-        strip1 = ''.join(e for e in selected_type if e.isalnum())
+        strip1 = ''.join(e for e in selected_type if e.isalnum()) #get name of active type
 
         for rtype in allowed_types:
-            strip2 = ''.join(e for e in rtype if e.isalnum())
-            if strip1 == strip2:
-                relationship_type = relationship_type + rtype
-                allowed_subtypes = list(CURRENT_DEFINITION.relationship_definition[rtype])
-                for subtype in allowed_subtypes:
-                    slug = subtype.replace(' ', '-')
+            strip2 = ''.join(e for e in rtype if e.isalnum()) #get name of each allowed type
+            if strip1 == strip2: #if same type
+                relationship_type = relationship_type + rtype #set rela type
+                allowed_subtypes = list(CURRENT_DEFINITION.relationship_definition[rtype]) #allowed subtype for it
+                for subtype in allowed_subtypes: #get name of each allowed subtype
+                    slug = relationship_type.replace(' ', '-') + '-' + subtype.replace(' ', '-') 
                     details_dict[subtype.capitalize()] = request.POST[slug]
                 break
         json_object = json.dumps(details_dict)  

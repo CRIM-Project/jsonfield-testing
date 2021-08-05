@@ -20,7 +20,6 @@
             {% csrf_token %}
             <div class="shadow-none p-4 mb-4 bg-light">
                 <div class="row-sm"> {{form.observer|as_crispy_field}}</div>
-                <!-- <div class="row-sm"> {{form.relationship_type|as_crispy_field}}</div> -->
     
                 
                 <!-- Nav tabs -->
@@ -191,14 +190,14 @@
                     const formData = new FormData(form);
                     const responseData = await postFormDataAsJson({ url, formData });
                     console.log({ responseData });
-                    /*$.ajax({
+                    $.ajax({
                         type:'POST',
                         url: '',
                         data: responseData,
                         success: function(response){
                             console.log('Success');
                         },
-                    });*/
+                    });
                     
                 } catch (error) {
                     console.error(error);
