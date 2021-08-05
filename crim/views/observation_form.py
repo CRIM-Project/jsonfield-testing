@@ -52,5 +52,5 @@ def get_observation(request):
  
     return render(request, 'observation_form.html',
                 context={'form': form,
-                        'relationship_definition': CURRENT_DEFINITION.observation_definition,
+                        'observation_definition': CURRENT_DEFINITION.observation_definition,
                         })
