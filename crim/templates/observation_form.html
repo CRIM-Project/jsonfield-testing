@@ -44,12 +44,14 @@
                         <div class="{{ key|slugify }}"></div>
                             <p><i>Pick the details for this type {{key.capitalize}}</i></p>
                             {% for innerkey, innervalue in value.items %}
-                                {% if innervalue == "boolean" %}
+
+                                {% if innervalue == "boolean" %} 
                                     <div class="form-check"> 
                                         <input class="form-check-input" type='checkbox' name="{{ key|concat_str:innerkey }}" value='true' id="{{ key|concat_str:innerkey }}"> 
                                         <input name="{{ key|concat_str:innerkey }}" type='hidden' value='false'> 
-                                        <label class='form-check-label' for="{{ key|concat_str:innerkey }}">{{ innerkey.capitalize }}</label>
-                                    </div>
+                                        <label class='form-check-label' for="{{ key|concat_str:innerkey }}">{{ innerkey.capitalize }}</label> 
+                                    </div> 
+
                                 {% elif innervalue == "text" %}
                                     <div class="form-group row"> 
                                         <label for="{{ key|concat_str:innerkey }}" class="col-sm col-form-label"> {{ innerkey.capitalize }} </label> 
@@ -57,6 +59,31 @@
                                             <textarea class="form-control form-control-sm" id="{{ key|concat_str:innerkey }}" name="{{ key|concat_str:innerkey }}" rows="1"></textarea>
                                         </div>
                                     </div>
+
+                                {% else %}    
+                                    {% for innerkey1, innervalue1 in innervalue.items %}
+                                        {% if innerkey1 == "radio" %}
+                                            <p><i>Pick the details for {{ innerkey.capitalize }}</i>
+                                            {% for option in innervalue1 %} 
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="{{ key|concat_str:innerkey }}" value="{{option}}" id="{{ key|concat_str:innerkey }}">
+                                                    <label class="form-check-label" for="{{ key|concat_str:innerkey }}">{{ option.capitalize }}</label>
+                                                </div>
+                                            {% endfor %}
+                                            </p>
+                                        
+                                        {% elif innerkey1 == "checkbox" %}
+                                            <p><i>Pick the details for {{ innerkey.capitalize }}</i>
+                                            {% for option in innervalue1 %} 
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type='checkbox' name="{{ key|concat_str:innerkey }}" value={{option}} id="{{ key|concat_str:innerkey }}"> 
+                                                    <label class='form-check-label' for="{{ key|concat_str:innerkey }}">{{ option.capitalize }}</label> 
+                                                </div>
+                                            {% endfor %}
+                                            </p>
+
+                                        {% endif %}
+                                    {% endfor %}
                                 {% endif %}
                             {% endfor %} 
                         </div>
@@ -88,6 +115,7 @@
         <script>
 
             //TODO: validation and template fix
+
 
             //cadence type
             $("#cadence-authentic").keyup(function() {
