@@ -24,9 +24,9 @@
                 <ul class="nav nav-tabs">
                     {% for key, value in observation_definition.items %}
                         {% if forloop.first %}
-                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#{{ key|slugify }}">{{ key }}</a></li>
+                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#{{ key|slugify }}">{{ key.capitalize }}</a></li>
                         {% else %}
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#{{ key|slugify }}">{{ key }}</a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#{{ key|slugify }}">{{ key.capitalize }}</a></li>
                         {% endif %}
                     {% endfor %}
                 </ul>
@@ -42,18 +42,20 @@
                         {% endif %}
 
                         <div class="{{ key|slugify }}"></div>
-                            <p><i>Pick the details for this type {{key}}</i></p>
+                            <p><i>Pick the details for this type {{key.capitalize}}</i></p>
                             {% for innerkey, innervalue in value.items %}
                                 {% if innervalue == "boolean" %}
                                     <div class="form-check"> 
                                         <input class="form-check-input" type='checkbox' name="{{ key|concat_str:innerkey }}" value='true' id="{{ key|concat_str:innerkey }}"> 
                                         <input name="{{ key|concat_str:innerkey }}" type='hidden' value='false'> 
-                                        <label class='form-check-label' for="{{ key|concat_str:innerkey }}">{{ innerkey }}</label>
+                                        <label class='form-check-label' for="{{ key|concat_str:innerkey }}">{{ innerkey.capitalize }}</label>
                                     </div>
                                 {% elif innervalue == "text" %}
-                                    <div class="form-group"> 
-                                        <label for="{{ key|concat_str:innerkey }}"> {{ innerkey }} </label> 
-                                        <textarea class="form-control" id="{{ key|concat_str:innerkey }}" name="{{ key|concat_str:innerkey }}" rows="1"></textarea>
+                                    <div class="form-group row"> 
+                                        <label for="{{ key|concat_str:innerkey }}" class="col-sm col-form-label"> {{ innerkey.capitalize }} </label> 
+                                        <div class="col-sm">
+                                            <textarea class="form-control form-control-sm" id="{{ key|concat_str:innerkey }}" name="{{ key|concat_str:innerkey }}" rows="1"></textarea>
+                                        </div>
                                     </div>
                                 {% endif %}
                             {% endfor %} 
@@ -86,6 +88,38 @@
         <script>
 
             //TODO: validation and template fix
+
+            //cadence type
+            $("#cadence-authentic").keyup(function() {
+                if ($("#cadence-authentic").val().length > 0) {
+                    $("#cadence-phrygian").attr('disabled', 'disabled');
+                    $("#cadence-plagal").attr('disabled', 'disabled');
+                } else {
+                    $('#cadence-phrygian').removeAttr('disabled');
+                    $('#cadence-plagal').removeAttr('disabled');
+                }
+            });
+
+            $("#cadence-phrygian").keyup(function() {
+                if ($("#cadence-phrygian").val().length > 0) {
+                    $("#cadence-authentic").attr('disabled', 'disabled');
+                    $("#cadence-plagal").attr('disabled', 'disabled');
+                } else {
+                    $('#cadence-authentic').removeAttr('disabled');
+                    $('#cadence-plagal').removeAttr('disabled');
+                }
+            });
+
+            $("#cadence-plagal").keyup(function() {
+                if ($("#cadence-plagal").val().length > 0) {
+                    $("#cadence-phrygian").attr('disabled', 'disabled');
+                    $("#cadence-authentic").attr('disabled', 'disabled');
+                } else {
+                    $('#cadence-phrygian').removeAttr('disabled');
+                    $('#cadence-authentic').removeAttr('disabled');
+                }
+            });
+
       
             $("input:checkbox").change(function () {
                 $(this).parent().find('input:hidden').val($(this).is(':checked'));
@@ -93,6 +127,7 @@
 
             
             $(document).ready(function(){
+
                 var activeTab = $(".tab-content").find(".active");
                 var id = activeTab.attr('id');
                 $("#selected-tab").val(id);

@@ -25,9 +25,9 @@
                 <ul class="nav nav-tabs">
                     {% for key, value in relationship_definition.items %}
                         {% if forloop.first %}
-                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#{{ key|slugify }}">{{ key }}</a></li>
+                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#{{ key|slugify }}">{{ key.capitalize }}</a></li>
                         {% else %}
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#{{ key|slugify }}">{{ key }}</a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#{{ key|slugify }}">{{ key.capitalize }}</a></li>
                         {% endif %}
                     {% endfor %}
                 </ul>
@@ -43,12 +43,12 @@
                         {% endif %}
 
                         <div class="{{ key|slugify }}"></div>
-                            <p><i>Pick the details for this type {{key}}</i></p>
+                            <p><i>Pick the details for this type {{key.capitalize}}</i></p>
                             {% for innerkey, innervalue in value.items %}
                                 <div class="form-check"> 
                                     <input class="form-check-input" type='checkbox' name="{{ key|concat_str:innerkey }}" value='true' id="{{ key|concat_str:innerkey }}"> 
                                     <input name="{{ key|concat_str:innerkey }}" type='hidden' value='false'> 
-                                    <label class='form-check-label' for="{{ key|concat_str:innerkey }}">{{ innerkey }}</label>
+                                    <label class='form-check-label' for="{{ key|concat_str:innerkey }}">{{ innerkey.capitalize }}</label>
                                 </div>
                             {% endfor %} 
 
