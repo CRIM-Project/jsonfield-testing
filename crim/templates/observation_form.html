@@ -63,24 +63,28 @@
                                 {% else %}    
                                     {% for innerkey1, innervalue1 in innervalue.items %}
                                         {% if innerkey1 == "radio" %}
-                                            <p><i>Pick the details for {{ innerkey.capitalize }}</i>
+                                            <input type="hidden" id="{{ key|concat_str:innerkey}}" name="{{ key|concat_str:innerkey }}" value="No dovetail">
+                                            <p>{{ innerkey.capitalize }}:
+                                            <div id="{{ key|concat_str:innerkey }}" style="margin-left:100px;">
                                             {% for option in innervalue1 %} 
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="{{ key|concat_str:innerkey }}" value="{{option}}" id="{{ key|concat_str:innerkey }}">
                                                     <label class="form-check-label" for="{{ key|concat_str:innerkey }}">{{ option.capitalize }}</label>
                                                 </div>
                                             {% endfor %}
-                                            </p>
+                                            </div></p>
                                         
                                         {% elif innerkey1 == "checkbox" %}
-                                            <p><i>Pick the details for {{ innerkey.capitalize }}</i>
+                                            <input type="hidden" id="{{ key|concat_str:innerkey}}" name="{{ key|concat_str:innerkey }}">
+                                            <p>{{ innerkey.capitalize }}:
+                                            <div id="{{ key|concat_str:innerkey }}" style="margin-left:100px;">
                                             {% for option in innervalue1 %} 
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type='checkbox' name="{{ key|concat_str:innerkey }}" value={{option}} id="{{ key|concat_str:innerkey }}"> 
-                                                    <label class='form-check-label' for="{{ key|concat_str:innerkey }}">{{ option.capitalize }}</label> 
+                                                    <input class="form-check-input" type='checkbox' name="{{ innerkey|concat_str:option }}" value={{option}} id="{{ innerkey|concat_str:option }}"> 
+                                                    <label class='form-check-label' for="{{ innerkey|concat_str:option }}">{{ option.capitalize }}</label> 
                                                 </div>
                                             {% endfor %}
-                                            </p>
+                                            </div></p>
 
                                         {% endif %}
                                     {% endfor %}
@@ -95,7 +99,7 @@
                 <div class="row-sm">{{form.observation_definition}}</div>
 
                 <input type="hidden" id="selected-tab" name="selected-tab">
-                <input class="btn btn-primary" type="submit" name="Submit" value="Submit">
+                <input class="btn btn-primary" type="submit" name="Submit" value="Submit" id="submit">
             
             </form>
         </div>
@@ -173,7 +177,22 @@
                     var selected = x.replace(/\s+/g, '-');
                     $("#selected-tab").val(selected);
                 });
-                
+
+                // get array of values from all checkboxes 
+                // TODO: come up with ways to avoid hardcode
+                $("#submit").click(function() {
+                    // cadence irregular roles
+                    var irregular_roles_selected_options = [];
+                    $('#cadence-irregular-roles input:checked').each(function() {
+                        irregular_roles_selected_options.push(this.value);
+                    });
+                    if (irregular_roles_selected_options.length > 0) {
+                        $("#cadence-irregular-roles").val(irregular_roles_selected_options);
+                    } else {
+                        $("#cadence-irregular-roles").val("None");
+                    }
+                });
+
             }); 
 
             // GET ALL FORM INPUT AS JSON
@@ -189,14 +208,14 @@
                     const formData = new FormData(form);
                     const responseData = await postFormDataAsJson({ url, formData });
                     console.log({ responseData });
-                    $.ajax({
+                    /* $.ajax({
                         type:'POST',
                         url: '',
                         data: responseData,
                         success: function(response){
                             console.log('Success');
                         },
-                    });
+                    }); */
                     
                 } catch (error) {
                     console.error(error);
