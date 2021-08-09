@@ -63,7 +63,6 @@
                                 {% else %}    
                                     {% for innerkey1, innervalue1 in innervalue.items %}
                                         {% if innerkey1 == "radio" %}
-                                            <input type="hidden" id="{{ key|concat_str:innerkey}}" name="{{ key|concat_str:innerkey }}" value="No dovetail">
                                             <p>{{ innerkey.capitalize }}:
                                             <div id="{{ key|concat_str:innerkey }}" style="margin-left:100px;">
                                             {% for option in innervalue1 %} 
@@ -80,8 +79,8 @@
                                             <div id="{{ key|concat_str:innerkey }}" style="margin-left:100px;">
                                             {% for option in innervalue1 %} 
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type='checkbox' name="{{ innerkey|concat_str:option }}" value={{option}} id="{{ innerkey|concat_str:option }}"> 
-                                                    <label class='form-check-label' for="{{ innerkey|concat_str:option }}">{{ option.capitalize }}</label> 
+                                                    <input class="form-check-input" type='checkbox' name="{{ key|concat_str:option }}" value={{option}} id="{{ key|concat_str:option }}"> 
+                                                    <label class='form-check-label' for="{{ key|concat_str:option }}">{{ option.capitalize }}</label> 
                                                 </div>
                                             {% endfor %}
                                             </div></p>
@@ -105,8 +104,9 @@
         </div>
 
         <hr>
-        <p class="act"><b>Active Tab</b>: <span></span></p>
-        <p class="prev"><b>Previous Tab</b>: <span></span></p>
+        <a href = "{% url 'relationship-form' %}">Click here to redirect to relationship form</a>
+        <br>
+        <a href = "{% url 'home-view' %}">Click here to redirect to home view</a>
 
         <!-- Optional Javascript -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -121,7 +121,8 @@
             //TODO: validation and template fix
 
 
-            //cadence type
+            // CADENCE
+            // cadence type
             $("#cadence-authentic").keyup(function() {
                 if ($("#cadence-authentic").val().length > 0) {
                     $("#cadence-phrygian").attr('disabled', 'disabled');
@@ -152,7 +153,130 @@
                 }
             });
 
-      
+            // FUGA
+            // strict and flexed/flexed tonal
+            $('#fuga-strict').on('change', function () {
+                if (this.checked) {     
+                    $('#fuga-flexed').prop('checked', false);
+                    $('#fuga-flexed-tonal').prop('checked', false);
+                }
+            });
+            $('#fuga-flexed').on('change', function () {
+                if (this.checked) {     
+                    $('#fuga-strict').prop('checked', false);
+                }
+            });
+            $('#fuga-flexed-tonal').on('change', function () {
+                if (this.checked) {     
+                    $('#fuga-strict').prop('checked', false);
+                }
+            });
+
+            // IMITATIVE DUOS
+            // strict and flexed/flexed tonal
+            $('#imitative-duos-strict').on('change', function () {
+                if (this.checked) {     
+                    $('#imitative-duos-flexed').prop('checked', false);
+                    $('#imitative-duos-flexed-tonal').prop('checked', false);
+                }
+            });
+            $('#imitative-duos-flexed').on('change', function () {
+                if (this.checked) {     
+                    $('#imitative-duos-strict').prop('checked', false);
+                }
+            });
+            $('#imitative-duos-flexed-tonal').on('change', function () {
+                if (this.checked) {     
+                    $('#imitative-duos-strict').prop('checked', false);
+                }
+            });
+
+            // NON-IMITATIVE DUOS
+            // strict and flexed/flexed tonal
+            $('#non-imitative-duos-strict').on('change', function () {
+                if (this.checked) {     
+                    $('#non-imitative-duos-flexed').prop('checked', false);
+                    $('#non-imitative-duos-flexed-tonal').prop('checked', false);
+                }
+            });
+            $('#non-imitative-duos-flexed').on('change', function () {
+                if (this.checked) {     
+                    $('#non-imitative-duos-strict').prop('checked', false);
+                }
+            });
+            $('#non-imitative-duos-flexed-tonal').on('change', function () {
+                if (this.checked) {     
+                    $('#non-imitative-duos-strict').prop('checked', false);
+                }
+            });
+
+            // PERIODIC ENTRIES
+            // strict and flexed/flexed tonal
+            $('#periodic-entries-strict').on('change', function () {
+                if (this.checked) {     
+                    $('#periodic-entries-flexed').prop('checked', false);
+                    $('#periodic-entries-flexed-tonal').prop('checked', false);
+                }
+            });
+            $('#periodic-entries-flexed').on('change', function () {
+                if (this.checked) {     
+                    $('#periodic-entries-strict').prop('checked', false);
+                }
+            });
+            $('#periodic-entries-flexed-tonal').on('change', function () {
+                if (this.checked) {     
+                    $('#periodic-entries-strict').prop('checked', false);
+                }
+            });
+
+
+            // HOMORHYTHM
+            // mutually exclusive subtypes
+            $('#homorhythm-simple').on('change', function () {
+                if (this.checked) {     
+                    $('#homorhythm-staggered').prop('checked', false);
+                    $('#homorhythm-sequential').prop('checked', false);
+                    $('#homorhythm-fauxbourdon').prop('checked', false);
+                }
+            });
+            $('#homorhythm-staggered').on('change', function () {
+                if (this.checked) {     
+                    $('#homorhythm-simple').prop('checked', false);
+                    $('#homorhythm-sequential').prop('checked', false);
+                    $('#homorhythm-fauxbourdon').prop('checked', false);
+                }
+            });
+            $('#homorhythm-sequential').on('change', function () {
+                if (this.checked) {     
+                    $('#homorhythm-staggered').prop('checked', false);
+                    $('#homorhythm-simple').prop('checked', false);
+                    $('#homorhythm-fauxbourdon').prop('checked', false);
+                }
+            });
+            $('#homorhythm-fauxbourdon').on('change', function () {
+                if (this.checked) {     
+                    $('#homorhythm-staggered').prop('checked', false);
+                    $('#homorhythm-sequential').prop('checked', false);
+                    $('#homorhythm-simple').prop('checked', false);
+                }
+            });
+
+            //INTERVAL PATTERNS
+            // prepared and unprepared
+            $('#interval-patterns-prepared').on('change', function () {
+                if (this.checked) {     
+                    $('#interval-patterns-unprepared').prop('checked', false);
+                }
+            });
+            $('#interval-patterns-unprepared').on('change', function () {
+                if (this.checked) {     
+                    $('#interval-patterns-prepared').prop('checked', false);
+                }
+            });
+
+
+
+            //get checkbox values as true/false on click
             $("input:checkbox").change(function () {
                 $(this).parent().find('input:hidden').val($(this).is(':checked'));
             });
@@ -160,25 +284,24 @@
             
             $(document).ready(function(){
 
+                // default selected tab == first tab
                 var activeTab = $(".tab-content").find(".active");
                 var id = activeTab.attr('id');
                 $("#selected-tab").val(id);
 
+                // dynamically show tab content
                 $(".nav-tabs a").click(function(){
                     $(this).tab('show');
                 });
-
+                 
+                // change selected tab if clicked on any tab
                 $(".nav-tabs a").on('shown.bs.tab', function(event){
                     var x = $(event.target).text();         // active tab
-                    var y = $(event.relatedTarget).text();  // previous tab
-                    $(".act span").text(x);
-                    $(".prev span").text(y);
-
-                    var selected = x.replace(/\s+/g, '-');
+                    var selected = x.replace(/\s+/g, '-').toLowerCase();
                     $("#selected-tab").val(selected);
                 });
 
-                // get array of values from all checkboxes 
+                // get array of values from all checkboxes for one subtype
                 // TODO: come up with ways to avoid hardcode
                 $("#submit").click(function() {
                     // cadence irregular roles
@@ -190,6 +313,17 @@
                         $("#cadence-irregular-roles").val(irregular_roles_selected_options);
                     } else {
                         $("#cadence-irregular-roles").val("None");
+                    }
+
+                    // interval patterns dissonances
+                    var dissonances_selected_options = [];
+                    $('#interval-patterns-dissonances input:checked').each(function() {
+                        dissonances_selected_options.push(this.value);
+                    });
+                    if (dissonances_selected_options.length > 0) {
+                        $("#interval-patterns-dissonances").val(dissonances_selected_options);
+                    } else {
+                        $("#interval-patterns-dissonances").val("None");
                     }
                 });
 

@@ -72,8 +72,9 @@
         </div>
 
         <hr>
-        <p class="act"><b>Active Tab</b>: <span></span></p>
-        <p class="prev"><b>Previous Tab</b>: <span></span></p>
+        <a href = "{% url 'observation-form' %}">Click here to redirect to observation form</a>
+        <br>
+        <a href = "{% url 'home-view' %}">Click here to redirect to home view</a>
 
         <!-- Optional Javascript -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -92,51 +93,51 @@
             // TODO: clear hardcode
 
             // exact and monnayage
-            $('#exact').on('change', function () {
+            $('#quotation-exact').on('change', function () {
                 if (this.checked) {     
-                    $('#monnayage').prop('checked', false);
+                    $('#quotation-monnayage').prop('checked', false);
                 }
             });
-            $('#monnayage').on('change', function () {
+            $('#quotation-monnayage').on('change', function () {
                 if (this.checked) {     
-                    $('#exact').prop('checked', false);
+                    $('#quotation-exact').prop('checked', false);
                 }
             });
 
             // amplified and truncated
-            $('#truncated').on('change', function () {
+            $('#non-mechanical-transformatiom-truncated').on('change', function () {
                 if (this.checked) {     
-                    $('#amplified').prop('checked', false);
+                    $('#non-mechanical-transformation-amplified').prop('checked', false);
                 }
             });
-            $('#amplified').on('change', function () {
+            $('#non-mechanical-transformation-amplified').on('change', function () {
                 if (this.checked) {     
-                    $('#truncated').prop('checked', false);
+                    $('#non-mechanical-transformation-truncated').prop('checked', false);
                 }
             });
 
              // embellished and reduced
-            $('#embellished').on('change', function () {
+            $('#non-mechanical-transformation-embellished').on('change', function () {
                 if (this.checked) {     
-                    $('#reduced').prop('checked', false);
+                    $('#non-mechanical-transformation-reduced').prop('checked', false);
                 }
             });
             
-            $('#reduced').on('change', function () {
+            $('#non-mechanical-transformation-reduced').on('change', function () {
                 if (this.checked) {     
-                    $('#embellished').prop('checked', false);
+                    $('#non-mechanical-transformation-embellished').prop('checked', false);
                 }
             });
             
             // transposed and transposed diff amounts
-            $('#transposed').on('change', function () {
+            $('#mechanical-transformation-transposed').on('change', function () {
                 if (this.checked) {     
-                    $('#transposed-different-amounts').prop('checked', false);
+                    $('#mechanical-transformation-transposed-different-amounts').prop('checked', false);
                 }
             });
-            $('#transposed-different-amounts').on('change', function () {
+            $('#mechanical-transformation-transposed-different-amounts').on('change', function () {
                 if (this.checked) {     
-                    $('#transposed').prop('checked', false);
+                    $('#mechanical-transformation-transposed').prop('checked', false);
                 }
             });
 
@@ -151,11 +152,7 @@
 
                 $(".nav-tabs a").on('shown.bs.tab', function(event){
                     var x = $(event.target).text();         // active tab
-                    var y = $(event.relatedTarget).text();  // previous tab
-                    $(".act span").text(x);
-                    $(".prev span").text(y);
-
-                    var selected = x.replace(/\s+/g, '-');
+                    var selected = x.replace(/\s+/g, '-').toLowerCase();
                     $("#selected-tab").val(selected);
                 });
                 
