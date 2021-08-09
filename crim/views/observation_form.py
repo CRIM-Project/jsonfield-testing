@@ -23,7 +23,7 @@ def get_observation(request):
                 musical_type = musical_type + mtype #set musical type
                 allowed_subtypes = list(CURRENT_DEFINITION.observation_definition[mtype]) #allowed subtype for it
                 for subtype in allowed_subtypes: #get name of each allowed subtype
-                    slug = musical_type.replace(' ', '-') + '-' + subtype.replace(' ', '-') 
+                    slug = selected_type + '-' + subtype.replace(' ', '-') 
                     details_dict[subtype.capitalize()] = request.POST[slug]
                 break
         json_object = json.dumps(details_dict)  

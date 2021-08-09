@@ -56,7 +56,7 @@
                                     <div class="form-group row"> 
                                         <label for="{{ key|concat_str:innerkey }}" class="col-sm col-form-label"> {{ innerkey.capitalize }} </label> 
                                         <div class="col-sm">
-                                            <textarea class="form-control form-control-sm" id="{{ key|concat_str:innerkey }}" name="{{ key|concat_str:innerkey }}" rows="1"></textarea>
+                                            <input class="form-control form-control-sm" id="{{ key|concat_str:innerkey }}" name="{{ key|concat_str:innerkey }}">
                                         </div>
                                     </div>
 
@@ -301,32 +301,6 @@
                     $("#selected-tab").val(selected);
                 });
 
-                // get array of values from all checkboxes for one subtype
-                // TODO: come up with ways to avoid hardcode
-                $("#submit").click(function() {
-                    // cadence irregular roles
-                    var irregular_roles_selected_options = [];
-                    $('#cadence-irregular-roles input:checked').each(function() {
-                        irregular_roles_selected_options.push(this.value);
-                    });
-                    if (irregular_roles_selected_options.length > 0) {
-                        $("#cadence-irregular-roles").val(irregular_roles_selected_options);
-                    } else {
-                        $("#cadence-irregular-roles").val("None");
-                    }
-
-                    // interval patterns dissonances
-                    var dissonances_selected_options = [];
-                    $('#interval-patterns-dissonances input:checked').each(function() {
-                        dissonances_selected_options.push(this.value);
-                    });
-                    if (dissonances_selected_options.length > 0) {
-                        $("#interval-patterns-dissonances").val(dissonances_selected_options);
-                    } else {
-                        $("#interval-patterns-dissonances").val("None");
-                    }
-                });
-
             }); 
 
             // GET ALL FORM INPUT AS JSON
@@ -334,7 +308,39 @@
             form.addEventListener("submit", handleFormSubmit)
             
             async function handleFormSubmit(event) {
+
                 event.preventDefault();
+                
+                // GET ARRAYS OF CHECKED VALUES
+                // cadence irregular roles
+                var irregular_roles_selected_options = [];
+                $('#cadence-irregular-roles input:checked').each(function() {
+                    irregular_roles_selected_options.push(this.value.substr(0, 1).toUpperCase() + this.value.substr(1));
+                });
+                if (irregular_roles_selected_options.length > 0) {
+                    $("#cadence-irregular-roles").val(irregular_roles_selected_options);                    
+                } else {
+                    $("#cadence-irregular-roles").val("None");
+                }
+
+                // interval patterns dissonances
+                var dissonances_selected_options = [];
+                $('#interval-patterns-dissonances input:checked').each(function() {
+                    dissonances_selected_options.push(this.value.substr(0, 1).toUpperCase() + this.value.substr(1));
+                });
+                if (dissonances_selected_options.length > 0) {
+                    $("#interval-patterns-dissonances").val(dissonances_selected_options);
+                } else {
+                    $("#interval-patterns-dissonances").val("None");
+                }
+
+                // make sure FormData includes all disabled fields as not applicable
+                $("input:disabled").each(function() {
+                    $(this).removeAttr('disabled');
+                    $(this).val("Not applicable");
+                });
+                
+
                 const form = event.currentTarget;
                 const url = form.action;
 
@@ -342,14 +348,14 @@
                     const formData = new FormData(form);
                     const responseData = await postFormDataAsJson({ url, formData });
                     console.log({ responseData });
-                    /* $.ajax({
+                     $.ajax({
                         type:'POST',
                         url: '',
                         data: responseData,
                         success: function(response){
                             console.log('Success');
                         },
-                    }); */
+                    }); 
                     
                 } catch (error) {
                     console.error(error);

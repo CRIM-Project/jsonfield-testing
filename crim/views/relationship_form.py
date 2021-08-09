@@ -24,7 +24,7 @@ def get_relationship(request):
                 relationship_type = relationship_type + rtype #set rela type
                 allowed_subtypes = list(CURRENT_DEFINITION.relationship_definition[rtype]) #allowed subtype for it
                 for subtype in allowed_subtypes: #get name of each allowed subtype
-                    slug = relationship_type.replace(' ', '-') + '-' + subtype.replace(' ', '-') 
+                    slug = selected_type + '-' + subtype.replace(' ', '-') 
                     details_dict[subtype.capitalize()] = request.POST[slug]
                 break
         json_object = json.dumps(details_dict)  
