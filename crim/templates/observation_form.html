@@ -10,6 +10,12 @@
     <body>
         {% load crispy_forms_tags %}
         {% load concat_str %}
+        <header>
+        <a href = "{% url 'relationship-form' %}">Click here to redirect to relationship form</a>
+        <br>
+        <a href = "{% url 'home-view' %}">Click here to redirect to home view</a>
+        </header>
+        <hr>
         
         <div class="shadow-none p-4 mt-4 mb-4 bg-light">
             <div class="text-center">
@@ -348,7 +354,7 @@
                     const formData = new FormData(form);
                     const responseData = await postFormDataAsJson({ url, formData });
                     console.log({ responseData });
-                     $.ajax({
+                    $.ajax({
                         type:'POST',
                         url: '',
                         data: responseData,
