@@ -13,8 +13,8 @@ def run():
     #                        definition=CRIMDefinition.objects.get(pk=5))
     #testobs2.save()
 
-    testdef = CRIMDefinition(
-        observation_definition={
+    testdef = CRIMDefinition.objects.get(id = 7)
+    testdef.observation_definition = {
         "cadence": {
             "tone": {
                 "radio" : ["C","D","E","E-flat","F","G","A","B","B-flat"]
@@ -23,8 +23,8 @@ def run():
                 "radio" : ["Authentic", "Plagal", "Phrygian"]
             },
             "voices": "text",
-            "overlapping": "boolean",
-            "dovetail cadence": "text",
+            "dovetail cadence": "boolean",
+            "dovetail cadence voice": "text",
             "dovetail position": {
                 "radio": ["Above", "Between", "Below", "Not applicable"]
             },
@@ -74,32 +74,33 @@ def run():
             "voices": "text",
             "entry intervals": "text",
             "time intervals": "text",
-            "invertible counterpoint": "boolean",
             "regularity" : {
                 "radio": ["Strict", "Flexed", "Flexed tonal"]
             },
+            "invertible counterpoint": "boolean",
         },
         "non-imitative duos": {
             "voices": "text",
             "entry intervals": "text",
             "time intervals": "text",
-            "invertible counterpoint": "boolean",
             "regularity" : {
                 "radio": ["Strict", "Flexed", "Flexed tonal"]
             },
+            "invertible counterpoint": "boolean"
         },
         "periodic entries": {
             "voices": "text",
             "entry intervals": "text",
             "time intervals": "text",
-            "invertible counterpoint": "boolean",
             "regularity" : {
                 "radio": ["Strict", "Flexed", "Flexed tonal"]
             },
+            "invertible counterpoint": "boolean",
             "sequential": "boolean",
             "added entries": "boolean",
         },
         "homorhythm": {
+            "voices": "text",
             "type": {
                 "radio": ["Simple", "Staggered", "Sequential", "Fauxbourdon"]
             },
@@ -117,44 +118,6 @@ def run():
             },
             "suspension" : "boolean"
         }
-    }, 
-    relationship_definition={
-        "mechanical transformation": {
-            "melodically inverted": "boolean",
-            "metrically shifted": "boolean",
-            "retrograde": "boolean",
-            "sounding of different voices": "boolean",
-            "systematic augmentation": "boolean",
-            "systematic diminution": "boolean",
-            "transposed": "boolean",
-            "transposed different amounts": "boolean"
-        },
-        "new material": {},
-        "non-mechanical transformation": {
-            "amplified": "boolean",
-            "double or invertible counterpoint": "boolean",
-            "embellished": "boolean",
-            "melodically inverted": "boolean",
-            "metrically shifted": "boolean",
-            "new combination": "boolean",
-            "new counter subject": "boolean",
-            "old counter subject shifted metrically": "boolean",
-            "old counter subject transposed": "boolean",
-            "reduced": "boolean",
-            "retrograde": "boolean",
-            "sounding of different voices": "boolean",
-            "truncated": "boolean"
-        },
-        "omission": {},
-        "quotation": {
-            "exact": "boolean",
-            "monnayage": "boolean"
-        },
-        "self": {
-            "self enchainment": "boolean",
-            "self repetition": "boolean",
-            "self return": "boolean"
-        }
-    })
+    }
 
     testdef.save()
