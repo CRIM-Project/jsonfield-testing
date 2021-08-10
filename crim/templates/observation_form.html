@@ -69,6 +69,7 @@
                                 {% else %}    
                                     {% for innerkey1, innervalue1 in innervalue.items %}
                                         {% if innerkey1 == "radio" %}
+                                            <input name="{{ key|concat_str:innerkey }}" type='hidden' value='No value by default'> 
                                             <p>{{ innerkey.capitalize }}:
                                             <div id="{{ key|concat_str:innerkey }}" style="margin-left:50px;">
                                             {% for option in innervalue1 %} 
@@ -123,164 +124,6 @@
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"> </script>
         
         <script>
-            /*
-            //TODO: validation and template fix
-
-
-            // CADENCE
-            // cadence type
-            $("#cadence-authentic").keyup(function() {
-                if ($("#cadence-authentic").val().length > 0) {
-                    $("#cadence-phrygian").attr('disabled', 'disabled');
-                    $("#cadence-plagal").attr('disabled', 'disabled');
-                } else {
-                    $('#cadence-phrygian').removeAttr('disabled');
-                    $('#cadence-plagal').removeAttr('disabled');
-                }
-            });
-
-            $("#cadence-phrygian").keyup(function() {
-                if ($("#cadence-phrygian").val().length > 0) {
-                    $("#cadence-authentic").attr('disabled', 'disabled');
-                    $("#cadence-plagal").attr('disabled', 'disabled');
-                } else {
-                    $('#cadence-authentic').removeAttr('disabled');
-                    $('#cadence-plagal').removeAttr('disabled');
-                }
-            });
-
-            $("#cadence-plagal").keyup(function() {
-                if ($("#cadence-plagal").val().length > 0) {
-                    $("#cadence-phrygian").attr('disabled', 'disabled');
-                    $("#cadence-authentic").attr('disabled', 'disabled');
-                } else {
-                    $('#cadence-phrygian').removeAttr('disabled');
-                    $('#cadence-authentic').removeAttr('disabled');
-                }
-            });
-
-            // FUGA
-            // strict and flexed/flexed tonal
-            $('#fuga-strict').on('change', function () {
-                if (this.checked) {     
-                    $('#fuga-flexed').prop('checked', false);
-                    $('#fuga-flexed-tonal').prop('checked', false);
-                }
-            });
-            $('#fuga-flexed').on('change', function () {
-                if (this.checked) {     
-                    $('#fuga-strict').prop('checked', false);
-                }
-            });
-            $('#fuga-flexed-tonal').on('change', function () {
-                if (this.checked) {     
-                    $('#fuga-strict').prop('checked', false);
-                }
-            });
-
-            // IMITATIVE DUOS
-            // strict and flexed/flexed tonal
-            $('#imitative-duos-strict').on('change', function () {
-                if (this.checked) {     
-                    $('#imitative-duos-flexed').prop('checked', false);
-                    $('#imitative-duos-flexed-tonal').prop('checked', false);
-                }
-            });
-            $('#imitative-duos-flexed').on('change', function () {
-                if (this.checked) {     
-                    $('#imitative-duos-strict').prop('checked', false);
-                }
-            });
-            $('#imitative-duos-flexed-tonal').on('change', function () {
-                if (this.checked) {     
-                    $('#imitative-duos-strict').prop('checked', false);
-                }
-            });
-
-            // NON-IMITATIVE DUOS
-            // strict and flexed/flexed tonal
-            $('#non-imitative-duos-strict').on('change', function () {
-                if (this.checked) {     
-                    $('#non-imitative-duos-flexed').prop('checked', false);
-                    $('#non-imitative-duos-flexed-tonal').prop('checked', false);
-                }
-            });
-            $('#non-imitative-duos-flexed').on('change', function () {
-                if (this.checked) {     
-                    $('#non-imitative-duos-strict').prop('checked', false);
-                }
-            });
-            $('#non-imitative-duos-flexed-tonal').on('change', function () {
-                if (this.checked) {     
-                    $('#non-imitative-duos-strict').prop('checked', false);
-                }
-            });
-
-            // PERIODIC ENTRIES
-            // strict and flexed/flexed tonal
-            $('#periodic-entries-strict').on('change', function () {
-                if (this.checked) {     
-                    $('#periodic-entries-flexed').prop('checked', false);
-                    $('#periodic-entries-flexed-tonal').prop('checked', false);
-                }
-            });
-            $('#periodic-entries-flexed').on('change', function () {
-                if (this.checked) {     
-                    $('#periodic-entries-strict').prop('checked', false);
-                }
-            });
-            $('#periodic-entries-flexed-tonal').on('change', function () {
-                if (this.checked) {     
-                    $('#periodic-entries-strict').prop('checked', false);
-                }
-            });
-
-
-            // HOMORHYTHM
-            // mutually exclusive subtypes
-            $('#homorhythm-simple').on('change', function () {
-                if (this.checked) {     
-                    $('#homorhythm-staggered').prop('checked', false);
-                    $('#homorhythm-sequential').prop('checked', false);
-                    $('#homorhythm-fauxbourdon').prop('checked', false);
-                }
-            });
-            $('#homorhythm-staggered').on('change', function () {
-                if (this.checked) {     
-                    $('#homorhythm-simple').prop('checked', false);
-                    $('#homorhythm-sequential').prop('checked', false);
-                    $('#homorhythm-fauxbourdon').prop('checked', false);
-                }
-            });
-            $('#homorhythm-sequential').on('change', function () {
-                if (this.checked) {     
-                    $('#homorhythm-staggered').prop('checked', false);
-                    $('#homorhythm-simple').prop('checked', false);
-                    $('#homorhythm-fauxbourdon').prop('checked', false);
-                }
-            });
-            $('#homorhythm-fauxbourdon').on('change', function () {
-                if (this.checked) {     
-                    $('#homorhythm-staggered').prop('checked', false);
-                    $('#homorhythm-sequential').prop('checked', false);
-                    $('#homorhythm-simple').prop('checked', false);
-                }
-            });
-
-            //INTERVAL PATTERNS
-            // prepared and unprepared
-            $('#interval-patterns-prepared').on('change', function () {
-                if (this.checked) {     
-                    $('#interval-patterns-unprepared').prop('checked', false);
-                }
-            });
-            $('#interval-patterns-unprepared').on('change', function () {
-                if (this.checked) {     
-                    $('#interval-patterns-prepared').prop('checked', false);
-                }
-            });
-
-            */
 
             //get checkbox values as true/false on click
             $("input:checkbox").change(function () {
@@ -345,14 +188,14 @@
                     const formData = new FormData(form);
                     const responseData = await postFormDataAsJson({ url, formData });
                     console.log({ responseData });
-                    /*$.ajax({
+                    $.ajax({
                         type:'POST',
                         url: '',
                         data: responseData,
                         success: function(response){
                             console.log('Success');
                         },
-                    }); */
+                    }); 
                     
                 } catch (error) {
                     console.error(error);
