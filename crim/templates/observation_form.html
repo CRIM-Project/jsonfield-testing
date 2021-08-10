@@ -70,7 +70,7 @@
                                     {% for innerkey1, innervalue1 in innervalue.items %}
                                         {% if innerkey1 == "radio" %}
                                             <p>{{ innerkey.capitalize }}:
-                                            <div id="{{ key|concat_str:innerkey }}" style="margin-left:100px;">
+                                            <div id="{{ key|concat_str:innerkey }}" style="margin-left:50px;">
                                             {% for option in innervalue1 %} 
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="{{ key|concat_str:innerkey }}" value="{{option}}" id="{{ key|concat_str:innerkey }}">
@@ -82,7 +82,7 @@
                                         {% elif innerkey1 == "checkbox" %}
                                             <input type="hidden" id="{{ key|concat_str:innerkey}}" name="{{ key|concat_str:innerkey }}">
                                             <p>{{ innerkey.capitalize }}:
-                                            <div id="{{ key|concat_str:innerkey }}" style="margin-left:100px;">
+                                            <div id="{{ key|concat_str:innerkey }}" style="margin-left:50px;">
                                             {% for option in innervalue1 %} 
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type='checkbox' name="{{ key|concat_str:option }}" value={{option}} id="{{ key|concat_str:option }}"> 
@@ -123,7 +123,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"> </script>
         
         <script>
-
+            /*
             //TODO: validation and template fix
 
 
@@ -280,7 +280,7 @@
                 }
             });
 
-
+            */
 
             //get checkbox values as true/false on click
             $("input:checkbox").change(function () {
@@ -317,6 +317,7 @@
 
                 event.preventDefault();
                 
+                
                 // GET ARRAYS OF CHECKED VALUES
                 // cadence irregular roles
                 var irregular_roles_selected_options = [];
@@ -329,16 +330,6 @@
                     $("#cadence-irregular-roles").val("None");
                 }
 
-                // interval patterns dissonances
-                var dissonances_selected_options = [];
-                $('#interval-patterns-dissonances input:checked').each(function() {
-                    dissonances_selected_options.push(this.value.substr(0, 1).toUpperCase() + this.value.substr(1));
-                });
-                if (dissonances_selected_options.length > 0) {
-                    $("#interval-patterns-dissonances").val(dissonances_selected_options);
-                } else {
-                    $("#interval-patterns-dissonances").val("None");
-                }
 
                 // make sure FormData includes all disabled fields as not applicable
                 $("input:disabled").each(function() {
@@ -354,14 +345,14 @@
                     const formData = new FormData(form);
                     const responseData = await postFormDataAsJson({ url, formData });
                     console.log({ responseData });
-                    $.ajax({
+                    /*$.ajax({
                         type:'POST',
                         url: '',
                         data: responseData,
                         success: function(response){
                             console.log('Success');
                         },
-                    }); 
+                    }); */
                     
                 } catch (error) {
                     console.error(error);

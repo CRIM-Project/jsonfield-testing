@@ -30,7 +30,7 @@ def run():
             },
             "irregular cadence": "boolean",
             "irregular roles": {
-                "checkboxes": ["Cantizans", "Altizans", "Tenorizans", "Bassizans"]
+                "checkbox": ["Cantizans", "Altizans", "Tenorizans", "Bassizans"]
             }
         },
         "cantus firmus": {
