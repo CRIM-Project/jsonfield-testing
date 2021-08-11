@@ -69,7 +69,7 @@
                                 {% else %}    
                                     {% for innerkey1, innervalue1 in innervalue.items %}
                                         {% if innerkey1 == "radio" %}
-                                            <input name="{{ key|concat_str:innerkey }}" type='hidden' value='No value by default'> 
+                                            <input name="{{ key|concat_str:innerkey }}" type='hidden' value='None'> 
                                             <p>{{ innerkey.capitalize }}:
                                             <div id="{{ key|concat_str:innerkey }}" style="margin-left:50px;">
                                             {% for option in innervalue1 %} 
@@ -124,6 +124,24 @@
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"> </script>
         
         <script>
+            
+            // make radios deselectable
+            function deselectableRadios(rootElement) {
+                if(!rootElement) rootElement = document;
+                if(!window.radioChecked) window.radioChecked = null;
+                window.radioClick = function(e) {
+                    const obj = e.target;
+                    if(e.keyCode) return obj.checked = e.keyCode!=32;
+                    obj.checked = window.radioChecked != obj;
+                    window.radioChecked = obj.checked ? obj : null;
+                }
+                rootElement.querySelectorAll("input[type='radio']").forEach( radio => {
+                    radio.setAttribute("onclick", "radioClick(event)");
+                    radio.setAttribute("onkeyup", "radioClick(event)");
+                });
+            }
+
+            deselectableRadios();
 
             //get checkbox values as true/false on click
             $("input:checkbox").change(function () {
@@ -188,14 +206,14 @@
                     const formData = new FormData(form);
                     const responseData = await postFormDataAsJson({ url, formData });
                     console.log({ responseData });
-                    $.ajax({
+                    /*$.ajax({
                         type:'POST',
                         url: '',
                         data: responseData,
                         success: function(response){
                             console.log('Success');
                         },
-                    }); 
+                    }); */
                     
                 } catch (error) {
                     console.error(error);
