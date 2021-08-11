@@ -81,7 +81,6 @@
                                             </div></p>
                                         
                                         {% elif innerkey1 == "checkbox" %}
-                                            <input type="hidden" id="{{ key|concat_str:innerkey}}" name="{{ key|concat_str:innerkey }}">
                                             <p>{{ innerkey.capitalize }}:
                                             <div id="{{ key|concat_str:innerkey }}" style="margin-left:50px;">
                                             {% for option in innervalue1 %} 
@@ -178,7 +177,7 @@
 
                 event.preventDefault();
                 
-                
+                /*
                 // GET ARRAYS OF CHECKED VALUES
                 // cadence irregular roles
                 var irregular_roles_selected_options = [];
@@ -190,13 +189,13 @@
                 } else {
                     $("#cadence-irregular-roles").val("None");
                 }
+                */
 
-
-                // make sure FormData includes all disabled fields as not applicable
+                /* make sure FormData includes all disabled fields as not applicable
                 $("input:disabled").each(function() {
                     $(this).removeAttr('disabled');
                     $(this).val("Not applicable");
-                });
+                }); */
                 
 
                 const form = event.currentTarget;
@@ -206,14 +205,14 @@
                     const formData = new FormData(form);
                     const responseData = await postFormDataAsJson({ url, formData });
                     console.log({ responseData });
-                    /*$.ajax({
+                    $.ajax({
                         type:'POST',
                         url: '',
                         data: responseData,
                         success: function(response){
                             console.log('Success');
                         },
-                    }); */
+                    });
                     
                 } catch (error) {
                     console.error(error);

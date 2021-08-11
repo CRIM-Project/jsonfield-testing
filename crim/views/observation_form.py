@@ -24,7 +24,23 @@ def get_observation(request):
                 allowed_subtypes = list(CURRENT_DEFINITION.observation_definition[mtype]) #allowed subtype for it
                 for subtype in allowed_subtypes: #get name of each allowed subtype
                     slug = selected_type + '-' + subtype.replace(' ', '-') 
-                    details_dict[subtype.capitalize()] = request.POST[slug]
+                    
+                    # check if checkboxes need to be added to array
+                    if slug in dict(request.POST):
+                        if request.POST[slug] != "":
+                            details_dict[subtype.capitalize()] = request.POST[slug].capitalize()
+                        else:
+                            details_dict[subtype.capitalize()] = "None"
+                    # if checkboxes to be input as array
+                    else:
+                        allowed_options = list(CURRENT_DEFINITION.observation_definition[mtype][subtype]['checkbox'])
+                        selected_options = []
+                        for option in allowed_options:
+                            slug_array = selected_type + '-' + option.replace(' ', '-').lower()
+                            if slug_array in dict(request.POST):
+                                selected_options.append(request.POST[slug_array])
+                        selected_options_string = ', '.join([str(elem) for elem in selected_options])
+                        details_dict[subtype.capitalize()] = selected_options_string
                 break
         json_object = json.dumps(details_dict)  
 
@@ -35,10 +51,10 @@ def get_observation(request):
                     }
         #print(form_data)
         form = ObservationForm(form_data)
-        print (form.is_bound)
-        print (form.is_valid())
-        print (form.errors)
-        print (form.non_field_errors)
+        #print (form.is_bound)
+        #print (form.is_valid())
+        #print (form.errors)
+        #print (form.non_field_errors)
         # check whether it's valid:
         if form.is_valid():
             form.save()
