@@ -177,27 +177,6 @@
 
                 event.preventDefault();
                 
-                /*
-                // GET ARRAYS OF CHECKED VALUES
-                // cadence irregular roles
-                var irregular_roles_selected_options = [];
-                $('#cadence-irregular-roles input:checked').each(function() {
-                    irregular_roles_selected_options.push(this.value.substr(0, 1).toUpperCase() + this.value.substr(1));
-                });
-                if (irregular_roles_selected_options.length > 0) {
-                    $("#cadence-irregular-roles").val(irregular_roles_selected_options);                    
-                } else {
-                    $("#cadence-irregular-roles").val("None");
-                }
-                */
-
-                /* make sure FormData includes all disabled fields as not applicable
-                $("input:disabled").each(function() {
-                    $(this).removeAttr('disabled');
-                    $(this).val("Not applicable");
-                }); */
-                
-
                 const form = event.currentTarget;
                 const url = form.action;
 

@@ -56,7 +56,7 @@
                                 {% else %}    
                                     {% for innerkey1, innervalue1 in innervalue.items %}
                                         {% if innerkey1 == "radio" %}
-                                            <input name="{{ key|concat_str:innerkey }}" type='hidden' value='No value by default'> 
+                                            <input name="{{ key|concat_str:innerkey }}" type='hidden' value='None'> 
                                             <p>{{ innerkey.capitalize }}:
                                             <div id="{{ key|concat_str:innerkey }}" style="margin-left:50px;">
                                             {% for option in innervalue1 %} 
