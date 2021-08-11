@@ -45,13 +45,32 @@
                         <div class="{{ key|slugify }}"></div>
                             <p><i>Pick the details for this type {{key.capitalize}}</i></p>
                             {% for innerkey, innervalue in value.items %}
-                                <div class="form-check"> 
-                                    <input class="form-check-input" type='checkbox' name="{{ key|concat_str:innerkey }}" value='true' id="{{ key|concat_str:innerkey }}"> 
-                                    <input name="{{ key|concat_str:innerkey }}" type='hidden' value='false'> 
-                                    <label class='form-check-label' for="{{ key|concat_str:innerkey }}">{{ innerkey.capitalize }}</label>
-                                </div>
-                            {% endfor %} 
 
+                                {% if innervalue == "boolean" %} 
+                                    <div class="form-check"> 
+                                        <input class="form-check-input" type='checkbox' name="{{ key|concat_str:innerkey }}" value='true' id="{{ key|concat_str:innerkey }}"> 
+                                        <input name="{{ key|concat_str:innerkey }}" type='hidden' value='false'> 
+                                        <label class='form-check-label' for="{{ key|concat_str:innerkey }}">{{ innerkey.capitalize }}</label> 
+                                    </div> 
+
+                                {% else %}    
+                                    {% for innerkey1, innervalue1 in innervalue.items %}
+                                        {% if innerkey1 == "radio" %}
+                                            <input name="{{ key|concat_str:innerkey }}" type='hidden' value='No value by default'> 
+                                            <p>{{ innerkey.capitalize }}:
+                                            <div id="{{ key|concat_str:innerkey }}" style="margin-left:50px;">
+                                            {% for option in innervalue1 %} 
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="{{ key|concat_str:innerkey }}" value="{{option}}" id="{{ key|concat_str:innerkey }}">
+                                                    <label class="form-check-label" for="{{ key|concat_str:innerkey }}">{{ option.capitalize }}</label>
+                                                </div>
+                                            {% endfor %}
+                                            </div></p>
+
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %} 
                         </div>
 
                     {% endfor %}
@@ -90,55 +109,6 @@
                 $(this).parent().find('input:hidden').val($(this).is(':checked'));
             });
 
-            // TODO: clear hardcode
-
-            // exact and monnayage
-            $('#quotation-exact').on('change', function () {
-                if (this.checked) {     
-                    $('#quotation-monnayage').prop('checked', false);
-                }
-            });
-            $('#quotation-monnayage').on('change', function () {
-                if (this.checked) {     
-                    $('#quotation-exact').prop('checked', false);
-                }
-            });
-
-            // amplified and truncated
-            $('#non-mechanical-transformatiom-truncated').on('change', function () {
-                if (this.checked) {     
-                    $('#non-mechanical-transformation-amplified').prop('checked', false);
-                }
-            });
-            $('#non-mechanical-transformation-amplified').on('change', function () {
-                if (this.checked) {     
-                    $('#non-mechanical-transformation-truncated').prop('checked', false);
-                }
-            });
-
-             // embellished and reduced
-            $('#non-mechanical-transformation-embellished').on('change', function () {
-                if (this.checked) {     
-                    $('#non-mechanical-transformation-reduced').prop('checked', false);
-                }
-            });
-            $('#non-mechanical-transformation-reduced').on('change', function () {
-                if (this.checked) {     
-                    $('#non-mechanical-transformation-embellished').prop('checked', false);
-                }
-            });
-            
-            // transposed and transposed diff amounts
-            $('#mechanical-transformation-transposed').on('change', function () {
-                if (this.checked) {     
-                    $('#mechanical-transformation-transposed-different-amounts').prop('checked', false);
-                }
-            });
-            $('#mechanical-transformation-transposed-different-amounts').on('change', function () {
-                if (this.checked) {     
-                    $('#mechanical-transformation-transposed').prop('checked', false);
-                }
-            });
 
             $(document).ready(function(){
                 var activeTab = $(".tab-content").find(".active");

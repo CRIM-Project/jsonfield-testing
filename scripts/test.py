@@ -14,109 +14,46 @@ def run():
     #testobs2.save()
 
     testdef = CRIMDefinition.objects.get(id = 7)
-    testdef.observation_definition = {
-        "cadence": {
-            "tone": {
-                "radio" : ["C","D","E","E-flat","F","G","A","B","B-flat"]
+    testdef.relationship_definition = {
+        "mechanical transformation": {
+            "melodically inverted": "boolean",
+            "metrically shifted": "boolean",
+            "retrograde": "boolean",
+            "sounding of different voices": "boolean",
+            "systematic augmentation": "boolean",
+            "systematic diminution": "boolean",
+            "transposition": {
+                "radio": ["Transposed", "Transposed Different Amounts"]
             },
-            "type": {
-                "radio" : ["Authentic", "Plagal", "Phrygian"]
+        },
+        "new material": {},
+        "non-mechanical transformation": {
+            "activity": {
+                "radio": ["Embellished", "Reduced"]
             },
-            "voices": "text",
-            "dovetail cadence": "boolean",
-            "dovetail cadence voice": "text",
-            "dovetail position": {
-                "radio": ["Above", "Between", "Below", "Not applicable"]
+            "extent": {
+                "radio": ["Amplified", "Truncated"]
             },
-            "irregular cadence": "boolean",
-            "irregular roles": {
-                "checkbox": ["Cantizans", "Altizans", "Tenorizans", "Bassizans"]
+            "double or invertible counterpoint": "boolean",
+            "melodically inverted": "boolean",
+            "metrically shifted": "boolean",
+            "new combination": "boolean",
+            "new counter subject": "boolean",
+            "old counter subject shifted metrically": "boolean",
+            "old counter subject transposed": "boolean",
+            "retrograde": "boolean",
+            "sounding of different voices": "boolean",
+        },
+        "omission": {},
+        "quotation": {
+            "type" : {
+                "radio" : ["Exact", "Monnayage"]
             }
         },
-        "cantus firmus": {
-            "voice": "text",
-            "features": {
-                "radio" : ["Both Pitches and Duration", "Pitches Only", "Durations Only"]
-            }
-        },
-        "soggetto": {
-            "voice": "text",
-            "features": {
-                "radio" : ["Both Pitches and Duration", "Pitches Only", "Durations Only"]
-            },
-            "ostinato" : "boolean",
-            "periodic" : "boolean"
-        },
-        "counter soggetto": {
-            "voice": "text",
-            "features": {
-                "radio" : ["Both Pitches and Duration", "Pitches Only", "Durations Only"]
-            },
-            "ostinato" : "boolean",
-            "periodic" : "boolean"
-        },
-        "contrapuntal duo": {
-            "voices": "text"
-        },
-        "fuga": { 
-            "voices": "text",
-            "entry intervals": "text",
-            "time intervals": "text",
-            "regularity" : {
-                "radio": ["Strict", "Flexed", "Flexed tonal"]
-            },
-            "periodic": "boolean",
-            "sequential": "boolean",
-            "inverted": "boolean",
-            "retrograde": "boolean"
-        },
-        "imitative duos": {
-            "voices": "text",
-            "entry intervals": "text",
-            "time intervals": "text",
-            "regularity" : {
-                "radio": ["Strict", "Flexed", "Flexed tonal"]
-            },
-            "invertible counterpoint": "boolean",
-        },
-        "non-imitative duos": {
-            "voices": "text",
-            "entry intervals": "text",
-            "time intervals": "text",
-            "regularity" : {
-                "radio": ["Strict", "Flexed", "Flexed tonal"]
-            },
-            "invertible counterpoint": "boolean"
-        },
-        "periodic entries": {
-            "voices": "text",
-            "entry intervals": "text",
-            "time intervals": "text",
-            "regularity" : {
-                "radio": ["Strict", "Flexed", "Flexed tonal"]
-            },
-            "invertible counterpoint": "boolean",
-            "sequential": "boolean",
-            "added entries": "boolean",
-        },
-        "homorhythm": {
-            "voices": "text",
-            "type": {
-                "radio": ["Simple", "Staggered", "Sequential", "Fauxbourdon"]
-            },
-            "dialogue" : "boolean"
-        },
-        "interval patterns": {
-            "alternating 3/5": "boolean",
-            "alternating 6/5": "boolean",
-            "alternating 8/3": "boolean",
-            "parallel 10ths": "boolean",
-            "parallel 3rds": "boolean",
-            "parallel 6ths": "boolean",
-            "preparation": {
-                "radio": ["Prepared","Unprepared"]
-            },
-            "suspension" : "boolean"
+        "self": {
+            "self enchainment": "boolean",
+            "self repetition": "boolean",
+            "self return": "boolean"
         }
     }
 
