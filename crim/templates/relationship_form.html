@@ -79,11 +79,99 @@
                 <p></p>
                 <div class="row">
                     <div class="col-sm">{{form.model_observation|as_crispy_field}}
-                        <p><a href = "{% url 'observation-form' %}">Make new model observation</a></p>
+                        <p><button type="button" class="btn btn-dark" id="form1Button">Make new observation</button></p>
+                        
                     </div>
                     <div class="col-sm">{{form.derivative_observation|as_crispy_field}}
                         <p><a href = "{% url 'observation-form' %}">Make new derivative observation</a></p>
                     </div>
+                </div>
+
+                <div>
+                    <form id="form1">
+                        <div class="shadow-none p-4 mb-4 bg-light">
+                            Test
+                            
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs">
+                                {% for key, value in observation_definition.items %}
+                                {% if forloop.first %}
+                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#{{ key|slugify }}">{{ key.capitalize }}</a></li>
+                            {% else %}
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#{{ key|slugify }}">{{ key.capitalize }}</a></li>
+                            {% endif %}
+                                {% endfor %}
+                            </ul>
+              
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+            
+                                {% for key, value in observation_definition.items %}
+                                {% if forloop.first %}
+                                <div class="tab-pane container fade show active" id="{{ key|slugify }}">
+                            {% else %}
+                                <div class="tab-pane container fade" id="{{ key|slugify }}">
+                            {% endif %}
+                                    
+            
+                                    <div class="{{ key|slugify }}"></div>
+                                        <p><i>Pick the details for this type {{key.capitalize}}</i></p>
+                                        {% for innerkey, innervalue in value.items %}
+            
+                                            {% if innervalue == "boolean" %} 
+                                                <div class="form-check"> 
+                                                    <input class="form-check-input" type='checkbox' name="{{ key|concat_str:innerkey }}" value='true' id="{{ key|concat_str:innerkey }}"> 
+                                                    <input name="{{ key|concat_str:innerkey }}" type='hidden' value='false'> 
+                                                    <label class='form-check-label' for="{{ key|concat_str:innerkey }}">{{ innerkey.capitalize }}</label> 
+                                                </div> 
+            
+                                            {% elif innervalue == "text" %}
+                                                <div class="form-group row"> 
+                                                    <label for="{{ key|concat_str:innerkey }}" class="col-sm col-form-label"> {{ innerkey.capitalize }} </label> 
+                                                    <div class="col-sm">
+                                                        <input class="form-control form-control-sm" id="{{ key|concat_str:innerkey }}" name="{{ key|concat_str:innerkey }}">
+                                                    </div>
+                                                </div>
+            
+                                            {% else %}    
+                                                {% for innerkey1, innervalue1 in innervalue.items %}
+                                                    {% if innerkey1 == "radio" %}
+                                                        <input name="{{ key|concat_str:innerkey }}" type='hidden' value='None'> 
+                                                        <p>{{ innerkey.capitalize }}:
+                                                        <div id="{{ key|concat_str:innerkey }}" style="margin-left:50px;">
+                                                        {% for option in innervalue1 %} 
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio" name="{{ key|concat_str:innerkey }}" value="{{option}}" id="{{ key|concat_str:innerkey }}">
+                                                                <label class="form-check-label" for="{{ key|concat_str:innerkey }}">{{ option.capitalize }}</label>
+                                                            </div>
+                                                        {% endfor %}
+                                                        </div></p>
+                                                    
+                                                    {% elif innerkey1 == "checkbox" %}
+                                                        <p>{{ innerkey.capitalize }}:
+                                                        <div id="{{ key|concat_str:innerkey }}" style="margin-left:50px;">
+                                                        {% for option in innervalue1 %} 
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type='checkbox' name="{{ key|concat_str:option }}" value={{option}} id="{{ key|concat_str:option }}"> 
+                                                                <label class='form-check-label' for="{{ key|concat_str:option }}">{{ option.capitalize }}</label> 
+                                                            </div>
+                                                        {% endfor %}
+                                                        </div></p>
+            
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endfor %} 
+                                    </div>
+                                {% endfor %}
+                            </div>
+            
+                            <div class="row-sm">{{form.details|as_crispy_field}}</div>
+                            <div class="row-sm">{{form.observation_definition}}</div>
+            
+                            <input type="hidden" id="observation-selected-tab" name="observation-selected-tab">
+                            
+                </form>
                 </div>
                 <div class="row-sm">{{form.details|as_crispy_field}}</div>
                 <div class="row-sm">{{form.relationship_definition}}</div>
@@ -147,6 +235,10 @@
                     var x = $(event.target).text();         // active tab
                     var selected = x.replace(/\s+/g, '-').toLowerCase();
                     $("#selected-tab").val(selected);
+                });
+
+                $("#form1Button").click(function() {
+                    $("#form1").toggle();
                 });
                 
             }); 
