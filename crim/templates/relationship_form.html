@@ -79,12 +79,11 @@
                 <p></p>
                 <div class="row">
                     <div class="col-sm">{{form.model_observation|as_crispy_field}}
-                        <p><a href = "{% url 'observation-form' %}">Make new derivative observation</a></p>
-                        <p><button type="button" class="btn btn-light" id="form1Button">Make new model observation</button></p>
+                        <p><a class="btn btn-outline-info" href = "{% url 'observation-form' %}">Make new model observation</a></p>
                         
                     </div>
                     <div class="col-sm">{{form.derivative_observation|as_crispy_field}}
-                        <p><a href = "{% url 'observation-form' %}">Make new derivative observation</a></p>
+                        <p><a class="btn btn-outline-info" href = "{% url 'observation-form' %}">Make new derivative observation</a></p>
                     </div>
                 </div>
 
