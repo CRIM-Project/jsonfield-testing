@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crim.apps.CrimConfig',
     'django_extensions',
     'crispy_forms',
+    'django_select2'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -142,3 +143,4 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     ]
 }
+

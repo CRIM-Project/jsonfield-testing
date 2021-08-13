@@ -98,14 +98,14 @@
                 <div class="row-sm">{{form.observation_definition}}</div>
 
                 <input type="hidden" id="selected-tab" name="selected-tab">
-                <input class="btn btn-primary" type="submit" name="Submit" value="Submit" id="submit">
+                <p><br><input class="btn btn-primary" type="submit" name="Submit" value="Submit" id="submit"></p>
+                <p></p>
+                <p><a class="btn btn-outline-info btn-sm" href = "{% url 'relationship-form' %}">Go to relationship form</a></p>
             
             </form>
         </div>
 
         <hr>
-        <a href = "{% url 'relationship-form' %}">Click here to redirect to relationship form</a>
-        <br>
         <a href = "{% url 'home-view' %}">Click here to redirect to home view</a>
 
         <!-- Optional Javascript -->

@@ -79,11 +79,10 @@
                 <p></p>
                 <div class="row">
                     <div class="col-sm">{{form.model_observation|as_crispy_field}}
-                        <p><a class="btn btn-outline-info" href = "{% url 'observation-form' %}">Make new model observation</a></p>
+                        <p><a class="btn btn-outline-info btn-sm" href = "{% url 'observation-form' %}">Make new observation</a></p>
                         
                     </div>
                     <div class="col-sm">{{form.derivative_observation|as_crispy_field}}
-                        <p><a class="btn btn-outline-info" href = "{% url 'observation-form' %}">Make new derivative observation</a></p>
                     </div>
                 </div>
 
@@ -92,6 +91,7 @@
                 <div class="row-sm">{{form.relationship_definition}}</div>
 
                 <input type="hidden" id="selected-tab" name="selected-tab">
+                <p></p>
                 <input class="btn btn-primary" type="submit" name="Submit" value="Submit">
             
             </form>
@@ -107,7 +107,9 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"> </script>
-        
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
         <script>
            
            // make radios deselectable
@@ -136,6 +138,9 @@
 
 
             $(document).ready(function(){
+                $('#id_model_observation').select2();
+                $('#id_derivative_observation').select2();
+                
                 var activeTab = $(".tab-content").find(".active");
                 var id = activeTab.attr('id');
                 $("#selected-tab").val(id);
@@ -150,9 +155,9 @@
                     $("#selected-tab").val(selected);
                 });
 
-                $("#form1Button").click(function() {
-                    $("#form1").toggle();
-                });
+                //$("#form1Button").click(function() {
+                //    $("#form1").toggle();
+                //});
                 
             }); 
 

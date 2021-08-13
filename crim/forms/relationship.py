@@ -30,8 +30,8 @@ class RelationshipForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(RelationshipForm, self).__init__(*args, **kwargs)
-        self.fields['model_observation'] = forms.ModelChoiceField(queryset=CRIMObservation.objects.all(), widget=forms.NumberInput, required=True)
-        self.fields['derivative_observation'] = forms.ModelChoiceField(queryset=CRIMObservation.objects.all(), widget=forms.NumberInput, required=True)
+        self.fields['model_observation'] = forms.ModelChoiceField(queryset=CRIMObservation.objects.all(), required=False)
+        self.fields['derivative_observation'] = forms.ModelChoiceField(queryset=CRIMObservation.objects.all(), required=False)
 
        
 
