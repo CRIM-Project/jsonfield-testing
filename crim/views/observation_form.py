@@ -2,7 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 import json
 from crim.forms.observation import ObservationForm
-from crim.models.definition import CRIMDefinition
+from crim.models.observation import CRIMObservation
+from django.contrib import messages
 
 from crim.common import *
 
@@ -58,9 +59,7 @@ def get_observation(request):
         # check whether it's valid:
         if form.is_valid():
             form.save()
-            return HttpResponse('Your observation instance is saved.')
-        else:
-            return HttpResponse('Something is wrong with your input. Try again.')
+        messages.success(request, 'You just created observation #' + CRIMObservation.objects.latest('id').__str__())
 
     # if a GET (or any other method) we'll create a blank form
     else:

@@ -15,7 +15,7 @@
             <div class="text-center">
                 <h1>Create a relationship instance</h1>
             </div>
-            <form method="POST" action="https://jsonplaceholder.typicode.com/users" id="form">
+            <form method="POST" action="https://jsonplaceholder.typicode.com/users" id="form" autocomplete="on">
             {% csrf_token %}
             <div class="shadow-none p-4 mb-4 bg-light">
                 <div class="row-sm"> {{form.observer|as_crispy_field}}</div>
@@ -78,9 +78,7 @@
                 </div>
                 <p></p>
                 <div class="row">
-                    <div class="col-sm">{{form.model_observation|as_crispy_field}}
-                        <p><a class="btn btn-outline-info btn-sm" href = "{% url 'observation-form' %}">Make new observation</a></p>
-                        
+                    <div class="col-sm">{{form.model_observation|as_crispy_field}}  
                     </div>
                     <div class="col-sm">{{form.derivative_observation|as_crispy_field}}
                     </div>
@@ -91,7 +89,8 @@
                 <div class="row-sm">{{form.relationship_definition}}</div>
 
                 <input type="hidden" id="selected-tab" name="selected-tab">
-                <p></p>
+                <p><br><a class="btn btn-outline-info btn-sm" id="go-to-obs-form" name="go-to-obs-form" href = "{% url 'observation-form' %}">Make new observation</a></p>
+                <p><br></p>
                 <input class="btn btn-primary" type="submit" name="Submit" value="Submit">
             
             </form>

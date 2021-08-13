@@ -100,7 +100,14 @@
                 <input type="hidden" id="selected-tab" name="selected-tab">
                 <p><br><input class="btn btn-primary" type="submit" name="Submit" value="Submit" id="submit"></p>
                 <p></p>
-                <p><a class="btn btn-outline-info btn-sm" href = "{% url 'relationship-form' %}">Go to relationship form</a></p>
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <p><a class="btn btn-outline-info btn-sm" id="go-to-rela-form" name="go-to-rela-form" onclick="history.back()">Go to relationship form</a></p>
             
             </form>
         </div>

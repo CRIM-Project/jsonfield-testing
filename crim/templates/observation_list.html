@@ -3,6 +3,7 @@
 <ol>
     {% for observation in observations %}
         <p><li><b>{{ observation.musical_type }}</b></li>
+        <br>Observation ID : {{ observation.pk }}
         <br>Observer : {{ observation.observer }}    
         {% for key, value in observation.details.items %}
             <br>{{ key }} : {{ value }}
