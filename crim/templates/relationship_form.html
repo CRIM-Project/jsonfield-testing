@@ -93,9 +93,9 @@
                     <ul class="nav nav-pills">
                         {% for key, value in observation_definition.items %}
                             {% if forloop.first %}
-                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#{{ key|slugify }}">{{ key.capitalize }}</a></li>
+                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#model-{{ key|slugify }}">{{ key.capitalize }}</a></li>
                             {% else %}
-                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#{{ key|slugify }}">{{ key.capitalize }}</a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#model-{{ key|slugify }}">{{ key.capitalize }}</a></li>
                             {% endif %}
                         {% endfor %}
                     </ul>
@@ -105,51 +105,51 @@
 
                         {% for key, value in observation_definition.items %}
                             {% if forloop.first %}
-                                <div class="tab-pane container fade show active" id="{{ key|slugify }}">
+                                <div class="tab-pane container fade show active" id="model-{{ key|slugify }}">
                             {% else %}
-                                <div class="tab-pane container fade" id="{{ key|slugify }}">
+                                <div class="tab-pane container fade" id="model-{{ key|slugify }}">
                             {% endif %}
 
-                            <div class="{{ key|slugify }}"></div>
+                            <div class="model-{{ key|slugify }}"></div>
                                 <p><br><i>Pick the details for this type {{key.capitalize}}</i></p>
                                 {% for innerkey, innervalue in value.items %}
 
                                     {% if innervalue == "boolean" %} 
                                         <div class="form-check"> 
-                                            <input class="form-check-input" type='checkbox' name="{{ key|concat_str:innerkey }}" value='true' id="{{ key|concat_str:innerkey }}"> 
-                                            <input name="{{ key|concat_str:innerkey }}" type='hidden' value='false'> 
-                                            <label class='form-check-label' for="{{ key|concat_str:innerkey }}">{{ innerkey.capitalize }}</label> 
+                                            <input class="form-check-input" type='checkbox' name="model-{{ key|concat_str:innerkey }}" value='true' id="model-{{ key|concat_str:innerkey }}"> 
+                                            <input name="model-{{ key|concat_str:innerkey }}" type='hidden' value='false'> 
+                                            <label class='form-check-label' for="model-{{ key|concat_str:innerkey }}">{{ innerkey.capitalize }}</label> 
                                         </div> 
 
                                     {% elif innervalue == "text" %}
                                         <div class="form-group row"> 
-                                            <label for="{{ key|concat_str:innerkey }}" class="col-sm col-form-label"> {{ innerkey.capitalize }} </label> 
+                                            <label for="model-{{ key|concat_str:innerkey }}" class="col-sm col-form-label"> {{ innerkey.capitalize }} </label> 
                                             <div class="col-sm">
-                                                <input class="form-control form-control-sm" id="{{ key|concat_str:innerkey }}" name="{{ key|concat_str:innerkey }}">
+                                                <input class="form-control form-control-sm" id="model-{{ key|concat_str:innerkey }}" name="model-{{ key|concat_str:innerkey }}">
                                             </div>
                                         </div>
 
                                     {% else %}    
                                         {% for innerkey1, innervalue1 in innervalue.items %}
                                             {% if innerkey1 == "radio" %}
-                                                <input name="{{ key|concat_str:innerkey }}" type='hidden' value='None'> 
+                                                <input name="model-{{ key|concat_str:innerkey }}" type='hidden' value='None'> 
                                                 <p>{{ innerkey.capitalize }}:
-                                                <div id="{{ key|concat_str:innerkey }}" style="margin-left:50px;">
+                                                <div id="model-{{ key|concat_str:innerkey }}" style="margin-left:50px;">
                                                     {% for option in innervalue1 %} 
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="{{ key|concat_str:innerkey }}" value="{{option}}" id="{{ key|concat_str:innerkey }}">
-                                                            <label class="form-check-label" for="{{ key|concat_str:innerkey }}">{{ option.capitalize }}</label>
+                                                            <input class="form-check-input" type="radio" name="model-{{ key|concat_str:innerkey }}" value="{{option}}" id="model-{{ key|concat_str:innerkey }}">
+                                                            <label class="form-check-label" for="model-{{ key|concat_str:innerkey }}">{{ option.capitalize }}</label>
                                                         </div>
                                                     {% endfor %}
                                                 </div></p>
                                         
                                             {% elif innerkey1 == "checkbox" %}
                                                 <p>{{ innerkey.capitalize }}:
-                                                <div id="{{ key|concat_str:innerkey }}" style="margin-left:50px;">
+                                                <div id="model-{{ key|concat_str:innerkey }}" style="margin-left:50px;">
                                                     {% for option in innervalue1 %} 
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type='checkbox' name="{{ key|concat_str:option }}" value={{option}} id="{{ key|concat_str:option }}"> 
-                                                        <label class='form-check-label' for="{{ key|concat_str:option }}">{{ option.capitalize }}</label> 
+                                                        <input class="form-check-input" type='checkbox' name="model-{{ key|concat_str:option }}" value="{{option}}" id="model-{{ key|concat_str:option }}"> 
+                                                        <label class='form-check-label' for="model-{{ key|concat_str:option }}">{{ option.capitalize }}</label> 
                                                     </div>
                                                     {% endfor %}
                                                 </div></p>
@@ -180,9 +180,9 @@
                     <ul class="nav nav-pills">
                         {% for key, value in observation_definition.items %}
                             {% if forloop.first %}
-                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#{{ key|slugify }}">{{ key.capitalize }}</a></li>
+                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#derivative-{{ key|slugify }}">{{ key.capitalize }}</a></li>
                             {% else %}
-                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#{{ key|slugify }}">{{ key.capitalize }}</a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#derivative-{{ key|slugify }}">{{ key.capitalize }}</a></li>
                             {% endif %}
                         {% endfor %}
                     </ul>
@@ -192,51 +192,51 @@
 
                         {% for key, value in observation_definition.items %}
                             {% if forloop.first %}
-                                <div class="tab-pane container fade show active" id="{{ key|slugify }}">
+                                <div class="tab-pane container fade show active" id="derivative-{{ key|slugify }}">
                             {% else %}
-                                <div class="tab-pane container fade" id="{{ key|slugify }}">
+                                <div class="tab-pane container fade" id="derivative-{{ key|slugify }}">
                             {% endif %}
 
-                            <div class="{{ key|slugify }}"></div>
+                            <div class="derivative-{{ key|slugify }}"></div>
                                 <p><br><i>Pick the details for this type {{key.capitalize}}</i></p>
                                 {% for innerkey, innervalue in value.items %}
 
                                     {% if innervalue == "boolean" %} 
                                         <div class="form-check"> 
-                                            <input class="form-check-input" type='checkbox' name="{{ key|concat_str:innerkey }}" value='true' id="{{ key|concat_str:innerkey }}"> 
-                                            <input name="{{ key|concat_str:innerkey }}" type='hidden' value='false'> 
-                                            <label class='form-check-label' for="{{ key|concat_str:innerkey }}">{{ innerkey.capitalize }}</label> 
+                                            <input class="form-check-input" type='checkbox' name="derivative-{{ key|concat_str:innerkey }}" value='true' id="derivative-{{ key|concat_str:innerkey }}"> 
+                                            <input name="derivative-{{ key|concat_str:innerkey }}" type='hidden' value='false'> 
+                                            <label class='form-check-label' for="derivative-{{ key|concat_str:innerkey }}">{{ innerkey.capitalize }}</label> 
                                         </div> 
 
                                     {% elif innervalue == "text" %}
                                         <div class="form-group row"> 
-                                            <label for="{{ key|concat_str:innerkey }}" class="col-sm col-form-label"> {{ innerkey.capitalize }} </label> 
+                                            <label for="derivative-{{ key|concat_str:innerkey }}" class="col-sm col-form-label"> {{ innerkey.capitalize }} </label> 
                                             <div class="col-sm">
-                                                <input class="form-control form-control-sm" id="{{ key|concat_str:innerkey }}" name="{{ key|concat_str:innerkey }}">
+                                                <input class="form-control form-control-sm" id="derivative-{{ key|concat_str:innerkey }}" name="derivative-{{ key|concat_str:innerkey }}">
                                             </div>
                                         </div>
 
                                     {% else %}    
                                         {% for innerkey1, innervalue1 in innervalue.items %}
                                             {% if innerkey1 == "radio" %}
-                                                <input name="{{ key|concat_str:innerkey }}" type='hidden' value='None'> 
+                                                <input name="derivative-{{ key|concat_str:innerkey }}" type='hidden' value='None'> 
                                                 <p>{{ innerkey.capitalize }}:
-                                                <div id="{{ key|concat_str:innerkey }}" style="margin-left:50px;">
+                                                <div id="derivative-{{ key|concat_str:innerkey }}" style="margin-left:50px;">
                                                     {% for option in innervalue1 %} 
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="{{ key|concat_str:innerkey }}" value="{{option}}" id="{{ key|concat_str:innerkey }}">
-                                                            <label class="form-check-label" for="{{ key|concat_str:innerkey }}">{{ option.capitalize }}</label>
+                                                            <input class="form-check-input" type="radio" name="derivative-{{ key|concat_str:innerkey }}" value="{{option}}" id="derivative-{{ key|concat_str:innerkey }}">
+                                                            <label class="form-check-label" for="derivative-{{ key|concat_str:innerkey }}">{{ option.capitalize }}</label>
                                                         </div>
                                                     {% endfor %}
                                                 </div></p>
                                         
                                             {% elif innerkey1 == "checkbox" %}
                                                 <p>{{ innerkey.capitalize }}:
-                                                <div id="{{ key|concat_str:innerkey }}" style="margin-left:50px;">
+                                                <div id="derivative-{{ key|concat_str:innerkey }}" style="margin-left:50px;">
                                                     {% for option in innervalue1 %} 
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type='checkbox' name="{{ key|concat_str:option }}" value={{option}} id="{{ key|concat_str:option }}"> 
-                                                        <label class='form-check-label' for="{{ key|concat_str:option }}">{{ option.capitalize }}</label> 
+                                                        <input class="form-check-input" type='checkbox' name="derivative-{{ key|concat_str:option }}" value="{{option}}" id="derivative-{{ key|concat_str:option }}"> 
+                                                        <label class='form-check-label' for="derivative-{{ key|concat_str:option }}">{{ option.capitalize }}</label> 
                                                     </div>
                                                     {% endfor %}
                                                 </div></p>
@@ -257,6 +257,8 @@
                 <div class="row-sm">{{form.relationship_definition}}</div>
 
                 <input type="hidden" id="selected-tab" name="selected-tab">
+                <input type="hidden" id="model-selected-tab" name="model-selected-tab">
+                <input type="hidden" id="derivative-selected-tab" name="derivative-selected-tab">
                 <p><br></p>
                 <input class="btn btn-primary" type="submit" name="Submit" value="Submit">
             
@@ -338,14 +340,14 @@
                     const formData = new FormData(form);
                     const responseData = await postFormDataAsJson({ url, formData });
                     console.log({ responseData });
-                    $.ajax({
+                    /*$.ajax({
                         type:'POST',
                         url: '',
                         data: responseData,
                         success: function(response){
                             console.log('Success');
                         },
-                    });
+                    });*/
                     
                 } catch (error) {
                     console.error(error);
