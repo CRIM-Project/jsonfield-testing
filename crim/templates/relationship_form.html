@@ -17,9 +17,9 @@
             </div>
             <form method="POST" action="https://jsonplaceholder.typicode.com/users" id="form" autocomplete="on">
             {% csrf_token %}
-            <div class="shadow-none p-4 mb-4 bg-light">
+                
                 <div class="row-sm"> {{form.observer|as_crispy_field}}</div>
-    
+            <div class="relationship">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs">
                     {% for key, value in relationship_definition.items %}
@@ -32,6 +32,7 @@
                 </ul>
   
                 <!-- Tab panes -->
+            
                 <div class="tab-content">
 
                     {% for key, value in relationship_definition.items %}
@@ -75,6 +76,8 @@
                     {% endfor %}
 
                 </div>
+            </div>    
+
                 <p><br></p>
                 
                 <div class="text-left">
@@ -88,7 +91,7 @@
 
 
                 <div class="shadow-none p-5 mb-5 text-secondary bg-white rounded" name="model-observation-form" id="model-observation-form" data-toggle="true">
-        
+                    <div class="model">
                     <!-- Nav pills -->
                     <ul class="nav nav-pills">
                         {% for key, value in observation_definition.items %}
@@ -99,7 +102,8 @@
                             {% endif %}
                         {% endfor %}
                     </ul>
-  
+                
+               
                     <!-- Tab panes -->
                     <div class="tab-content">
 
@@ -162,6 +166,7 @@
                         {% endfor %}
                     </div>
                 </div>
+                </div>
 
                 <hr>
 
@@ -175,7 +180,7 @@
                 <p></p>
 
                 <div class="shadow-none p-5 mb-5 text-secondary bg-white rounded" name="derivative-observation-form" id="derivative-observation-form">
-        
+                    <div class="derivative">
                     <!-- Nav pills -->
                     <ul class="nav nav-pills">
                         {% for key, value in observation_definition.items %}
@@ -186,7 +191,8 @@
                             {% endif %}
                         {% endfor %}
                     </ul>
-  
+                
+                
                     <!-- Tab panes -->
                     <div class="tab-content">
 
@@ -249,6 +255,7 @@
                         {% endfor %}
                     </div>
                 </div>
+                </div>
                 
 
 
@@ -309,18 +316,44 @@
                 $('#id_model_observation').select2();
                 $('#id_derivative_observation').select2();
                 
-                var activeTab = $(".tab-content").find(".active");
+                var activeTab = $(".relationship .tab-content").find(".active");
                 var id = activeTab.attr('id');
                 $("#selected-tab").val(id);
+
+            
+                var modelActiveTab = $(".model .tab-content").find(".active");
+                var id1 = modelActiveTab.attr('id');
+                $("#model-selected-tab").val(id1.replace("model-", ""));
+
+                var derivativeActiveTab = $(".derivative .tab-content").find(".active");
+                var id2 = derivativeActiveTab.attr('id');
+                $("#derivative-selected-tab").val(id2.replace("derivative-", "")); 
+
 
                 $(".nav-tabs a").click(function(){
                     $(this).tab('show');
                 });
 
-                $(".nav-tabs a").on('shown.bs.tab', function(event){
+                $(".nav-pills a").click(function(){
+                    $(this).tab('show');
+                });
+
+                $(".relationship .nav-tabs a").on('shown.bs.tab', function(event){
                     var x = $(event.target).text();         // active tab
                     var selected = x.replace(/\s+/g, '-').toLowerCase();
                     $("#selected-tab").val(selected);
+                });
+
+                $(".model .nav-pills a").on('shown.bs.tab', function(event){
+                    var x1 = $(event.target).text();         // active model tab
+                    var selected1 = x1.replace(/\s+/g, '-').toLowerCase();
+                    $("#model-selected-tab").val(selected1);
+                });
+
+                $(".derivative .nav-pills a").on('shown.bs.tab', function(event){
+                    var x2 = $(event.target).text();         // active serivative tab
+                    var selected2 = x2.replace(/\s+/g, '-').toLowerCase();
+                    $("#derivative-selected-tab").val(selected2);
                 });
 
                 
