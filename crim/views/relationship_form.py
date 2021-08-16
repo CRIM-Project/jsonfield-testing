@@ -56,4 +56,5 @@ def get_relationship(request):
     return render(request, 'relationship_form.html',
                 context={'form': form,
                         'relationship_definition': CURRENT_DEFINITION.relationship_definition,
+                        'observation_definition': CURRENT_DEFINITION.observation_definition
                         })
