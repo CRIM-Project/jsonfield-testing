@@ -32,7 +32,8 @@ class RelationshipForm(forms.ModelForm):
         super(RelationshipForm, self).__init__(*args, **kwargs)
         self.fields['model_observation'] = forms.ModelChoiceField(queryset=CRIMObservation.objects.all(), required=False)
         self.fields['derivative_observation'] = forms.ModelChoiceField(queryset=CRIMObservation.objects.all(), required=False)
-
+        self.fields['model_observation'].label = ''
+        self.fields['derivative_observation'].label = ''
        
 
         
