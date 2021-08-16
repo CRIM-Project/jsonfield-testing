@@ -86,10 +86,10 @@
                 <br><p><i>Select an existing observation as model observation</i></p>
                 <div class="row-sm"> {{form.model_observation|as_crispy_field}}  </div>
                 <p><b>OR</b></p>
-                <button type="button" class="btn btn-outline-info btn-sm" id="make-model" name="make-model" data-toggle="collapse" data-target="#model-observation-form"> Make new model observation </button>
+                <p><i> Create a new observation as model observation </i></p> 
                 <p></p>
 
-
+            <fieldset class="model-form">
                 <div class="shadow-none p-5 mb-5 text-secondary bg-white rounded" name="model-observation-form" id="model-observation-form" data-toggle="true">
                     <div class="model">
                     <!-- Nav pills -->
@@ -167,27 +167,28 @@
                     </div>
                 </div>
                 </div>
+            </fieldset>    
 
                 <hr>
-
+            <fieldset class="derivative-form">
                 <div class="text-left">
                     <h4>II. Derivative observation</h4>
                 </div>
                 <br><p><i> Select an existing observation as derivative observation </i></p>
                 <div class="row-sm">{{form.derivative_observation|as_crispy_field}} </div>
                 <p><b>OR</b></p>
-                <button type="button" class="btn btn-outline-info btn-sm" id="make-derivative" name="make-derivative" data-toggle="collapse" data-target="#derivative-observation-form"> Make new derivative observation </button>
+                <p><i> Create a new observation as derivative observation </i></p> 
                 <p></p>
 
                 <div class="shadow-none p-5 mb-5 text-secondary bg-white rounded" name="derivative-observation-form" id="derivative-observation-form">
-                    <div class="derivative">
+                    <div class="derivative" data-toggle="true">
                     <!-- Nav pills -->
                     <ul class="nav nav-pills">
                         {% for key, value in observation_definition.items %}
                             {% if forloop.first %}
-                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#derivative-{{ key|slugify }}">{{ key.capitalize }}</a></li>
+                                <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#derivative-{{ key|slugify }}">{{ key.capitalize }}</a></li>
                             {% else %}
-                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#derivative-{{ key|slugify }}">{{ key.capitalize }}</a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#derivative-{{ key|slugify }}">{{ key.capitalize }}</a></li>
                             {% endif %}
                         {% endfor %}
                     </ul>
@@ -256,7 +257,7 @@
                     </div>
                 </div>
                 </div>
-                
+            </fieldset>    
 
 
                 
@@ -327,7 +328,8 @@
 
                 var derivativeActiveTab = $(".derivative .tab-content").find(".active");
                 var id2 = derivativeActiveTab.attr('id');
-                $("#derivative-selected-tab").val(id2.replace("derivative-", "")); 
+                if (id2.length > 0)
+                    $("#derivative-selected-tab").val(id2.replace("derivative-", "")); 
 
 
                 $(".nav-tabs a").click(function(){
