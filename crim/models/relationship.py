@@ -40,7 +40,7 @@ class CRIMRelationship(models.Model):
     observer = models.CharField(max_length=128, blank=True)
     musical_type = models.CharField(max_length=128, blank=True)
     relationship_type = models.CharField(max_length=128, blank=True)
-    details = JSONField(null=True) 
+    details = JSONField(blank=True, null=True) 
 
     def __str__(self):
         return str(self.pk)
@@ -72,25 +72,21 @@ class CRIMRelationship(models.Model):
             string_details = json.dumps(self.details)
             sub_dict = json.loads(string_details)
             
-            curr_subtypes = sorted(list(sub_dict.keys()))
-            curr_subtypes_lower = [e.lower() for e in curr_subtypes]
-            
             if allowed_subtypes == []:
                 valid_sub = True
-            elif curr_subtypes_lower == allowed_subtypes:
-                valid_sub = True
+
+            else:
+                curr_subtypes = sorted(list(sub_dict.keys()))
+                curr_subtypes_lower = [e.lower() for e in curr_subtypes]
+    
+                if curr_subtypes_lower == allowed_subtypes:
+                    valid_sub = True
         
             if valid_sub:
-                print('validated. saving rela...')
-                self.model_observation.save()
-                print('model observation saved.')
-                self.derivative_observation.save()
-                print('derivative observation saved.')
                 self.definition.save()
+                self.model_observation.save()
+                self.derivative_observation.save()
                 super(CRIMRelationship, self).save(*args, **kwargs)
-                print('rela saved')
-            else:
-                print('subtypes not valid')
-        else:
-            print('Error saving, rtypename not in allowed relationship types')
+                print('Relationship instance saved')
+            
 

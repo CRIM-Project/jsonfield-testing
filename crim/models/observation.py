@@ -14,7 +14,7 @@ class CRIMObservation(models.Model):
     # This is trial for JSONField application
     observer = models.CharField(max_length=128, blank=True)
     musical_type = models.CharField(max_length=128, blank=True)
-    details = JSONField(null=True)
+    details = JSONField(blank=True, null=True)
     
     definition = models.ForeignKey(
         CRIMDefinition,
@@ -37,21 +37,19 @@ class CRIMObservation(models.Model):
             string_details = json.dumps(self.details)
             sub_dict = json.loads(string_details)
 
-            curr_subtypes = sorted(list(sub_dict.keys()))
-            curr_subtypes_lower = [e.lower() for e in curr_subtypes]
-
             if allowed_subtypes == []:
                 valid_sub = True
-            elif curr_subtypes_lower == allowed_subtypes:
-                valid_sub = True
+
+            else:
+                curr_subtypes = sorted(list(sub_dict.keys()))
+                curr_subtypes_lower = [e.lower() for e in curr_subtypes]
+                
+                if curr_subtypes_lower == allowed_subtypes:
+                    valid_sub = True
         
             if valid_sub:
-                print('validated. saving obs...')
                 self.definition.save()
                 super(CRIMObservation, self).save(*args, **kwargs)
-                print('obs saved')
-            else:
-                print('subtypes not valid')
-        else:
-            print('Error saving, mtypename not in allowed musical types')
+                print("Observation instance saved")
+            
 
