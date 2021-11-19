@@ -46,6 +46,7 @@ def get_observation(request):
         json_object = json.dumps(details_dict)  
 
         form_data = {"observer": request.POST['observer'],  
+                    "ema": request.POST['ema'],
                     "musical_type": musical_type.capitalize(),
                     "details": json_object,
                     "definition": CURRENT_DEFINITION 

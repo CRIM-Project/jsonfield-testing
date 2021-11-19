@@ -43,6 +43,7 @@ def make_new_observation(request, prefix, allowed_types, definition):
 
     obs_json_object = json.dumps(obs_details_dict)
     obs_form_data = {'observer' : request.POST['observer'],
+                    'ema' : request.POST['ema'],
                     'musical_type' : musical_type.capitalize(),
                     'details': obs_json_object,
                     'definition': definition}
@@ -81,7 +82,7 @@ def get_relationship(request):
         #OBSERVATION DETAILS
         #both existing observation
         if request.POST['model_observation'] != "" and request.POST['derivative_observation'] != "":
-            form_data = {"observer": request.POST['observer'],  
+            form_data = {"observer": request.POST['observer'],
                         "relationship_type": relationship_type.capitalize(),
                         "details": json_object,
                         "model_observation": request.POST['model_observation'],
@@ -101,7 +102,7 @@ def get_relationship(request):
                 if derivative_form.is_valid():
                     derivative_form.save()
 
-                    form_data = {"observer": request.POST['observer'],  
+                    form_data = {"observer": request.POST['observer'],
                                 "relationship_type": relationship_type.capitalize(),
                                 "details": json_object,
                                 "model_observation": request.POST['model_observation'],
@@ -117,7 +118,7 @@ def get_relationship(request):
                 if model_form.is_valid():
                     model_form.save()
 
-                    form_data = {"observer": request.POST['observer'],  
+                    form_data = {"observer": request.POST['observer'],
                                 "relationship_type": relationship_type.capitalize(),
                                 "details": json_object,
                                 "model_observation": CRIMObservation.objects.latest('id'),
@@ -135,7 +136,7 @@ def get_relationship(request):
                     model_form.save()
                     derivative_form.save()
 
-                    form_data = {"observer": request.POST['observer'],  
+                    form_data = {"observer": request.POST['observer'],
                                 "relationship_type": relationship_type.capitalize(),
                                 "details": json_object,
                                 "model_observation": CRIMObservation.objects.all().order_by('-id')[1],

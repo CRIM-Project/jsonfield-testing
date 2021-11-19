@@ -13,6 +13,7 @@ class CRIMObservation(models.Model):
 
     # This is trial for JSONField application
     observer = models.CharField(max_length=128, blank=True)
+    ema = models.CharField(max_length=10000, blank=True)
     musical_type = models.CharField(max_length=128, blank=True)
     details = JSONField(blank=True, null=True)
     
