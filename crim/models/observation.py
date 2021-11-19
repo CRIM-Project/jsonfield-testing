@@ -36,6 +36,7 @@ class CRIMObservation(models.Model):
             valid_sub = False
             allowed_subtypes = sorted(list(self.definition.observation_definition[mtypename]))
             string_details = json.dumps(self.details)
+            print(dir(self))
             sub_dict = json.loads(string_details)
 
             if allowed_subtypes == []:

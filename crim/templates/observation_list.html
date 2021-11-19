@@ -4,7 +4,8 @@
     {% for observation in observations %}
         <p><li><b>{{ observation.musical_type }}</b></li>
         <br>Observation ID : {{ observation.pk }}
-        <br>Observer : {{ observation.observer }}    
+        <br>Observer : {{ observation.observer }} 
+        <br>EMA : {{ observation.ema }}    
         {% for key, value in observation.details.items %}
             <br>{{ key }} : {{ value }}
         {% endfor %}</p>

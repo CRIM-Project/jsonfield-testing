@@ -23,7 +23,7 @@ class ObservationForm(forms.ModelForm):
 
     class Meta:
         model = CRIMObservation
-        fields=['observer', 'ema', 'musical_type', 'details', 'definition']
+        fields=['observer', 'musical_type', 'details', 'definition']
         widgets = {'definition': forms.HiddenInput(), 'details': forms.HiddenInput()}
 
     #def __init__(self, *args, **kwargs):

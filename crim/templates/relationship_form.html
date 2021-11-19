@@ -374,18 +374,14 @@
                 cnt.render()
 
                 const storedEma = $(emaEl+"Data")
-                console.log(storedEma)
                 if (storedEma) {
                     const ema = storedEma.val()
-                    console.log(ema)
                     const expr = "https%3A%2F%2Fwww.verovio.org%2Fexamples%2Fdownloads%2FChopin_Etude_op.10_no.9.mei/" + ema + "/highlight"
                     
                     EmaMei.withFullExpr(expr).then(function (r) {
                         // The result:
                         const selection = r.getSelection().querySelector('*|annot')
-                        console.log(selection)
                         if (selection) {
-                            console.log(selection.getAttribute("plist"))
                             for (const id of selection.getAttribute("plist").split(' ')) {
                                 if ($(id).length > 0) {
                                     cnt.addMusEventFromId(id.replace('#', ''))
@@ -536,7 +532,6 @@
 
             async function postFormDataAsJson({ url, formData }) {
                 const plainFormData = Object.fromEntries(formData.entries());
-                console.log(plainFormData)
 	            const formDataJsonString = JSON.stringify(plainFormData);
 
                 const fetchOptions = {
