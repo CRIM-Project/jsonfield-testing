@@ -8,14 +8,9 @@ def run():
     #                        definition=CRIMDefinition.objects.get(pk=5))
     #testobs1.save()
 
-    #testobs2 = CRIMObservation(observer='Dean', musical_type='Fuga',
-    #                        details={'periodic':False, 'strict':True, 'flexed':False, 'sequential':False, 'inverted':False, 'retrograde':False}, 
-    #                        definition=CRIMDefinition.objects.get(pk=5))
-    #testobs2.save()
 
-    testdef = CRIMDefinition(observation_definition={}, 
-                            relationship_definition={"mechanical transformation": {"test1": "boolean", "test2": "text"},
-                            "new material": {}, "non-mechanical transformation": {},
-                            "omission": {"test1":"boolean", "test2":"boolean"}, "quotation": {"exact":"boolean", "monnayage":"boolean"}})
+    testdef = CRIMDefinition.objects.get(id = 7)
+    #testdef.observation_definition['cadence']['dovetail position']['radio'] = ['Above', 'Between', 'Below']
 
-    testdef.save()
+    #testdef.save()
+    

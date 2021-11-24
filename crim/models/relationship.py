@@ -1,5 +1,7 @@
 from django.db import models
 from django.db.models import JSONField
+from crim.models.definition import CRIMDefinition
+from crim.models.observation import CRIMObservation
 import json
 
 # Create your models here.
@@ -12,7 +14,7 @@ class CRIMRelationship(models.Model):
 
     # This is trial for JSONField application  
     model_observation = models.ForeignKey(
-        'CRIMObservation',
+        CRIMObservation,
         on_delete=models.CASCADE,
         db_index=True,
         related_name='observations_as_model',
@@ -20,7 +22,7 @@ class CRIMRelationship(models.Model):
     )
 
     derivative_observation = models.ForeignKey(
-        'CRIMObservation',
+        CRIMObservation,
         on_delete=models.CASCADE,
         db_index=True,
         related_name='observations_as_derivative',
@@ -28,7 +30,7 @@ class CRIMRelationship(models.Model):
     )
 
     definition = models.ForeignKey(
-        'CRIMDefinition',
+        CRIMDefinition,
         on_delete=models.CASCADE,
         db_index=True,
         related_name='definition_for_relationship',
@@ -38,7 +40,7 @@ class CRIMRelationship(models.Model):
     observer = models.CharField(max_length=128, blank=True)
     musical_type = models.CharField(max_length=128, blank=True)
     relationship_type = models.CharField(max_length=128, blank=True)
-    details = JSONField(null=True) 
+    details = JSONField(blank=True, null=True) 
 
     def __str__(self):
         return str(self.pk)
@@ -62,26 +64,29 @@ class CRIMRelationship(models.Model):
 
         #Validation for model instance pre-save
         rtypename = str(self.relationship_type).lower()
-        def_dict = self.definition.relationship_definition
-        if rtypename in def_dict:
+        allowed_types = list(self.definition.relationship_definition.keys())
+       
+        if rtypename in allowed_types:
             valid_sub = False
-            allowed_subtypes = sorted(list(def_dict[rtypename]))
-            sub_dict = json.loads(self.details)
-            curr_subtypes = sorted(list(sub_dict.keys()))
+            allowed_subtypes = sorted(list(self.definition.relationship_definition[rtypename]))
+            string_details = json.dumps(self.details)
+            sub_dict = json.loads(string_details)
             
             if allowed_subtypes == []:
                 valid_sub = True
-            elif curr_subtypes == allowed_subtypes:
-                valid_sub = True
+
+            else:
+                curr_subtypes = sorted(list(sub_dict.keys()))
+                curr_subtypes_lower = [e.lower() for e in curr_subtypes]
+    
+                if curr_subtypes_lower == allowed_subtypes:
+                    valid_sub = True
         
             if valid_sub:
-                print('validated. saving rela...')
+                self.definition.save()
                 self.model_observation.save()
                 self.derivative_observation.save()
-                self.definition.save()
                 super(CRIMRelationship, self).save(*args, **kwargs)
-            else:
-                print('subtypes not valid')
-        else:
-            print('Error saving, rtypename not in allowed relationship types')
+                print('Relationship instance saved')
+            
 

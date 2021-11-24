@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crim.apps.CrimConfig',
     'django_extensions',
     'crispy_forms',
+    'django_select2'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -70,7 +71,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'libraries':{
-                'dict_lookup': 'crim.templatetags.dict_lookup'
+                'dict_lookup': 'crim.templatetags.dict_lookup',
+                'concat_str': 'crim.templatetags.concat_str'
             }
         },
     },
@@ -141,3 +143,4 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     ]
 }
+

@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from rest_framework.urlpatterns import format_suffix_patterns
 from crim.views.observation import ObservationList, ObservationDetail, api_root, ObservationListJSON, ObservationDetailJSON
 from crim.views.relationship import RelationshipList, RelationshipDetail, RelationshipListJSON, RelationshipDetailJSON
@@ -24,6 +24,8 @@ urlpatterns = [
     path('forms/relationship/', get_relationship, name='relationship-form'),
     path('forms/observation/', get_observation, name='observation-form'),
     path('', api_root, name='home-view'),
+
+    path("select2/", include("django_select2.urls")),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

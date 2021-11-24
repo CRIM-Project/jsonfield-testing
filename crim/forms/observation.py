@@ -2,31 +2,38 @@ from django import forms
 from crim.models.observation import CRIMObservation
 from crim.models.definition import CRIMDefinition
 
-PIECE_CHOICES = (
-    ('1', 'Piece 1'),
-    ('2', 'Piece 2'),
-    ('3', 'Piece 3'),
-    ('4', 'Piece 4'),
-)
+from crim.common import *
 
-#Set to definition 5
-set_definition = CRIMDefinition.objects.get(pk=5)
-allowed_types = list(set_definition.observation_definition.keys())
+#PIECE_CHOICES = (
+#    ('1', 'Piece 1'),
+#    ('2', 'Piece 2'),
+#    ('3', 'Piece 3'),
+#    ('4', 'Piece 4'),
+#)
 
-MUSICAL_TYPE_CHOICES = []
-i = 1
-for type in allowed_types:
-    MUSICAL_TYPE_CHOICES.append((i, type))
-    i=i+1
+allowed_types = list(CURRENT_DEFINITION.observation_definition.keys())
+#MUSICAL_TYPE_CHOICES = []
+#strkey = ''
+#for type in allowed_types:
+#    strkey = str(type).capitalize()
+#    MUSICAL_TYPE_CHOICES.append((strkey, strkey))
 
 class ObservationForm(forms.ModelForm):
     #piece = forms.ChoiceField(choices=PIECE_CHOICES)
-    #musical_type = forms.ChoiceField(choices=MUSICAL_TYPE_CHOICES)
 
     class Meta:
         model = CRIMObservation
-        fields=['observer', 'details', "definition"]
+        fields=['observer', 'musical_type', 'details', 'definition']
+        widgets = {'definition': forms.HiddenInput(), 'details': forms.HiddenInput()}
 
-    def __init__(self, *args, **kwargs):
-        super(ObservationForm, self).__init__(*args, **kwargs)
-        self.fields['musical_type'] = forms.ChoiceField(choices=MUSICAL_TYPE_CHOICES)
+    #def __init__(self, *args, **kwargs):
+    #   super(ObservationForm, self).__init__(*args, **kwargs)
+    #   self.fields['musical_type'] = forms.ChoiceField(choices=MUSICAL_TYPE_CHOICES)
+       
+
+       
+
+        
+        
+        
+        
