@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.http import Http404
-from crim.models.relationship import CRIMRelationship
-from crim.serializers.relationship import CRIMRelationshipSerializer
+from crim.models.relationship import CJRelationship
+from crim.serializers.relationship import CJRelationshipSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -10,25 +10,23 @@ from rest_framework.views import APIView
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 
 class RelationshipList(APIView):
-    """
-    List all observation, or create a new observation.
-    """
+    """List all observation, or create a new observation."""
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'relationship_list.html'
 
     def get(self, request, format=None):
-        relationships = CRIMRelationship.objects.all()
+        relationships = CJRelationship.objects.all()
         return Response({'relationships': relationships}, template_name='relationship_list.html')
 
     def post(self, request, format=None):
-        serializer = CRIMRelationshipSerializer(data=request.data, context={'request': request})
+        serializer = CJRelationshipSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, format=None):
-        relationships = CRIMRelationship.objects.all()
+        relationships = CJRelationship.objects.all()
         relationships.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -40,21 +38,21 @@ class RelationshipDetail(APIView):
     template_name = 'relationship_detail.html'
 
     def get(self, request, pk):
-        relationship = get_object_or_404(CRIMRelationship, pk=pk)
-        serializer = CRIMRelationshipSerializer(relationship, context={'request': request})
+        relationship = get_object_or_404(CJRelationship, pk=pk)
+        serializer = CJRelationshipSerializer(relationship, context={'request': request})
         return Response({'serializer': serializer, 'relationship': relationship}, template_name='relationship_detail.html')
 
     def post(self, request, pk):
-        relationship = get_object_or_404(CRIMRelationship, pk=pk)
-        serializer = CRIMRelationshipSerializer(relationship, data=request.data, context={'request': request})
+        relationship = get_object_or_404(CJRelationship, pk=pk)
+        serializer = CJRelationshipSerializer(relationship, data=request.data, context={'request': request})
         if not serializer.is_valid():
             return Response({'serializer': serializer, 'relationship': relationship})
         serializer.save()
         return redirect('crimrelationship-list')
-    
+
     def put(self, request, pk, format=None):
         relationship = self.get_object(pk)
-        serializer = CRIMRelationshipSerializer(relationship, data=request.data, context={'request': request})
+        serializer = CJRelationshipSerializer(relationship, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -64,27 +62,23 @@ class RelationshipDetail(APIView):
         relationship = self.get_object(pk)
         relationship.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
 
 class RelationshipListJSON(APIView):
-    """
-    List all relationships in json.
-    """
+    """List all relationships in json."""
     renderer_classes = [JSONRenderer]
 
     def get(self, request, format=None):
-        relationships = CRIMRelationship.objects.all()
-        serializer = CRIMRelationshipSerializer(relationships, many=True, context={'request':request})
+        relationships = CJRelationship.objects.all()
+        serializer = CJRelationshipSerializer(relationships, many=True, context={'request':request})
         return Response(serializer.data)
-        
+
 
 class RelationshipDetailJSON(APIView):
-    """
-    List one relationship in json.
-    """
+    """List one relationship in json."""
     renderer_classes = [JSONRenderer]
 
     def get(self, request, pk):
-        relationship = get_object_or_404(CRIMRelationship, pk=pk)
-        serializer = CRIMRelationshipSerializer(relationship, context={'request': request})
+        relationship = get_object_or_404(CJRelationship, pk=pk)
+        serializer = CJRelationshipSerializer(relationship, context={'request': request})
         return Response(serializer.data)

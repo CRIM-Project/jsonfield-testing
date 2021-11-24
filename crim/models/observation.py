@@ -4,14 +4,12 @@ from crim.models.definition import CRIMDefinition
 import json
 
 # Create your models here.
-class CRIMObservation(models.Model):
+class CJObservation(models.Model):
     class Meta:
         app_label = 'crim'
-        verbose_name = 'Observation'
-        verbose_name_plural = 'Observations'
+        verbose_name = 'Observation (updated)'
+        verbose_name_plural = 'Observations (updated)'
 
-
-    # This is trial for JSONField application
     observer = models.CharField(max_length=128, blank=True)
     ema = models.CharField(max_length=10000, blank=True)
     musical_type = models.CharField(max_length=128, blank=True)
@@ -50,5 +48,5 @@ class CRIMObservation(models.Model):
 
             if valid_sub:
                 self.definition.save()
-                super(CRIMObservation, self).save(*args, **kwargs)
+                super(CJObservation, self).save(*args, **kwargs)
                 print("Observation instance saved")

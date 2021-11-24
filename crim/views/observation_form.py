@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 import json
 from crim.forms.observation import ObservationForm
-from crim.models.observation import CRIMObservation
+from crim.models.observation import CJObservation
 from django.contrib import messages
 
 from crim.common import *
@@ -24,8 +24,8 @@ def get_observation(request):
                 musical_type = musical_type + mtype #set musical type
                 allowed_subtypes = list(CURRENT_DEFINITION.observation_definition[mtype]) #allowed subtype for it
                 for subtype in allowed_subtypes: #get name of each allowed subtype
-                    slug = selected_type + '-' + subtype.replace(' ', '-') 
-                    
+                    slug = selected_type + '-' + subtype.replace(' ', '-')
+
                     # check if checkboxes need to be added to array
                     if slug in dict(request.POST):
                         if request.POST[slug] != "":
@@ -43,12 +43,12 @@ def get_observation(request):
                         selected_options_string = ', '.join([str(elem) for elem in selected_options])
                         details_dict[subtype.capitalize()] = selected_options_string
                 break
-        json_object = json.dumps(details_dict)  
+        json_object = json.dumps(details_dict)
 
         form_data = {"observer": request.POST['observer'],
                     "musical_type": musical_type.capitalize(),
                     "details": json_object,
-                    "definition": CURRENT_DEFINITION 
+                    "definition": CURRENT_DEFINITION
                     }
         #print(form_data)
         form = ObservationForm(form_data)
@@ -59,13 +59,14 @@ def get_observation(request):
         # check whether it's valid:
         if form.is_valid():
             form.save()
-        messages.success(request, 'You just created observation #' + CRIMObservation.objects.latest('id').__str__())
+        messages.success(request, 'You just created observation #' + CJObservation.objects.latest('id').__str__())
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = ObservationForm(initial={"definition": CURRENT_DEFINITION})
- 
-    return render(request, 'observation_form.html',
-                context={'form': form,
-                        'observation_definition': CURRENT_DEFINITION.observation_definition,
-                        })
+
+    context_to_return = {
+        'form': form,
+        'observation_definition': CURRENT_DEFINITION.observation_definition,
+    }
+    return render(request, 'observation_form.html', context=context_to_return)

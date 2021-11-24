@@ -1,4 +1,4 @@
-from crim.models.observation import CRIMObservation
+from crim.models.observation import CJObservation
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 import json
@@ -9,7 +9,7 @@ from crim.models.definition import CRIMDefinition
 
 from crim.common import *
 
-def make_new_observation(request, prefix, allowed_types, definition): 
+def make_new_observation(request, prefix, allowed_types, definition):
     musical_type = ''
     obs_details_dict = {}
     selected_type = request.POST[prefix+'selected-tab']
@@ -21,8 +21,8 @@ def make_new_observation(request, prefix, allowed_types, definition):
             musical_type = musical_type + selected_type #set musical type
             allowed_subtypes = list(definition.observation_definition[selected_type]) #allowed subtype for it
             for subtype in allowed_subtypes: #get name of each allowed subtype
-                slug = prefix + selected_type + '-' + subtype.replace(' ', '-') 
-                            
+                slug = prefix + selected_type + '-' + subtype.replace(' ', '-')
+
                 # check if checkboxes need to be added to array
                 if slug in dict(request.POST):
                     if request.POST[slug] != "":
@@ -70,77 +70,77 @@ def get_relationship(request):
                 allowed_subtypes = list(CURRENT_DEFINITION.relationship_definition[rtype]) #allowed subtype for it
                 if len(allowed_subtypes) != 0:
                     for subtype in allowed_subtypes: #get name of each allowed subtype
-                        slug = selected_type + '-' + subtype.replace(' ', '-') 
+                        slug = selected_type + '-' + subtype.replace(' ', '-')
                         details_dict[subtype.capitalize()] = request.POST[slug]
                 else:
                     details_dict={}
                 break
-        json_object = json.dumps(details_dict)  
+        json_object = json.dumps(details_dict)
         print("details dict of this rela: " + str(json_object))
 
         #OBSERVATION DETAILS
         #both existing observation
         if request.POST['model_observation'] != "" and request.POST['derivative_observation'] != "":
-            form_data = {"observer": request.POST['observer'],  
+            form_data = {"observer": request.POST['observer'],
                         "relationship_type": relationship_type.capitalize(),
                         "details": json_object,
                         "model_observation": request.POST['model_observation'],
                         "derivative_observation": request.POST['derivative_observation'],
-                        "definition": CURRENT_DEFINITION 
+                        "definition": CURRENT_DEFINITION
                         }
             all_forms_valid = True
 
         #observation(s) made new
         else:
             observation_allowed_types = list(CURRENT_DEFINITION.observation_definition.keys())
-            
+
             #model existing and derivative made new
             if request.POST['model_observation'] != "" and request.POST['derivative_observation'] == "":
                 derivative_form = make_new_observation(request, "derivative-", observation_allowed_types, CURRENT_DEFINITION)
-                
+
                 if derivative_form.is_valid():
                     derivative_form.save()
 
-                    form_data = {"observer": request.POST['observer'],  
+                    form_data = {"observer": request.POST['observer'],
                                 "relationship_type": relationship_type.capitalize(),
                                 "details": json_object,
                                 "model_observation": request.POST['model_observation'],
-                                "derivative_observation": CRIMObservation.objects.latest('id'),
-                                "definition": CURRENT_DEFINITION 
+                                "derivative_observation": CJObservation.objects.latest('id'),
+                                "definition": CURRENT_DEFINITION
                                 }
                     all_forms_valid = True
 
             #model made new and derivative existing
             elif request.POST['model_observation'] == "" and request.POST['derivative_observation'] != "":
                 model_form = make_new_observation(request, "model-", observation_allowed_types, CURRENT_DEFINITION)
-                
+
                 if model_form.is_valid():
                     model_form.save()
 
-                    form_data = {"observer": request.POST['observer'],  
+                    form_data = {"observer": request.POST['observer'],
                                 "relationship_type": relationship_type.capitalize(),
                                 "details": json_object,
-                                "model_observation": CRIMObservation.objects.latest('id'),
+                                "model_observation": CJObservation.objects.latest('id'),
                                 "derivative_observation": request.POST['derivative_observation'],
-                                "definition": CURRENT_DEFINITION 
+                                "definition": CURRENT_DEFINITION
                                 }
                     all_forms_valid = True
-                    
+
             #both made new
             else:
                 model_form = make_new_observation(request, "model-", observation_allowed_types, CURRENT_DEFINITION)
                 derivative_form = make_new_observation(request, "derivative-", observation_allowed_types, CURRENT_DEFINITION)
-                
+
                 if model_form.is_valid() and derivative_form.is_valid():
                     model_form.save()
                     derivative_form.save()
 
-                    form_data = {"observer": request.POST['observer'],  
+                    form_data = {"observer": request.POST['observer'],
                                 "relationship_type": relationship_type.capitalize(),
                                 "details": json_object,
-                                "model_observation": CRIMObservation.objects.all().order_by('-id')[1],
-                                "derivative_observation": CRIMObservation.objects.latest('id'),
-                                "definition": CURRENT_DEFINITION 
+                                "model_observation": CJObservation.objects.all().order_by('-id')[1],
+                                "derivative_observation": CJObservation.objects.latest('id'),
+                                "definition": CURRENT_DEFINITION
                                 }
                     all_forms_valid = True
 
@@ -148,12 +148,12 @@ def get_relationship(request):
 
         if all_forms_valid and form.is_valid():
             form.save()
-            
+
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = RelationshipForm(initial={"definition": CURRENT_DEFINITION})
- 
+
     return render(request, 'relationship_form.html',
                 context={'form': form,
                         'relationship_definition': CURRENT_DEFINITION.relationship_definition,

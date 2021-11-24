@@ -10,7 +10,6 @@ class CRIMDefinition(models.Model):
 
     observation_definition = JSONField(null=True)
     relationship_definition = JSONField(null=True)
-    
 
     def __str__(self):
         return str(self.pk)

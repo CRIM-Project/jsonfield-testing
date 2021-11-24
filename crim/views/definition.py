@@ -10,9 +10,7 @@ from rest_framework.views import APIView
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 
 class DefinitionList(APIView):
-    """
-    List all definitions, or create a new definition.
-    """
+    """List all definitions, or create a new definition."""
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'definition_list.html'
 
@@ -33,9 +31,7 @@ class DefinitionList(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class DefinitionDetail(APIView):
-    """
-    Retrieve, update or delete an definition.
-    """
+    """Retrieve, update or delete an definition."""
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'definition_detail.html'
 
@@ -51,7 +47,7 @@ class DefinitionDetail(APIView):
             return Response({'serializer': serializer, 'definition': definition})
         serializer.save()
         return redirect('crimdefinition-list')
-    
+
     def put(self, request, pk, format=None):
         definition = self.get_object(pk)
         serializer = CRIMDefinitionSerializer(definition, data=request.data, context={'request': request})
@@ -64,19 +60,17 @@ class DefinitionDetail(APIView):
         definition = self.get_object(pk)
         definition.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
 
 class DefinitionListJSON(APIView):
-    """
-    List all definitions in json.
-    """
+    """List all definitions in json."""
     renderer_classes = [JSONRenderer]
 
     def get(self, request, format=None):
         definitions = CRIMDefinition.objects.all()
         serializer = CRIMDefinitionSerializer(definitions, many=True, context={'request':request})
         return Response(serializer.data)
-        
+
 
 class DefinitionDetailJSON(APIView):
     """

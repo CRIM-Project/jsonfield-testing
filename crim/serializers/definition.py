@@ -7,17 +7,23 @@ class CRIMDefinitionSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['observation_definition', 'relationship_definition']
 
     def create(self, validated_data):
-        """
-        Create and return a new `CRIMObservation` instance, given the validated data.
+        """Create and return a new `CJObservation` instance, given
+        the validated data.
         """
         return CRIMDefinition.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
+        """Update and return an existing `CJObservation` instance,
+        given the validated data.
         """
-        Update and return an existing `CRIMObservation` instance, given the validated data.
-        """
-        instance.observation_definition = validated_data.get('observation_definition', instance.observation_definition)
-        instance.relationship_definition = validated_data.get('relationship_definition', instance.relationship_definition)
+        instance.observation_definition = validated_data.get(
+            'observation_definition',
+            instance.observation_definition,
+        )
+        instance.relationship_definition = validated_data.get(
+            'relationship_definition',
+            instance.relationship_definition,
+        )
         instance.save()
-        
+
         return instance
