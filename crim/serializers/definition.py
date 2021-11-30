@@ -7,13 +7,13 @@ class CRIMDefinitionSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['observation_definition', 'relationship_definition']
 
     def create(self, validated_data):
-        """Create and return a new `CJObservation` instance, given
+        """Create and return a new `CRIMDefinition` instance, given
         the validated data.
         """
         return CRIMDefinition.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        """Update and return an existing `CJObservation` instance,
+        """Update and return an existing `CRIMDefinition` instance,
         given the validated data.
         """
         instance.observation_definition = validated_data.get(
